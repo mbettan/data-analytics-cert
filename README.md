@@ -17,9 +17,9 @@ Join the learning community!
 - Want to contribute? Submit a pull request with your additions, corrections, or improvements.
 - Have a question? Start a discussion to connect with other learners and share your insights.
 
+Happy learning!
+
 ## Disclaimer
 The audio files are generated using NotebookLM, an AI model that may produce inaccurate or incomplete information. Please double-check the content against reliable sources.
 
 The study notes are based on publicly available documentation and may not be completely up-to-date or reflect all perspectives.
-
-Happy learning!
