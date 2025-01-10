@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Certification Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #fff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 2em auto;
+            text-align: center; /* Center content within container */
+        }
+         h1, h2 {
+            text-align: center;
+             color: #3498db;
+            margin-bottom: 1em;
+        }
+
+        .filter-buttons {
+            margin-bottom: 20px;
+             text-align: center;
+        }
+
+        .filter-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-button:hover, .filter-button.active {
+            background-color: #2980b9;
+        }
+        .filter-button[data-filter="databricks"] {
+            background-color: red;
+        }
+         .filter-button[data-filter="databricks"]:hover, .filter-button[data-filter="databricks"].active {
+             background-color: darkred;
+        }
+
+        .product-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            text-align: left; /* Align content to the left within list items */
+        }
+
+        .product-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            position: relative; /* Add relative positioning for absolute badge */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             display: none;
+        }
+        .product-item:hover {
+            transform: translateY(-5px); /* Add a subtle lift effect on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+        }
+
+        .product-item h3 {
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+
+         .download-link {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+             text-align: center; /* Center the download button within the product item */
+        }
+
+        .download-link:hover {
+            background-color: #219a54;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+         .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+          .view-count {
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 0.5em;
+        }
+
+        /* Responsive adjustments */
+       @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1.5em;
+            }
+            .product-list {
+                grid-template-columns: 1fr; /* Single column on smaller screens */
+            }
+             .product-item {
+             padding: 15px;
+             }
+         }
+        .product-item.google-cloud, .product-item.databricks, .product-item.foundation {
+             display: none;
+        }
+         .product-item.active {
+             display: block;
+        }
+
+         .product-item.transparent-item {
+             opacity: 0.5;
+           pointer-events: none;
+        }
+
+        .product-item.transparent-item .badge{
+            opacity: 0.5;
+           pointer-events: none;
+        }
+         .product-item.transparent-item .download-link {
+            opacity: 0.5;
+           pointer-events: none;
+         }
+           .product-item.transparent-item  audio {
+            opacity: 0.5;
+           pointer-events: none;
+        }
+
+
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3WW6HE7Q0E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3WW6HE7Q0E');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Analytics Certification Hub</h1>
+        <p>Level up your data analytics skills with a curated collection of study notes and podcasts.</p>
+        <ul class="product-list">
+              <li class="product-item google-cloud active" data-badge="google-cloud">
+                <h3>BigQuery <span class="badge">Google Cloud</span></h3>
+                  <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                   <audio controls onplay="incrementViews('bq-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/data-analytics-cert/9c2b502ab7cf8056cefeb28bdf7be665b12f020b/gcp-pde/BigQuery-v1.0.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                 <h3>Pub/Sub <span class="badge">Google Cloud</span></h3>
+                   <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                    <audio controls onplay="incrementViews('ps-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                <h3>Dataflow <span class="badge">Google Cloud</span></h3>
+                 <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                      <audio controls onplay="incrementViews('df-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                  <h3>Google Cloud Storage (GCS) <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('gcs-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+               <h3>Dataplex <span class="badge">Google Cloud</span></h3>
+                  <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('dp-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                <h3>Cloud Composer <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                      <audio controls onplay="incrementViews('cm-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+               <h3>Data Catalog <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                     </a>
+                      <audio controls onplay="incrementViews('dc-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+              <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                 <h3>Dataproc <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                     </a>
+                    <audio controls onplay="incrementViews('dpc-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                 <h3>Datastream <span class="badge">Google Cloud</span></h3>
+                   <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                      Study Notes <i class="fas fa-file-pdf"></i>
+                     </a>
+                    <audio controls onplay="incrementViews('ds-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                <h3>Dataform <span class="badge">Google Cloud</span></h3>
+                  <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                      Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                    <audio controls onplay="incrementViews('dfm-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+               <h3>Bigtable <span class="badge">Google Cloud</span></h3>
+                   <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('bt-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                  <h3>Data Fusion <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('dfu-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                  <h3>Memorystore <span class="badge">Google Cloud</span></h3>
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                     </a>
+                    <audio controls onplay="incrementViews('ms-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                <h3>Cloud SQL <span class="badge">Google Cloud</span></h3>
+                     <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('csql-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+               <h3>Data Loss Prevention (DLP) <span class="badge">Google Cloud</span></h3>
+                   <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                      Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('dlp-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+                 <h3>Data Engineering 101 <span class="badge">Foundation</span></h3>
+                   <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                        Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                   <audio controls onplay="incrementViews('de-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+            <li class="product-item google-cloud transparent-item active" data-badge="google-cloud">
+               <h3>Overview services <span class="badge">Google Cloud</span></h3>
+                  <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('os-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+
+            </li>
+            <li class="product-item databricks" data-badge="databricks">
+                <h3>Dataflow <span class="badge">Databricks</span></h3>
+                <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('db-df-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+             <li class="product-item foundation" data-badge="foundation">
+                <h3>Dataflow <span class="badge">Foundation</span></h3>
+                <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf" class="download-link" download>
+                       Study Notes <i class="fas fa-file-pdf"></i>
+                    </a>
+                     <audio controls onplay="incrementViews('sf-df-audio')">
+                        <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+            </li>
+        </ul>
+    </div>
+    <div id="pdf-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000;">
+        <div style="position: relative; width: 80%; height: 90%; margin: 5% auto; background: white; padding: 1em; overflow: auto;">
+            <button style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 2em; cursor: pointer; color: #555;" onclick="document.getElementById('pdf-container').style.display='none';">×</button>
+            <div id="pdf-viewer" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+
+     <script>
+     function getViews(fileId) {
+            return parseInt(localStorage.getItem(fileId + '-views') || '0');
+        }
+
+    function updateViewDisplay(fileId) {
+        const views = getViews(fileId);
+         document.getElementById(fileId + '-views').textContent = views;
+    }
+     function incrementViews(fileId) {
+        const views = getViews(fileId) + 1;
+        localStorage.setItem(fileId + '-views', views);
+        updateViewDisplay(fileId);
+     }
+       // Function to open and display PDF
+    function showPDF(url, fileId) {
+            const container = document.getElementById('pdf-viewer');
+           document.getElementById('pdf-container').style.display='block';
+
+            // Initialize PDF.js
+            pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                // Load first page
+                pdf.getPage(1).then(function(page) {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale: scale });
+
+                    // Prepare canvas for rendering
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    container.innerHTML = '';
+                    container.appendChild(canvas);
+
+                    // Render PDF page
+                    page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+                });
+            });
+
+            incrementViews(fileId);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            updateViewDisplay('bq-audio');
+            updateViewDisplay('ps-audio');
+            updateViewDisplay('df-audio');
+            updateViewDisplay('gcs-audio');
+            updateViewDisplay('dp-audio');
+            updateViewDisplay('cm-audio');
+            updateViewDisplay('dc-audio');
+            updateViewDisplay('dpc-audio');
+            updateViewDisplay('ds-audio');
+            updateViewDisplay('dfm-audio');
+            updateViewDisplay('bt-audio');
+            updateViewDisplay('dfu-audio');
+            updateViewDisplay('ms-audio');
+            updateViewDisplay('csql-audio');
+            updateViewDisplay('dlp-audio');
+            updateViewDisplay('de-audio');
+            updateViewDisplay('os-audio');
+            updateViewDisplay('db-df-audio');
+            updateViewDisplay('sf-df-audio');
+
+             const filterButtons = document.querySelectorAll('.filter-button');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+
+                    // Update button styles
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Show/hide products based on the filter
+                    const productItems = document.querySelectorAll('.product-item');
+                    productItems.forEach(item => {
+                       item.classList.remove('active');
+                        if (item.classList.contains(filter)) {
+                            item.classList.add('active');
+                        }
+                   });
+
+                });
+            });
+         });
+    </script>
+    <footer style="text-align: center; margin-top: 20px;">
+        <p>
+            Created by <a href="https://www.linkedin.com/in/mbettan/" target="_blank">Michaël Bettan</a> | 
+            Licensed under <a href="https://github.com/mbettan/data-analytics-cert/blob/main/LICENSE" target="_blank">Apache License 2.0</a> |
+            <a href="https://github.com/mbettan/data-analytics-cert/issues/new" target="_blank">Report an issue</a>
+        </p>
+    </footer>
+</body>
+</html>
