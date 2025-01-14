@@ -2,6 +2,8 @@
 
 This repository is your one-stop resource for acing data analytics certifications and mastering cloud-based data analytics tools. Whether you're a beginner or a seasoned pro, we've got you covered!
 
+You can access the website on [https://mbettan.github.io/data-analytics-cert/](https://mbettan.github.io/data-analytics-cert/) 
+ 
 Here's what awaits you:
 - Comprehensive Study Notes: Concise, informative, and easy-to-understand notes covering a wide range of data analytics topics. Organized by certification and cloud provider for easy navigation.
 - Engaging Podcast Episodes (powered by NotebookLM): Dive deeper into key concepts with our podcast series. Each episode offers expert insights, real-world examples, and practical tips.
