@@ -365,6 +365,50 @@
             transform: translateY(-1px);
         }
 
+        /* Databricks Theme Buttons */
+        .product-item.databricks .download-link,
+        .product-item.databricks .infographic-link {
+            color: #FF8E8E;
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .product-item.databricks .download-link:hover,
+        .product-item.databricks .infographic-link:hover {
+            background: rgba(255, 107, 107, 0.12);
+            border-color: #FF8E8E;
+        }
+
+        .product-item.databricks:hover {
+            border-color: rgba(255, 107, 107, 0.25);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 107, 107, 0.08);
+        }
+
+        .product-item.databricks::before {
+            background: linear-gradient(90deg, transparent, #FF6B6B, transparent);
+        }
+
+        /* Foundation Theme Buttons */
+        .product-item.foundation .download-link,
+        .product-item.foundation .infographic-link {
+            color: #FCD34D;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .product-item.foundation .download-link:hover,
+        .product-item.foundation .infographic-link:hover {
+            background: rgba(245, 158, 11, 0.12);
+            border-color: #FCD34D;
+        }
+
+        .product-item.foundation:hover {
+            border-color: rgba(245, 158, 11, 0.25);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(245, 158, 11, 0.08);
+        }
+
+        .product-item.foundation::before {
+            background: linear-gradient(90deg, transparent, #F59E0B, transparent);
+        }
+
         /* Audio */
         .audio-label {
             font-size: 0.68rem;
@@ -924,24 +968,26 @@
                 </audio>
             </li>
 
-            <li class="product-item databricks hidden" data-badge="databricks">
+            <li class="product-item databricks active" data-badge="databricks">
                 <div class="card-header">
-                    <h3>Databricks 1</h3>
+                    <h3>Data Lakehouse</h3>
                     <span class="badge"
                         style="background:rgba(255,107,107,0.12);color:#FF8E8E;border-color:rgba(255,107,107,0.2);">Databricks</span>
                 </div>
                 <div class="card-actions">
-                    <a href="https://github.com/mbettan/data-analytics-cert/blob/a58b81cf527cd8615d18a45e74ff070e78b343df/gcp-pde/BigQuery-v1.0.pdf"
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/main/databricks/Data_LakeHouse-v1.0.pdf"
                         class="download-link" download>
                         <i class="fas fa-file-pdf"></i> Study Notes
                     </a>
-                    <a href="#" class="infographic-link">
+                    <a href="https://github.com/mbettan/data-analytics-cert/blob/main/databricks/Data_LakeHouse-v1.0.jpg"
+                        class="infographic-link">
                         <i class="fas fa-image"></i> Infographic
                     </a>
                 </div>
                 <div class="audio-label"><i class="fas fa-headphones"></i> &nbsp;Podcast</div>
-                <audio controls onplay="incrementViews('db-df-audio')">
-                    <source src="https://raw.githubusercontent.com/mbettan/da-cert/main/sample.mp3" type="audio/mpeg">
+                <audio controls onplay="incrementViews('lakehouse-audio')">
+                    <source src="https://github.com/mbettan/data-analytics-cert/raw/refs/heads/main/databricks/Data_LakeHouse-v1.0.mp3"
+                        type="audio/mpeg">
                 </audio>
             </li>
 
