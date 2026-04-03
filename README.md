@@ -22,6 +22,6 @@ Join the learning community!
 Happy learning!
 
 ## Disclaimer
-The audio files, slide decks, and infographics are generated using NotebookLM, an AI model that may produce inaccurate, incomplete, or hallucinated information. Please double-check the content against reliable sources.
+DISCLAIMER: The audio files, slide decks, and infographics provided are for educational and informational purposes only and do not constitute professional advice. These materials were generated using NotebookLM, an AI model that may produce inaccurate, incomplete, or hallucinated information. You should do your own research and independently verify all facts before making any decisions.
 
 The study notes are based on publicly available documentation and may not be completely up-to-date or reflect all perspectives.
