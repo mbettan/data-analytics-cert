@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigQuery: Guide & Study Notes | Data Analytics Cert Hub</title>
+    <meta name="description" content="Learn about BigQuery, Google Cloud's fully managed, serverless data warehouse. Study guide and notes for certification.">
+    <meta name="keywords" content="BigQuery, GCP, Data Warehouse, Data Analytics, Cloud, Study Guide">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3WW6HE7Q0E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3WW6HE7Q0E');
+    </script>
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-graduation-cap"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>BigQuery<br><em>Study Guide</em></h1>
+                <p class="cover-subtitle">
+                    Fully managed, Serverless (no-ops), powers fast SQL queries. Essential for analytics, cloud-based data warehouse.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Updated: <strong>April 2026</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Version: <strong>1.0</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Category: <strong>Data Warehouse</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Reading Time: <strong>~30 min</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#definition" class="toc-item">
+                    <span class="toc-number">01</span>
+                    <span>Definition & Use Cases</span>
+                </a>
+                <a href="#architecture" class="toc-item">
+                    <span class="toc-number">02</span>
+                    <span>Architecture, Billing & Jobs</span>
+                </a>
+                <a href="#data-model" class="toc-item">
+                    <span class="toc-number">03</span>
+                    <span>Data Model & Schema Design</span>
+                </a>
+                <a href="#partitioning" class="toc-item">
+                    <span class="toc-number">04</span>
+                    <span>Partitioning & Clustering</span>
+                </a>
+                <a href="#ingestion" class="toc-item">
+                    <span class="toc-number">05</span>
+                    <span>Data Ingestion & External Sources</span>
+                </a>
+                <a href="#querying" class="toc-item">
+                    <span class="toc-number">06</span>
+                    <span>Querying, Optimization & BI</span>
+                </a>
+                <a href="#analytics-hub" class="toc-item">
+                    <span class="toc-number">07</span>
+                    <span>Analytics Hub & Clean Room</span>
+                </a>
+                <a href="#recovery" class="toc-item">
+                    <span class="toc-number">08</span>
+                    <span>Data Recovery & BigLake</span>
+                </a>
+                <a href="#security" class="toc-item">
+                    <span class="toc-number">09</span>
+                    <span>Security, Governance & Monitoring</span>
+                </a>
+                <a href="#misc" class="toc-item">
+                    <span class="toc-number">10</span>
+                    <span>Functions, Errors & Misc</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 01: DEFINITION & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="definition">
+            <div class="section-divider-number">01</div>
+            <h2>Definition & Use Cases</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-info-circle"></i></div>What is BigQuery?</h3>
+            <p>
+                <strong>BigQuery</strong> is a fully managed, serverless (no-ops) data warehouse that powers fast SQL queries. It is essential for analytics and serving as a cloud-based data warehouse.
+            </p>
+            <div class="definition-grid" style="margin-top: 15px;">
+                <div class="definition-item">
+                    <dt>Availability</dt>
+                    <dd>Region (no cross-region replication with multi-region)</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>SLA</dt>
+                    <dd>99.99%</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-card accent-blue">
+            <h3><div class="icon-badge"><i class="fas fa-lightbulb"></i></div>Use Cases</h3>
+            <ul>
+                <li><strong>Large-scale data warehousing:</strong> Store and analyze massive datasets for historical trends and insights.</li>
+                <li><strong>Interactive data exploration:</strong> Easily explore and analyze Big Data using SQL queries.</li>
+                <li><strong>Fast, ad-hoc analytics:</strong> Get quick answers to complex questions with petabyte-scale data.</li>
+                <li><strong>Powerful BI reporting:</strong> Build interactive dashboards and reports for data-driven decision making.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 02: ARCHITECTURE, BILLING & JOBS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="architecture">
+            <div class="section-divider-number">02</div>
+            <h2>Architecture, Billing & Jobs</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-sitemap"></i></div>Architecture</h3>
+            <ul>
+                <li>Designed as a <strong>cloud-native EDW</strong> (first party service).</li>
+                <li><strong>Serverless:</strong> Automated scaling & zero infra management.</li>
+                <li><strong>Decoupled compute and storage:</strong> Scale independently.</li>
+                <li><strong>OLAP (not OLTP):</strong> Optimized for analytical queries, not frequent updates.</li>
+                <li>Supports <strong>ANSI SQL Queries</strong>.</li>
+                <li><strong>Multi-region location:</strong> No cross-region replication nor regional redundancy → no increase in dataset availability in the event of a regional outage. Data is stored in a single region within the geographic location.</li>
+                <li><strong>Columnar-Based Storage:</strong> Stores data column by column, with all the values for each column stored together.
+                    <ul>
+                        <li><em>Faster Queries:</em> Quickly scan through the relevant columns without reading unnecessary data.</li>
+                        <li><em>Better Compression:</em> Values in a single column have similar data types and patterns (less disk space).</li>
+                    </ul>
+                </li>
+                <li><strong>Slots for predictable costs:</strong> High, consistent query volume.</li>
+                <li><strong>Pay-per-query:</strong> Infrequent queries, unpredictable usage.</li>
+                <li><strong>Autoscaler:</strong> Dynamically adjusts your reservation allocation (# of slots) based on workloads: minimum guaranteed with baseline, scales up for peak loads to the maximum.</li>
+                <li><strong>Application Development:</strong> Building apps can be challenging due to query latency (multi-seconds) and potential cost implications for frequent and high-volume queries.</li>
+                <li><strong>Query Queue:</strong> Previous limit of 100 concurrent queries has been replaced with dynamic concurrency queuing.</li>
+            </ul>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-coral" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-credit-card"></i></div>Billing</h3>
+                <p>Load, copy, export, re-cluster, delete/metadata operations are <strong>Free</strong>.</p>
+                <ol style="margin-top: 10px; padding-left: 20px;">
+                    <li><strong>Storage:</strong> Active storage (<= 90 days or data modified) or Long-term storage (> 90 days; automatically).</li>
+                    <li><strong>Querying:</strong> Pay-per-query (aka On-Demand) amount of data scanned with 2000 fixed slots capacity or Pay-per-slot_hour (aka Editions) amount of slot hours with different features set, with optional slot commitments.</li>
+                    <li><strong>Ingestion:</strong> Streaming Inserts and Storage Write API; amount of data processed.</li>
+                </ol>
+            </div>
+
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-server"></i></div>Jobs & Reservation</h3>
+                <ul>
+                    <li><strong># of slots:</strong> Unit of compute = ~ throughput (CPU, RAM, NET).</li>
+                    <li><strong>Flex Slots:</strong> Available for bursting workloads.</li>
+                    <li><strong>Reservations (bucket of slots):</strong> Allocated to split any slot commitment to org, folder, and project levels.</li>
+                    <li><strong>Idle slots:</strong> Shared and available for other reservations in your organization to use.</li>
+                    <li><strong>Fair scheduler:</strong> To limit resource-heavy query consumption.</li>
+                    <li><strong>Default Pool:</strong> Load, export, copy by default is on free shared pool of slots.</li>
+                    <li><strong>Assignments:</strong> QUERY, PIPELINE, ML_EXTERNAL.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 03: DATA MODEL & SCHEMA DESIGN
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="data-model">
+            <div class="section-divider-number">03</div>
+            <h2>Data Model & Schema Design</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-mint" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-database"></i></div>Data Model</h3>
+                <ul>
+                    <li><strong>Project:</strong> Logical grouping of datasets for billing purposes.</li>
+                    <li><strong>Datasets:</strong> Top-level container for tables and views.</li>
+                    <li><strong>Authorized dataset:</strong> Authorizes all views within a dataset to access data in another (streamlining view authorization).
+                        <ul>
+                            <li>Protect Sensitive data</li>
+                            <li>Simplify access control management</li>
+                        </ul>
+                    </li>
+                    <li><strong>Table:</strong> Individual records into rows. Each is composed of columns with an enforced data type. Native or External table.</li>
+                    <li><strong>View:</strong> A virtual table defined by a SQL query.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-eye"></i></div>Views & Data Operations</h3>
+                <p>Views let you share query results without giving access to underlying source data.</p>
+                <ul>
+                    <li><strong>Authorized Views:</strong> Virtual table defined by a SQL query, definition hidden from users. Protects sensitive data.</li>
+                    <li><strong>Materialized Views:</strong> Precomputed views that periodically cache query results for performance (zero maintenance, fresh data; best effort refresh within 5 min of base table change).</li>
+                    <li><strong>Job:</strong> Asynchronous action (query, extract, load, copy).</li>
+                    <li><strong>DML (Data Manipulation):</strong> Update, insert, delete, MERGE. Has daily execution limits.</li>
+                    <li><strong>DDL (Data Definition):</strong> Create, alter, delete resources.</li>
+                    <li><strong>Schema Evolution:</strong> Supports schema changes without re-creating tables.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-pink">
+            <h3><div class="icon-badge"><i class="fas fa-sitemap"></i></div>Schema Design</h3>
+            <ul>
+                <li><strong>Choose Data Types Wisely:</strong> Select the most specific data type for your needs to optimize storage and query performance. Avoid overly generic types (like STRING for everything).</li>
+                <li><strong>Nested and Repeated Fields:</strong> Removes the need for a separate table and costly join operations.
+                    <ul>
+                        <li><em>Nested Fields (STRUCTs):</em> Group related data into logical units, improving readability and query efficiency.</li>
+                        <li><em>Repeated Fields (ARRAYs):</em> Store multiple values within a single row, reducing data redundancy.</li>
+                    </ul>
+                </li>
+                <li><strong>Schema Flexibility:</strong> You can have nested structs within repeated fields or repeated fields within structs, providing flexibility to model complex data relationships and track historical changes.</li>
+                <li><strong>UNNEST operator:</strong> Flattens nested and repeated fields for easier querying, treating each item in a repeated field as a separate row.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3><div class="icon-badge"><i class="fas fa-font"></i></div>Data Types</h3>
+            <div class="definition-grid">
+                <div class="definition-item">
+                    <dt>NUMERIC / BIGNUMERIC</dt>
+                    <dd>Financial analysis for precise currency calculations, stock prices, and reporting.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>FLOAT64</dt>
+                    <dd>Sensor data for capturing temperature readings, pressure, or other sensor values.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>TIMESTAMP</dt>
+                    <dd>Event logging for storing event timestamps with accurate time zone information.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>STRUCT</dt>
+                    <dd>Product catalog representing a product with attributes (name, description, price).</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>GEOGRAPHY</dt>
+                    <dd>Location-based services for storing user locations, geofencing, and spatial analysis.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>JSON</dt>
+                    <dd>Exchange Log events representing structured data in a flexible format.</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-key"></i></div>Primary and Foreign Keys</h3>
+            <p>BigQuery doesn't enforce primary and foreign key constraints in the same way as RDBMS, but they are highly useful for query optimization.</p>
+            <ul>
+                <li><strong>Primary Key:</strong> Uniquely identifies each row. Must contain a non-null value. Declared during table creation. It doesn't prevent inserting duplicate or NULL values, but if declared, BigQuery can optimize query performance (especially for joins).</li>
+                <li><strong>Foreign Key:</strong> A column referencing the primary key of another table. Declared via DDL. It doesn't automatically enforce referential integrity; you must implement your own checks and validation (e.g., using MERGE statements, pre-insert validation queries).</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 04: PARTITIONING & CLUSTERING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="partitioning">
+            <div class="section-divider-number">04</div>
+            <h2>Partitioning & Clustering</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-mint" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-border-all"></i></div>Partitioning</h3>
+                <p>Divides large tables into smaller, more manageable segments.</p>
+                <ul>
+                    <li><strong>Purpose:</strong> Query performance (faster by scanning only relevant partitions) and Cost reduction (charges based only on processed data).</li>
+                    <li><strong>Limits:</strong> Up to 10,000 partitions (~27 years of data). Daily limit of 30,000 partition modifications per table. Rate limit: 50 updates every 10 seconds.</li>
+                    <li><strong>Types:</strong>
+                        <ul>
+                            <li><em>Ingestion Time:</em> Based on ingestion date. Pseudo-column <code>_PARTITIONTIME</code>.</li>
+                            <li><em>Time-Unit Column:</em> Based on date or timestamp column.</li>
+                            <li><em>Integer Range:</em> Ranges of values in a specific column.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Frequencies:</strong> Daily (default), hourly, monthly, or yearly.</li>
+                    <li>Requires Partition Filter at table level (+ WHERE clause).</li>
+                    <li><strong>Excessive partitioning:</strong> (thousands of partitions) can negatively impact performance.</li>
+                    <li><strong>TABLE_DATE_RANGE:</strong> Specify a date range instead of manually listing individual partitions.</li>
+                    <li><strong>Partition Decorators:</strong> Reference a partition in a table to write data specifically to it (<code>table_name$partition_id</code>).</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-shapes"></i></div>Clustering & Sharding</h3>
+                <p>Sort data within partitions based on one or more columns.</p>
+                <ul>
+                    <li><strong>Purpose:</strong> Further improves query performance, especially for queries with filtering and aggregation, by co-locating related data.</li>
+                    <li><strong>Automatic Reclustering:</strong> Maintained in the background for efficiency (free).</li>
+                    <li><strong>Hierarchical Clustering:</strong> Cluster a table by multiple columns to create a hierarchical organization (e.g., country, then state/region, then city).</li>
+                    <li>Partitioning and clustering are powerful when used together (e.g., partition by date, cluster by heavily filtered column).</li>
+                    <li style="margin-top: 15px;"><strong>Sharding (Legacy):</strong> A similar concept (less preferred) with a single table per day. Uses UNION in query to scan multiple tables. Partitioning within a single table is easier to manage and leverages query optimizations more effectively than creating multiple sharded tables.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 05: DATA INGESTION & EXTERNAL SOURCES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="ingestion">
+            <div class="section-divider-number">05</div>
+            <h2>Data Ingestion & External Sources</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-purple" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-file-import"></i></div>Data Ingestion</h3>
+                <ul>
+                    <li><strong>Batch vs. Real-time:</strong> Factors include data volume, frequency, and latency requirements.</li>
+                    <li><strong>Batch Loading:</strong> For large datasets (free, shared resources).</li>
+                    <li><strong>Streaming Loading:</strong> For real-time use cases.
+                        <ul>
+                            <li><em>Streaming Inserts:</em> Disable insertId for high volume → best effort deduplication.</li>
+                            <li><em>BQ Storage Write API:</em> High throughput.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Streaming Buffer:</strong> Data is first held in a temporary staging area to ensure data durability. Available for querying immediately after ack. Up to 90 min for table copy.</li>
+                    <li><strong>File Formats (Fastest to Slowest):</strong> Avro, Parquet, ORC, uncompressed CSV & JSON, compressed (gzip).
+                        <ul>
+                            <li><em>Avro:</em> Row-based, faster write.</li>
+                            <li><em>Parquet:</em> Columnar, faster read.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Encoding & Schema:</strong> UTF-8 (default). Auto-detection for CSV/JSON, or define manually.</li>
+                    <li><strong>Data Sources:</strong> GCS (Firestore export), local file, Drive, BigTable, BigQuery Data Transfer Service (DTS).</li>
+                    <li><strong>Data Transformation:</strong> During ingestion via Dataflow, Dataproc, or Create a table from a query result (CTAS).</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-cloud-download-alt"></i></div>External Data Sources</h3>
+                <ul>
+                    <li><strong>Supported External Sources (5):</strong> Bigtable, Cloud Spanner, Cloud SQL, Cloud Storage, Google Drive.</li>
+                    <li><strong>External Tables:</strong> Act like a standard table. The table metadata (including the table schema) is stored in BigQuery storage, but the data itself resides in the external source.</li>
+                    <li><strong>Federated Query:</strong> A way to send a query statement to an external database (Cloud SQL or Cloud Spanner) and get the result back as a temporary table.
+                        <ul>
+                            <li><em>Use Cases:</em> ETL operations. Query small and frequently changing data without the need to reload it. Access data being ingested periodically.</li>
+                            <li><em>Limitations:</em> No consistency guarantees, potential performance impact, no caching.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Partitioning & Schema:</strong> Supports Hive partitioning for data in GCS. Schema flexibility allows adding columns without rewriting the entire table.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 06: QUERYING, OPTIMIZATION & BI
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="querying">
+            <div class="section-divider-number">06</div>
+            <h2>Querying, Optimization & BI</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-cyan" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-search"></i></div>Querying Data</h3>
+                <ul>
+                    <li><strong>Language:</strong> GoogleSQL (ANSI SQL) or Legacy SQL.</li>
+                    <li><strong>Query Jobs:</strong> Asynchronous actions (load, export, query, copy).</li>
+                    <li><strong>Results:</strong> Permanent or temporary tables.</li>
+                    <li><strong>Query Types:</strong>
+                        <ul>
+                            <li><em>Interactive:</em> Default, immediate execution, counts toward daily/concurrent usage limits.</li>
+                            <li><em>Batch:</em> Queued, starts when idle resources are available, switches to interactive if idle for 24 hours.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-chart-line"></i></div>BI Engine</h3>
+                <p>An in-memory analysis service that accelerates BigQuery queries for business intelligence (BI) and data visualization tools like Looker Studio and Looker.</p>
+                <ul>
+                    <li>Optimizes performance by storing data in memory, providing fast, sub-second query responses.</li>
+                    <li>Ideal for interactive reporting and dashboards.</li>
+                    <li>Automatically integrates with BigQuery, delivering high performance while maintaining real-time insights and reducing costs.</li>
+                    <li><strong>BI Engine SQL:</strong> For any BI tooling, e.g., Looker or Tableau.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3><div class="icon-badge"><i class="fas fa-rocket"></i></div>Query & Cost Optimization</h3>
+            <div class="definition-grid">
+                <div class="definition-item">
+                    <dt>Avoid SELECT *</dt>
+                    <dd>Select only necessary columns to reduce data scanned using <code>SELECT * EXCEPT</code>.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Sample Data</dt>
+                    <dd>Use Preview Table (free) and Preview queries (--dry-run) to estimate costs.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Limit Costs</dt>
+                    <dd>Use max bytes billed. Don't use LIMIT clause (it is still a full scan).</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Filtering</dt>
+                    <dd>Use filters and WHERE clauses early in the query to limit data processed.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Join Efficiency</dt>
+                    <dd>Join largest table, then smallest, then decreasing size. Filter on both tables.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Approx. Functions</dt>
+                    <dd>Use <code>APPROX_COUNT_DISTINCT</code> for acceptable accuracy results faster.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Window Functions</dt>
+                    <dd>Eliminate full table scans and temp tables for intermediate calculations. Avoid self-joins. Includes Aggregations, Navigation, Ranking functions.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Denormalization</dt>
+                    <dd>Speed up queries by reducing joins (read-heavy dashboards). Trade-offs: increased storage, redundancy.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Handle Data Skew</dt>
+                    <dd>Uneven distribution slowing queries. Fix via Pre-Aggregation on skewed column or using SHUFFLE Clause to redistribute data.</dd>
+                </div>
+            </div>
+            <ul style="margin-top: 15px;">
+                <li><strong>Monitor costs</strong> using dashboards and audit logs. Partition data by date.</li>
+                <li><strong>Break query results</strong> into stages.</li>
+                <li><strong>Use default table expiration</strong> to delete unneeded data.</li>
+                <li><strong>Ingestion Limits:</strong> Set hard limits on bytes processed per day. Set custom quota per user.</li>
+                <li><strong>Aggregate late and rarely</strong>, especially for queries with sub-SELECTs. Move aggregation functions up to the top.</li>
+                <li><strong>Cached queries:</strong> If you run the exact same query again, results from the cached table are used. Maintained per-user, per-project for ~24 hours.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 07: ANALYTICS HUB & CLEAN ROOM
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="analytics-hub">
+            <div class="section-divider-number">07</div>
+            <h2>Analytics Hub & Data Clean Room</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-mint" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-hub"></i></div>Analytics Hub</h3>
+                <p>Built-in data exchange platform for secure & scalable data sharing across organizations. Supports a Data Mesh architecture.</p>
+                <ul>
+                    <li><strong>Publish and subscribe model:</strong> Share datasets without duplicating data.</li>
+                    <li><strong>Shared datasets and exchanges:</strong> Organize data for sharing through curated datasets and access control via private or public exchanges.</li>
+                    <li><strong>Cross-domain Data Consumption:</strong> Users can easily access data products across different domains.</li>
+                    <li><strong>Data Discoverability:</strong> Data consumers can search for datasets across the organization in a standardized way.</li>
+                    <li><strong>Governance:</strong> In conjunction with Dataplex, teams maintain high data quality and privacy through federated policies.</li>
+                    <li><strong>Cost-effective sharing:</strong> Publishers only pay for storage, subscribers only pay for querying shared data.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-door-closed"></i></div>Data Clean Room</h3>
+                <p>Analyzing sensitive data with multiple parties while ensuring privacy and security without directly sharing the underlying data itself.</p>
+                <ul>
+                    <li><strong>Query controls:</strong> Restrictions on the types of queries that can be executed.</li>
+                    <li><strong>Output privacy mechanisms via analysis rule:</strong>
+                        <ul>
+                            <li><em>Aggregation threshold:</em> Enforces the minimum number of distinct entities that must be present in a set of data to be included in results.</li>
+                            <li><em>Differential privacy:</em> Anonymization technique that limits personal information revealed to prevent learning about an entity.</li>
+                            <li><em>List overlap:</em> Enforces an INNER JOIN and returns the exact rows where data intersects between two or more tables.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 08: DATA RECOVERY & BIGLAKE
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="recovery">
+            <div class="section-divider-number">08</div>
+            <h2>Data Recovery & BigLake</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-undo"></i></div>Data Recovery & Backup</h3>
+                <ul>
+                    <li><strong>Table clones:</strong> Create a lightweight, <strong>writable</strong> copy of an existing table (only changed data is billed) for dev/testing/sandboxes.</li>
+                    <li><strong>Table Snapshots:</strong> Preserve a <strong>read-only</strong> copy of a base table at a particular time. Retained indefinitely (or via custom expiration). <strong>Ideal for long-term backup</strong> and disaster recovery beyond the 7-day time travel window.</li>
+                    <li><strong>Time travel:</strong> Retrieves full table data for the past 2-7 days. Quick rollbacks, but no selective restore.</li>
+                    <li><strong>Export to GCS:</strong> In various formats (Avro, CSV) for long-term archival or disaster recovery.</li>
+                    <li><strong>Fail-Safe:</strong> Retains deleted data for an additional 7 days after time travel window for emergency recovery.</li>
+                    <li><strong>Copy dataset:</strong> Complete copy of dataset. Costly, not suited for long-term.</li>
+                    <li><strong>ELT pipelines:</strong> Organize data in monthly tables, export to GCS to restore specific time periods cleanly.</li>
+                    <li><strong>Regional outage:</strong> BigQuery does not offer automatic failover. Export to GCS in a different region to define your RPO.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-cyan" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-water"></i></div>BigLake</h3>
+                <p>Query structured & unstructured data across analytics & AI engines with built-in governance.</p>
+                <ul>
+                    <li><strong>Open Formats:</strong> Built on open formats (Parquet, ORC, Iceberg) to avoid vendor lock-in.</li>
+                    <li><strong>Multi-Cloud Governance:</strong> Discover and manage tables through Data Catalog.</li>
+                    <li><strong>Fine-Grained Security:</strong> Enforce consistent security policies (row filtering, column masking) removing need for file-level permissions.</li>
+                    <li><strong>Simplified Analytics:</strong> Query data using SQL interfaces regardless of storage engine.</li>
+                    <li><strong>Metadata caching:</strong> From GCS/S3 speeds up queries, especially for many files or Hive partition filters.</li>
+                    <li><strong>Moving cold (archive) data:</strong> To GCS, BigLake will query data even in lower-cost storage tiers.</li>
+                    <li><strong>BigLake over Omni:</strong> Eliminate data movement pipelines by directly querying data residing in S3 and Azure Data Lake.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 09: SECURITY, GOVERNANCE & MONITORING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="security">
+            <div class="section-divider-number">09</div>
+            <h2>Security, Governance & Monitoring</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-amber" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-user-shield"></i></div>IAM & Roles</h3>
+                <p>Granting an IAM role to an entity at different levels: Organization, Folder, Project, Dataset, Table, View.</p>
+                <ul>
+                    <li><strong>BigQuery Admin:</strong> Full access to all resources.</li>
+                    <li><strong>Data Owner:</strong> Manage data/metadata, create/delete datasets and tables.</li>
+                    <li><strong>Data Editor:</strong> Query data, create/modify tables, load data.</li>
+                    <li><strong>Data Viewer:</strong> Read-only access to dataset metadata and table data. Cannot run queries without the Job User role at the project level.</li>
+                    <li><strong>User:</strong> Can run jobs, including queries.</li>
+                    <li><strong>Job User:</strong> Can only run jobs (like queries), but cannot access data directly unless granted a separate data access role (like Data Viewer). Often used for automated processes.</li>
+                    <li><strong>Metadata Viewer:</strong> Allows viewing metadata about resources.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Tags:</strong> Key-value pairs to conditionally apply IAM to tables & datasets.</p>
+            </div>
+
+            <div class="concept-card accent-purple" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-search-dollar"></i></div>Auditing & Monitoring</h3>
+                <ul>
+                    <li><strong>Cloud Audit Logs:</strong> Identify who accessed specific tables, analyze query execution patterns, track IAM/schema changes, ensure compliance, and troubleshoot.</li>
+                    <li><strong>Security Command Center:</strong> For security events and alerts.</li>
+                    <li><strong>Cloud Monitoring:</strong> Dashboards and alerts for BigQuery usage and performance.</li>
+                    <li><strong>Slot Consumption Metrics:</strong> Monitored via Cloud Monitoring, <code>INFORMATION_SCHEMA.JOBS_*</code>, Operational health dashboard, or Audit logs (Jobs API).</li>
+                    <li><strong>Metrics tracked:</strong> Query execution time, bytes processed, slots used, job started/failed, storage bytes, streaming latency.</li>
+                    <li><strong>Custom Quota:</strong> Set query usage per day per user (applies to all users in a project).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-shield-alt"></i></div>Data Governance, Quality & Lineage</h3>
+            <ul>
+                <li><strong>Protect Sensitive Data:</strong> Using data masking in table columns and Sensitive Data Protection (DLP) via Sensitive data profiling and On-Demand inspection.</li>
+                <li><strong>Manage Encryption:</strong> Google-Managed, CMEK via Cloud KMS.</li>
+                <li><strong>AEAD Encryption:</strong> Create keysets to encrypt and decrypt individual values in a table, and rotate keys within a keyset.</li>
+                <li><strong>Dataplex Integration:</strong> Used to define continuous data checks, monitor results, and troubleshoot issues with data quality.</li>
+                <li><strong>Data Lineage:</strong> Tracking the origin, transformations, and dependencies of data (where it comes from, where it is passed to). Ensures data quality, compliance, and reproducibility.</li>
+            </ul>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-coral" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-network-wired"></i></div>VPC Service Controls</h3>
+                <p>Security feature that defines a security perimeter around resources to mitigate the risk of data exfiltration.</p>
+                <ul>
+                    <li><strong>Data Protection:</strong> Restricts access and establishes a defined perimeter.</li>
+                    <li><strong>Access Levels:</strong> Determine which users or services can access resources, ensuring only authorized users can interact.</li>
+                    <li><strong>Service Perimeters:</strong> Encompass multiple services, ensuring data does not leave defined boundaries.</li>
+                    <li><strong>Audit Logs:</strong> Detailed logs for activities within the perimeter.</li>
+                    <li><strong>Deny Rules:</strong> Restrict access from specified IP ranges.</li>
+                    <li><strong>Data Exfiltration Protection:</strong> Reduces risk of accidental or intentional exfiltration by enforcing sharing policies.</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-sync"></i></div>Change Data Capture (CDC)</h3>
+                <p>CDC tracks changes from transactional databases to BigQuery in near-real time.</p>
+                <ul>
+                    <li><strong>Log-based CDC:</strong> Preferred for efficient replication of inserts, updates, and deletes.</li>
+                    <li><strong>Staging Tables:</strong> Use to capture changes before applying them to reporting tables.</li>
+                    <li><strong>Apply Changes:</strong> In batches using <strong>DML MERGE</strong> to optimize performance and reduce overhead.</li>
+                    <li><strong>Stream CDC events:</strong> In real time for low-latency data availability.</li>
+                    <li><strong>Transactional Integrity:</strong> Ensures data consistency.</li>
+                    <li>BigQuery supports <strong>schema evolution</strong> for dynamic structure changes.</li>
+                    <li>Implement error handling for recovery in the pipeline.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 10: FUNCTIONS, ERRORS & MISC
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="misc">
+            <div class="section-divider-number">10</div>
+            <h2>Functions, Errors & Misc</h2>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-pink" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-code"></i></div>SQL Functions & Procedures</h3>
+                <ul>
+                    <li><strong>User-Defined Functions (UDF):</strong> SQL or Javascript function that accepts input, performs actions, and returns a value. Temporary or Persistent.</li>
+                    <li><strong>Stored Procedure:</strong> Persistent script invoked from inside a SQL statement. Can take input arguments and return values.</li>
+                    <li><strong>Routines:</strong> A resource type containing Stored procedures, UDFs, remote functions, and Table functions to re-use logic.</li>
+                    <li><strong>Scripting:</strong> Send multiple statements to BigQuery in one request.</li>
+                    <li><strong>Specialized Functions:</strong>
+                        <ul>
+                            <li><em>Working with arrays and JSON.</em></li>
+                            <li><em>Geospatial (GIS):</em> Geography data types/functions for spatial analysis.</li>
+                            <li><em>Security functions</em> for data encryption and access control.</li>
+                            <li><em>Approximate and HyperLogLog++:</em> For advanced analytics and efficient distinct counting.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-exclamation-triangle"></i></div>Error Handling & Data Quality</h3>
+                <ul>
+                    <li><strong>Common Errors:</strong>
+                        <ul>
+                            <li><em>Invalid Schema:</em> Data type mismatches between source data and table schema.</li>
+                            <li><em>Query Timeouts:</em> Queries exceeding configured limits or resource contention.</li>
+                            <li><em>Ingestion Issues:</em> Problems loading data, often due to format errors or permissions.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Troubleshooting Tips:</strong>
+                        <ul>
+                            <li>Analyze using <code>EXPLAIN</code> statements to identify bottlenecks in Query Plans.</li>
+                            <li>Examine Cloud Logging for error messages.</li>
+                            <li>Check Job Details history in the console for errors and stats.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Data Validation:</strong>
+                        <ul>
+                            <li><em>CHECK Constraints:</em> Define rules at the table level to enforce data integrity (e.g., data type, range).</li>
+                            <li><em>ETL Validation:</em> Incorporate data quality checks early in pipelines.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-ellipsis-h"></i></div>Miscellaneous Features</h3>
+            <ul>
+                <li><strong>BigQuery Omni:</strong> For multi-cloud querying with External Tables.</li>
+                <li><strong>Time Travel:</strong> At no extra cost via <code>AS OF SYSTEM TIME</code>, going back 7 days.</li>
+                <li><strong>ROW_NUMBER:</strong> A window function that assigns a unique, sequential integer to each row within a partition of a result set, starting at 1, based on the <code>ORDER BY</code> clause.</li>
+                <li><strong>Wildcard Tables:</strong> Query multiple tables using concise SQL, useful when a dataset contains multiple, similarly named tables that have compatible schemas.</li>
+                <li><strong>BigQuery ML:</strong> Enables building and training machine learning models directly on BigQuery data.</li>
+                <li><strong>Business Intelligence Tools:</strong> Integrate seamlessly with BI tools for data visualization and reporting (Tableau, Looker).</li>
+                <li><strong>BigQuery Tags:</strong> Assign metadata to datasets in the form of key-value pairs. Used to apply IAM policies conditionally.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SELF ASSESSMENT QUESTIONS
+             ═══════════════════════════════════════ -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What is the main difference between Partitioning and Clustering in BigQuery?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Partitioning divides large tables into segments (e.g., by date), while Clustering sorts data within those partitions based on one or more columns for better performance.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> How long are cached query results maintained in BigQuery?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Cached query results are maintained per-user and per-project for 24 hours (with some exceptions).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> How do you flatten nested or repeated fields in a BigQuery table for querying?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">You use the UNNEST operator, which flattens the data for easier querying and treats each item in a repeated field as a separate row.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the best approach to handle data skew when querying in BigQuery?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">You can perform Pre-Aggregation on the skewed column to reduce the number of rows with the same value, or use a SHUFFLE Clause to redistribute data evenly before joining.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> Can you query data residing on AWS S3 or Azure directly using BigQuery?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Yes, using BigLake over Omni, which eliminates the need for data movement pipelines by directly querying data residing in S3 and Azure Data Lake.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+        <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () { this.classList.toggle('revealed'); });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>
