@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Composer v2 - Michaël Bettan</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-project-diagram"></i>
+                    Workflow Orchestration
+                </div>
+                <h1>Google Cloud<br><em>Cloud Composer v2</em></h1>
+                <p class="cover-subtitle">
+                    Managed Apache Airflow workflow orchestration service. Apache Airflow is an open source platform to orchestrate data pipelines programmatically in Python.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Availability: <strong>Regional</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Standard: <strong>Python 3 / Airflow 2</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview &amp; Key Capabilities
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Architecture &amp; Components
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Airflow DAGs &amp; Operators
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Failure &amp; ETL Patterns
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Logging, Monitoring &amp; Security
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview &amp; Key Capabilities</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                <strong>Cloud Composer v2</strong> provides a managed environment for Apache Airflow, making it a great fit for hybrid and multi-cloud architectures. It allows you to author, schedule, and monitor data pipelines natively within Airflow.
+            </p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li>Orchestration of data ingestion, including hybrid use cases</li>
+                    <li>Data processing</li>
+                    <li>Orchestration of proprietary API endpoints jobs</li>
+                    <li>Custom code tasks run directly in Airflow</li>
+                    <li>ML / AI pipelines</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-file-invoice-dollar"></i></span>
+                    Billing Components
+                </h3>
+                <ul>
+                    <li>Web, Database core hours</li>
+                    <li>Database SQL core hours</li>
+                    <li>Web and Data storage</li>
+                    <li>Network egress for all</li>
+                    <li>Workers and Scheduler GKE nodes</li>
+                    <li>GCS Bucket (DAGs)</li>
+                    <li>Cloud Monitoring logs usage</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Architecture &amp; Components</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                An <strong>Environment</strong> is the fundamental instance construct of Cloud Composer. It is deployed automatically across two distinct Google Cloud projects: your Customer project and a Google-managed tenant project.
+            </p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Customer Project</dt>
+                <dd>Where you create your environments. You can create more than one environment in a single customer project. Hosts the GKE cluster and Cloud Storage bucket.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Google-managed Tenant Project</dt>
+                <dd>Provides unified access control and an additional layer of data security. Each environment has its own tenant project containing Cloud SQL, Identity-Aware-Proxy, and App Engine Flexible.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Airflow Web Server</dt>
+                <dd>Runs on App Engine Flexible and serves the Airflow UI.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Airflow Database</dt>
+                <dd>Hosted on Cloud SQL; acts as the backend database storing all Airflow metadata.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Environment's Bucket</dt>
+                <dd>A Cloud Storage bucket used to store DAGs, plugins, data dependencies, and Airflow logs.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Airflow Scheduler</dt>
+                <dd>Controls the scheduling of DAG runs and individual tasks. Distributes tasks to Airflow workers by using a Redis queue (runs as GKE deployments).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Airflow Workers</dt>
+                <dd>Execute individual tasks from DAGs by taking them from the Redis queue. Run as GKE deployments.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Redis Queue</dt>
+                <dd>Holds a queue of individual tasks. Runs as a GKE StatefulSet application so that messages persist across container restarts.</dd>
+            </dl>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="callout-content">
+                <h4>VPC Peering Note</h4>
+                <p>For each Private IP environment, Cloud Composer creates one <strong>VPC peering connection</strong> for the tenant project network.</p>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Airflow DAGs &amp; Operators</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-project-diagram"></i></span>
+                Airflow DAGs (Directed Acyclic Graphs)
+            </h3>
+            <p>A DAG is synonymous with a <strong>Workflow pipeline</strong>. Acyclic means the workflow travels in one direction without creating a closed loop.</p>
+            <ul>
+                <li><strong>Executed workflows:</strong> A collection of tasks with defined dependencies and relationships.</li>
+                <li><strong>Storage:</strong> The pipeline code is loaded and stored in the DAGs folder of the Environment's Cloud Storage bucket.</li>
+                <li><strong>Extensibility:</strong> Supports Python dependencies (modules) and custom plugins including operators, hooks, and interfaces.</li>
+            </ul>
+        </div>
+
+        <div class="prose">
+            <p><strong>Example Pipeline Flow:</strong></p>
+        </div>
+
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="process-step-number">STEP 1</div>
+                <h4>Export</h4>
+                <p>Export BigQuery data</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 2</div>
+                <h4>Move</h4>
+                <p>Move to GCS folder</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 3</div>
+                <h4>Cleanse</h4>
+                <p>Cleanse data</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 4</div>
+                <h4>Ingest</h4>
+                <p>Ingest into Snowflake</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 5</div>
+                <h4>Notify</h4>
+                <p>Send Slack Message</p>
+            </div>
+        </div>
+
+        <div class="prose">
+            <p>
+                <strong>Airflow Operators</strong> are the core building blocks of DAGs. Operators invoke the tasks you want to complete and are usually atomic in nature (one operator per task).
+            </p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>DummyOperator</dt>
+                <dd>Used primarily for visual clarity in the UI (e.g., establishing start or end points).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>BashOperator &amp; PythonOperator</dt>
+                <dd>Executes bash commands or Python code respectively within the task context.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>GoogleCloudStorageToBigQueryOperator</dt>
+                <dd>Transfers and loads data originating from Cloud Storage directly into BigQuery tables.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>BigQueryToCloudStorageOperator</dt>
+                <dd>Exports data from BigQuery to GCS. Pay attention to the different export formats (Avro, Parquet) and compression options (Snappy, Deflate) for cost optimization.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>GoogleCloudStorageToGoogleCloudStorageOperator</dt>
+                <dd>Efficiently copies files between different GCS buckets.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>EmailOperator &amp; Others</dt>
+                <dd>Sends emails. Many other operators exist for interacting with services like DataProc, Dataflow, and Pub/Sub.</dd>
+            </dl>
+        </div>
+
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Failure &amp; ETL Patterns</h2>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-exclamation-triangle"></i></span>
+                Failure and Retry Mechanisms
+            </h3>
+            <ul>
+                <li>Users can define <strong>retry logic</strong> directly within their DAGs, specifying the number of retry attempts and the time interval between retries.</li>
+                <li>On failure, Airflow can automatically <strong>trigger alerts and store logs</strong> for debugging, enabling automated recovery and efficient troubleshooting.</li>
+                <li>The <code>on_failure_callback</code> parameter is designed to handle situations where a task fails, allowing custom logic (such as sending notifications) to be executed programmatically.</li>
+                <li>Specific operators may also offer customized failure handling options built-in.</li>
+            </ul>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-bolt"></i></span>
+                    Push-based ETL
+                </h3>
+                <p><strong>Cloud Functions + Airflow</strong></p>
+                <ul>
+                    <li>Data ingestion is initiated by an external event (e.g., a new file in Cloud Storage, a Pub/Sub message).</li>
+                    <li>The event triggers a Cloud Function, which triggers the specific Airflow DAG execution.</li>
+                    <li><strong>Reactive approach:</strong> Ideal for near real-time data processing dependent on the arrival of new data.</li>
+                    <li>Cloud Function acts as a lightweight intermediary, decoupling the event source from the Airflow execution.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-clock"></i></span>
+                    Pull-based ETL
+                </h3>
+                <p><strong>Scheduled Airflow DAGs</strong></p>
+                <ul>
+                    <li>Initiated on a predefined schedule (e.g., cron expression) directly within Airflow.</li>
+                    <li>Airflow Scheduler autonomously checks for scheduled DAG runs and executes them at designated times.</li>
+                    <li><strong>Proactive approach:</strong> Best suited for batch processing of data at regular intervals where volume is predictable.</li>
+                    <li>Simpler to manage than push-based systems but less responsive to immediate data changes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Logging, Monitoring &amp; Security</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-bar"></i></span>
+                    Logging &amp; Monitoring
+                </h3>
+                <ul>
+                    <li><strong>Operational Logs (System):</strong> E.g., Scheduler logs. Viewable via Logs Viewers in the console from Cloud Monitoring.</li>
+                    <li><strong>Task Logs:</strong> Each DAG task has an associated log accessible via the Airflow UI, or directly in the Logs folder in GCS.</li>
+                    <li>Natively monitor system and task health directly from the Environment UI.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-user-shield"></i></span>
+                    Security &amp; IAM Roles
+                </h3>
+                <ul>
+                    <li><strong>Composer Administrator:</strong> Full control of all Composer resources.</li>
+                    <li><strong>Environment and Storage Object Administrator:</strong> Administrative control over environments and GCS bucket objects.</li>
+                    <li><strong>Environment User and Storage Object Viewer:</strong> View-only access to environments and underlying storage objects.</li>
+                    <li><strong>Composer User:</strong> Basic user access for Airflow operations.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> In the Cloud Composer architecture, where are your DAGs, plugins, and Airflow logs physically stored?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">In the Environment's Cloud Storage bucket, which is hosted within your Customer project.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> Which architectural component is responsible for storing Airflow metadata?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">The Airflow Database, which is hosted on Cloud SQL in the Google-managed tenant project.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> You need to process data in near real-time whenever a new file lands in Cloud Storage. Which ETL pattern should you use?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Push-based ETL using a Cloud Function triggered by the GCS event to launch the Airflow DAG reactively.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> How does Airflow ensure that individual tasks persist across container restarts?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Tasks are held in a Redis queue running as a GKE StatefulSet application.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> You want to execute a custom Python function if a specific DAG task fails. How can you implement this?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">By using the `on_failure_callback` parameter designed to handle custom logic upon task failure.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Exam Readiness</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

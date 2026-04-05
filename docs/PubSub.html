@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pub/Sub: Guide & Study Notes | Data Analytics Cert Hub</title>
+    <meta name="description" content="Learn about Pub/Sub, Google Cloud's event-driven asynchronous messaging service. Study guide and notes for certification.">
+    <meta name="keywords" content="Pub/Sub, GCP, Messaging, Data Analytics, Cloud, Study Guide">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-graduation-cap"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Pub/Sub<br><em>Study Guide</em></h1>
+                <p class="cover-subtitle">
+                    Event-driven asynchronous messaging service that decouples senders and receivers. Allows for secure and highly available communication between independently written applications.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Updated: <strong>April 2026</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Version: <strong>1.1</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Category: <strong>Messaging</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Reading Time: <strong>~20 min</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#definition" class="toc-item">
+                    <span class="toc-number">01</span>
+                    <span>Definition & Use Cases</span>
+                </a>
+                <a href="#concepts" class="toc-item">
+                    <span class="toc-number">02</span>
+                    <span>Core Concepts & Data Model</span>
+                </a>
+                <a href="#flow" class="toc-item">
+                    <span class="toc-number">03</span>
+                    <span>Message Flow & Considerations</span>
+                </a>
+                <a href="#architecture" class="toc-item">
+                    <span class="toc-number">04</span>
+                    <span>Architecture & Patterns</span>
+                </a>
+                <a href="#kafka" class="toc-item">
+                    <span class="toc-number">05</span>
+                    <span>Kafka Comparison</span>
+                </a>
+                <a href="#operations" class="toc-item">
+                    <span class="toc-number">06</span>
+                    <span>Operations & Metrics</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 01: DEFINITION & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="definition">
+            <div class="section-divider-number">01</div>
+            <h2>Definition & Use Cases</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-info-circle"></i></div>What is Pub/Sub?</h3>
+            <p>
+                <strong>Pub/Sub</strong> is an event-driven asynchronous messaging service that decouples senders (producing events) and receivers (processing events). It allows for secure and highly available communication between independently written applications.
+            </p>
+            <div class="definition-grid" style="margin-top: 20px;">
+                <div class="definition-item">
+                    <dt>Availability</dt>
+                    <dd>Global (no guarantee of multi-region storage)</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>SLA</dt>
+                    <dd>&gt;=99.95%</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-columns" style="margin-bottom: 24px;">
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-lightbulb"></i></div>Use Cases</h3>
+                <ul class="numbered-steps" style="margin-bottom: 0;">
+                    <li><strong>Data streaming</strong> from various processes or devices</li>
+                    <li><strong>Balancing workloads</strong> in network clusters</li>
+                    <li><strong>Queue</strong> can efficiently distribute tasks</li>
+                    <li><strong>Implementing asynchronous workflows</strong></li>
+                    <li><strong>Reliability improvement</strong> - in case zone failure</li>
+                    <li><strong>Distributing event notifications</strong></li>
+                    <li><strong>Refreshing distributed caches</strong></li>
+                    <li><strong>Logging to multiple systems</strong></li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-credit-card"></i></div>Billing</h3>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Data throughput:</strong> Volume of data processed (GB).</li>
+                    <li><strong>Data storage:</strong> Charges apply for storing messages, with different rates for different storage durations.</li>
+                    <li><strong>Network usage:</strong> Costs are incurred for data transferred between regions or out of GCP.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 02: CORE CONCEPTS & DATA MODEL
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="concepts">
+            <div class="section-divider-number">02</div>
+            <h2>Core Concepts & Data Model</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-cogs"></i></div>Core Concepts</h3>
+            <div class="definition-grid" style="margin-top: 15px; margin-bottom: 0;">
+                <div class="definition-item">
+                    <dt>Streaming Data</dt>
+                    <dd>Unbounded data (continuous flow of data).</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Messaging service</dt>
+                    <dd>Queue (app write &gt; async &lt; app read).</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Loosely coupled architecture</dt>
+                    <dd>Designing interfaces across modules to reduce the interdependencies across components (Fault tolerance, Scalability, Message Queuing).</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Deduplication</dt>
+                    <dd>Action to eliminate duplicate records.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Backlog</dt>
+                    <dd>Accumulation of data to be processed.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Sensors</dt>
+                    <dd>Device emitting events.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Publisher / Subscriber</dt>
+                    <dd>Senders producing events / Receivers processing events.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Dead letter Queue</dt>
+                    <dd>Offline message inspection.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Seek &amp; Replay</dt>
+                    <dd>Ability to reprocess &amp; discard messages.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Ack deadline</dt>
+                    <dd>Time to wait for ACK by subscriber, push/pull.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Snapshot</dt>
+                    <dd>Captures current state at a specific point in time.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Msg Retention Duration</dt>
+                    <dd>After ACK is up to 7 days.</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="concept-card accent-pink">
+            <h3><div class="icon-badge"><i class="fas fa-database"></i></div>Data Model</h3>
+            <div class="definition-grid" style="margin-top: 15px; margin-bottom: 0;">
+                <div class="definition-item">
+                    <dt>Topic</dt>
+                    <dd>A named resource to which messages are sent by publishers.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Subscription</dt>
+                    <dd>A named resource representing the stream of messages from a single, specific topic, to be delivered to the subscribing application.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Message</dt>
+                    <dd>The combination of data and optional attributes that a publisher sends to a topic and is eventually delivered to subscribers.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Message Attribute</dt>
+                    <dd>Key-value pair that a publisher can define for a message.</dd>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 03: MESSAGE FLOW & CONSIDERATIONS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="flow">
+            <div class="section-divider-number">03</div>
+            <h2>Message Flow & Considerations</h2>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3><div class="icon-badge"><i class="fas fa-sync"></i></div>Message Flow</h3>
+            <ul class="numbered-steps" style="margin-bottom: 0;">
+                <li><strong>Publisher</strong> creates a <strong>topic</strong> in Pub/Sub and sends <strong>messages</strong> to the topic.</li>
+                <li><strong>Messages</strong> are persisted in a message store until they are delivered and acknowledged by the subscribers.</li>
+                <li>Pub/Sub forwards messages from a topic to all of its <strong>subscriptions</strong>, individually. Each subscription receives messages either by <strong>push</strong> or <strong>pull</strong> methods.</li>
+                <li><strong>Subscriber</strong> receives pending messages from its subscription and acknowledges messages.</li>
+                <li>When a message is <strong>acknowledged</strong> by the subscriber, it is removed from the <strong>subscription's message queue</strong>.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3><div class="icon-badge"><i class="fas fa-exclamation-triangle"></i></div>Considerations</h3>
+            <ul style="margin-top: 10px;">
+                <li><strong>Duplicate &amp; out-of-order delivery</strong> is expected.</li>
+                <li>Possible to add <strong>message attributes</strong> for ordering.</li>
+                <li><strong>At least-once</strong> delivery or <strong>exactly once</strong> delivery.</li>
+                <li>Offers an <strong>exactly-once delivery</strong> for pull subscriptions, to distinguish this from <strong>exactly-once processing</strong>, which involves additional application-level logic.</li>
+                <li><strong>Exactly-once delivery</strong> is limited to a <strong>single region</strong>. If your subscribers span multiple regions, <strong>duplicate deliveries are possible</strong>, even with the feature enabled.</li>
+                <li>Messages are stored for <strong>up to 31 days (7 days default)</strong>.</li>
+                <li>If an application receives more data than it can process, data is <strong>held until application is ready</strong>.</li>
+                <li><strong>Schemas</strong> are used to define a standard message structure and they are assigned to topics during creation.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 04: ARCHITECTURE & DISTRIBUTION PATTERNS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="architecture">
+            <div class="section-divider-number">04</div>
+            <h2>Architecture, Patterns & Batching</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-sitemap"></i></div>Architecture Overview</h3>
+            <ul style="margin-top: 10px;">
+                <li><strong>Serverless:</strong> No Ops -- no management of servers.</li>
+                <li><strong>Globally Distributed, Scalable Messaging service:</strong> Scales effortlessly. Publishers and Subscribers can be located anywhere globally, and the service handles the scaling complexities.</li>
+            </ul>
+        </div>
+
+        <div class="two-columns" style="margin-bottom: 24px;">
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-download"></i></div>Pull Subscriptions</h3>
+                <p>Subscribers actively request messages from the subscription. They have to explicitly acknowledge messages after successful processing. This provides more control over the message consumption rate and is suitable for work queues where guaranteed processing is crucial.</p>
+                <ul style="margin-top: 15px;">
+                    <li>Large volume of messages (more than 1 per sec)</li>
+                    <li>Critical efficiency and throughput</li>
+                    <li>No public HTTPS endpoint</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-pink" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-upload"></i></div>Push Subscriptions</h3>
+                <p>Pub/Sub pushes messages to a registered HTTP endpoint (webhook) on the subscriber. A successful HTTP 200 OK response acts as the acknowledgement. Pub/Sub automatically manages the delivery rate based on the subscriber's response times.</p>
+                <ul style="margin-top: 15px;">
+                    <li>Multiple topics for same webbook</li>
+                    <li>Lower latency</li>
+                    <li>Dependencies can't be set up (creds, client libraries)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-network-wired"></i></div>Message Distribution Patterns</h3>
+            <div class="definition-grid" style="margin-top: 15px; margin-bottom: 0;">
+                <div class="definition-item">
+                    <dt>One-to-One</dt>
+                    <dd>A single publisher sends messages to a single topic, consumed by a single subscriber through a single subscription.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Fan-in (Load Balancing)</dt>
+                    <dd>Multiple publishers send messages to the same topic. Multiple subscribers can consume these messages from the same subscription, enabling parallel processing and load balancing across the subscribers. All subscribers in the subscription receive all messages.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Fan-out (Distribution)</dt>
+                    <dd>A single publisher sends messages to a topic, and multiple subscriptions are attached to that topic. Each subscription receives all the messages, allowing the same data to be processed by different systems.</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-columns" style="margin-bottom: 24px;">
+            <div class="concept-card accent-cyan" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-boxes"></i></div>Batching</h3>
+                <p>Combines multiple messages into a single publish request, optimizing <strong>throughput</strong> and <strong>reducing cost per message</strong>.</p>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Default behavior:</strong> Enabled by default in client libraries, simplifying implementation.</li>
+                    <li><strong>Throughput improvement:</strong> Significantly reduces the overhead associated with individual publish requests, allowing for higher message throughput.</li>
+                    <li><strong>Cost reduction:</strong> Fewer publish requests translate directly to lower costs.</li>
+                    <li><strong>Latency trade-off:</strong> Introduces latency as the publisher waits for enough messages to form a complete batch or a timeout to occur before sending.</li>
+                    <li><strong>Impact on ordering:</strong> Messages within a batch are guaranteed to be delivered in the order they were added to the batch. However, different batches can arrive at the subscriber out of order. If strict ordering is crucial, consider using a single ordered stream within a topic.</li>
+                    <li><strong>Flow control and Back pressure:</strong> Batching plays a role in flow control. If the publisher sends messages faster than they can be batched and published, the client library's internal buffers may fill up, leading to backpressure.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-lock"></i></div>Security Access Control</h3>
+                <ul style="margin-top: 15px;">
+                    <li><strong>Resource Levels:</strong> Configurable at Project, Topic or Subscription levels.</li>
+                    <li><strong>IAM Roles:</strong> Admin, Editor, Publisher, Subscriber, Viewer roles.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 05: KAFKA COMPARISON
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="kafka">
+            <div class="section-divider-number">05</div>
+            <h2>Kafka Comparison</h2>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3><div class="icon-badge"><i class="fas fa-exchange-alt"></i></div>Kafka Integration &amp; Concepts</h3>
+            <ul style="margin-top: 10px;">
+                <li><strong>OSS alternative</strong> to Pub/Sub, but without global delivery.</li>
+                <li><strong>Best for hybrid workloads</strong> and existing tools/frameworks.</li>
+                <li><strong>Kafka Connect:</strong> OSS plugin to connect to GCP world.</li>
+                <li><strong>Pub/Sub Kafka connector</strong> lets you migrate your Kafka infrastructure to Pub/Sub in phases:
+                    <ul>
+                        <li>Sink connector to copy messages to Pub/Sub.</li>
+                        <li>Update individual subscribers with Pub/Sub.</li>
+                    </ul>
+                </li>
+                <li><strong>Upstream:</strong> Source Connector &amp; <strong>Downstream:</strong> Sink Connector.</li>
+                <li><strong>Ability to Seek to a Specific Offset:</strong> enables consumers to navigate to a particular offset within a topic, allowing you to read data from any point, including from the very beginning of all captured data.</li>
+                <li><strong>Retain Per-Key Ordering:</strong> preserves the sequence of messages within a partition. By associating a key with your messages and routing those messages with the same key to the same partition, you can ensure that the order is maintained for each key.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-table"></i></div>Feature Comparison</h3>
+            <div class="definition-grid" style="margin-top: 15px; margin-bottom: 0;">
+                <div class="definition-item">
+                    <dt>Persistence</dt>
+                    <dd><strong>Kafka:</strong> Durable<br><strong>Pub/Sub:</strong> Ephemeral (options for persistence)</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Delivery</dt>
+                    <dd><strong>Kafka:</strong> At-least-once, at-most-once, exactly-once<br><strong>Pub/Sub:</strong> At-least-once (exactly-once options)</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Ordering</dt>
+                    <dd><strong>Kafka:</strong> Within a partition<br><strong>Pub/Sub:</strong> Generally not guaranteed</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Scalability</dt>
+                    <dd><strong>Kafka:</strong> Very high<br><strong>Pub/Sub:</strong> High</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Consumer Mgmt</dt>
+                    <dd><strong>Kafka:</strong> Consumer-managed offsets<br><strong>Pub/Sub:</strong> Service-managed</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Deployment</dt>
+                    <dd><strong>Kafka:</strong> Self-hosted or managed service<br><strong>Pub/Sub:</strong> Managed service</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Ecosystem</dt>
+                    <dd><strong>Kafka:</strong> Rich<br><strong>Pub/Sub:</strong> Integrates with cloud services</dd>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 06: OPERATIONS, METRICS & BEST PRACTICES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="operations">
+            <div class="section-divider-number">06</div>
+            <h2>Operations, Metrics & Best Practices</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-check-double"></i></div>Best Practices</h3>
+            <ul style="margin-top: 10px;">
+                <li><strong>Alerting</strong> for backlog thresholds reached.</li>
+                <li>Subscriber(s) must <strong>acknowledge the messages</strong> (code).</li>
+                <li>Subscriber(s) should <strong>not be under-provisioned</strong> (infra scale).</li>
+                <li>Dataflow solving for out of order messages are resolved.</li>
+                <li>Dataflow solving for <strong>at-least-once delivery</strong> (duplicates) with an <strong>exactly-once processing</strong>.</li>
+                <li><strong>Dead letter Queue</strong> and <strong>Error logging</strong> to prevent failure.</li>
+                <li><strong>Exponential backoff policy:</strong> add progressively longer delays between retry attempts (for better flow control).</li>
+                <li>Application endpoint must <strong>acknowledge messages within the acknowledgement deadline</strong> (otherwise: duplicate/error).</li>
+                <li><strong>Message storage policies:</strong> Messages are stored in the <strong>nearest region by default</strong>. Storage location is configurable via policies (e.g., GDPR). Egress fees may apply.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-blue">
+            <h3><div class="icon-badge"><i class="fas fa-chart-line"></i></div>Cloud Logging Metrics</h3>
+            
+            <div class="two-columns" style="margin-top: 15px;">
+                <div class="definition-item" style="margin-bottom: 0;">
+                    <dt style="color: var(--blue);">Maintain a healthy subscription</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li>Monitor message backlog</li>
+                            <li>Monitor delivery latency health</li>
+                            <li>Monitor acknowledgment deadline expiration</li>
+                            <li>Monitor message throughput</li>
+                            <li>Monitor push subscriptions</li>
+                            <li>Monitor subscriptions with filters</li>
+                            <li>Monitor forwarded undeliverable messages</li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="definition-item" style="margin-bottom: 0;">
+                    <dt style="color: var(--blue);">Maintain a healthy publisher</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li>Monitor message throughput</li>
+                        </ul>
+                    </dd>
+                </div>
+            </div>
+
+            <div class="definition-grid" style="margin-top: 15px; margin-bottom: 0;">
+                <div class="definition-item">
+                    <dt style="color: var(--pink);">Message Rates</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li><code>subscription/num_undelivered_messages</code>: High counts indicate potential subscriber issues (processing too slow, crashes, etc.).</li>
+                            <li><code>subscription/byte_cost</code>: Track message size to optimize costs and identify large messages that might impact performance.</li>
+                            <li><code>topic/send_message_operation_count</code>: Monitor publish rates to detect anomalies like sudden spikes or drops that could indicate publisher problems or unusual traffic.</li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="definition-item">
+                    <dt style="color: var(--amber);">Latency</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li><code>subscription/oldest_unacked_message_age</code>: High values signify processing delays in subscribers. Crucial for time-sensitive applications.</li>
+                            <li><code>topic/publish_latency</code>: Tracks publish latency, helpful for identifying publisher-side bottlenecks.</li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="definition-item">
+                    <dt style="color: var(--coral);">Errors</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li><code>subscription/pull_request_count</code>: A high volume may indicate inefficient pull configuration.</li>
+                            <li><code>topic/send_message_error_count</code>: Publishing errors to identify issues with publisher code or topic availability.</li>
+                        </ul>
+                    </dd>
+                </div>
+                <div class="definition-item">
+                    <dt style="color: var(--mint);">Resource Usage</dt>
+                    <dd>
+                        <ul style="margin-top: 8px;">
+                            <li><code>subscription/ack_message_operation_count</code>: Compare against published messages to ensure messages are being processed and acknowledged properly. A significant mismatch could indicate message loss or subscriber problems.</li>
+                        </ul>
+                    </dd>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SELF ASSESSMENT QUESTIONS
+             ═══════════════════════════════════════ -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What is the main difference between Push and Pull subscriptions?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Pull subscribers request messages; Push subscribers have messages sent to an HTTP endpoint.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> How does persistence differ between Kafka and Pub/Sub?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Kafka uses durable log-based persistence by default, whereas Pub/Sub is primarily ephemeral with options available for extended persistence (up to 31 days).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> What is a Dead Letter Queue used for?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">For offline message inspection of messages that cannot be processed successfully.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () { this.classList.toggle('revealed'); });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

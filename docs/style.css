@@ -1052,6 +1052,127 @@ footer a:hover {
     line-height: 1.65;
 }
 
+/* --- Highlight / Callout Box --- */
+.callout {
+    display: flex;
+    gap: 16px;
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    border: 1px solid;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.callout-content h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.callout-content p {
+    font-size: 0.87rem;
+    line-height: 1.7;
+}
+
+/* Callout: Exam Tip (Mint) */
+.callout.tip {
+    background: var(--mint-dim);
+    border-color: rgba(0, 232, 160, 0.15);
+}
+.callout.tip .callout-icon {
+    background: rgba(0, 232, 160, 0.15);
+    color: var(--mint);
+}
+.callout.tip .callout-content h4 { color: var(--mint); }
+.callout.tip .callout-content p { color: rgba(0, 232, 160, 0.75); }
+
+/* Callout: Warning (Amber) */
+.callout.warning {
+    background: var(--amber-dim);
+    border-color: rgba(245, 158, 11, 0.15);
+}
+.callout.warning .callout-icon {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--amber);
+}
+.callout.warning .callout-content h4 { color: var(--amber); }
+.callout.warning .callout-content p { color: rgba(245, 158, 11, 0.75); }
+
+/* Callout: Important (Purple) */
+.callout.important {
+    background: var(--purple-dim);
+    border-color: rgba(184, 130, 255, 0.15);
+}
+.callout.important .callout-icon {
+    background: rgba(184, 130, 255, 0.15);
+    color: var(--purple);
+}
+.callout.important .callout-content h4 { color: var(--purple); }
+.callout.important .callout-content p { color: rgba(184, 130, 255, 0.75); }
+
+/* Callout: Key Fact (Blue) */
+.callout.info {
+    background: var(--blue-dim);
+    border-color: rgba(96, 165, 250, 0.15);
+}
+.callout.info .callout-icon {
+    background: rgba(96, 165, 250, 0.15);
+    color: var(--blue);
+}
+.callout.info .callout-content h4 { color: var(--blue); }
+.callout.info .callout-content p { color: rgba(96, 165, 250, 0.75); }
+
+/* --- Formula / Equation Block --- */
+.formula-block {
+    background: var(--surface-raised);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    text-align: center;
+    page-break-inside: avoid;
+}
+
+.formula-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+}
+
+.formula {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    color: var(--mint);
+    padding: 12px;
+    background: var(--mint-dim);
+    border: 1px solid rgba(0, 232, 160, 0.12);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    letter-spacing: 0.03em;
+}
+
+.formula-description {
+    font-size: 0.82rem;
+    color: var(--text-tertiary);
+    margin-top: 10px;
+}
+
 /* --- Process Flow --- */
 .process-flow {
     display: grid;
@@ -1101,6 +1222,129 @@ footer a:hover {
     font-size: 0.8rem;
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* --- Diagram / Architecture Block --- */
+.diagram-block {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+}
+
+.diagram-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.diagram-title i {
+    color: var(--purple);
+}
+
+.architecture-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+}
+
+.arch-node {
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid;
+    min-width: 120px;
+}
+
+.arch-node.input {
+    background: var(--blue-dim);
+    border-color: rgba(96, 165, 250, 0.2);
+    color: var(--blue);
+}
+
+.arch-node.process {
+    background: var(--purple-dim);
+    border-color: rgba(184, 130, 255, 0.2);
+    color: var(--purple);
+}
+
+.arch-node.output {
+    background: var(--mint-dim);
+    border-color: rgba(0, 232, 160, 0.2);
+    color: var(--mint);
+}
+
+.arch-node.storage {
+    background: var(--amber-dim);
+    border-color: rgba(245, 158, 11, 0.2);
+    color: var(--amber);
+}
+
+.arch-arrow {
+    color: var(--text-tertiary);
+    font-size: 1.2rem;
+}
+
+/* --- Summary / Key Takeaways --- */
+.summary-block {
+    background: linear-gradient(135deg, rgba(184, 130, 255, 0.05), rgba(0, 232, 160, 0.05));
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+}
+
+.summary-block h3 {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.summary-block h3 i {
+    font-size: 0.85rem;
+}
+
+.summary-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.summary-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.summary-list li i {
+    color: var(--mint);
+    font-size: 0.7rem;
+    margin-top: 6px;
+    flex-shrink: 0;
 }
 
 /* --- Quiz Block --- */

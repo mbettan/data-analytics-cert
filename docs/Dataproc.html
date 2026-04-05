@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataproc Study Notes — Certification Hub</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-cloud"></i>
+                    Google Cloud Data Engineering
+                </div>
+                <h1>Dataproc<br><em>Managed Apache Spark & Hadoop</em></h1>
+                <p class="cover-subtitle">
+                    Managed Apache Spark and Hadoop service to leverage OSS Hadoop ecosystem tools (Pig, Hive, Spark, etc.).
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Availability: <strong>Regional</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>SLA: <strong>&gt;=99.5%</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Billing: <strong>1-min minimum</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Core Components &amp; Ecosystem
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Architecture &amp; Foundation
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    GCP Integration &amp; Security
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Best Practices &amp; Optimization
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Ephemeral vs Persistent Clusters
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Languages &amp; Web Interfaces
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: Core Components
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Core Components &amp; Ecosystem</h2>
+        </div>
+
+        <div class="prose">
+            <p>Data can no longer fit in memory on one machine (monolithic), so a new way of computing was devised using many computers to process the data (distributed). Such a group is called a cluster. <strong>Hadoop</strong> is an open source distributed processing framework that manages data processing and storage for big data applications running in clustered systems.</p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-briefcase"></i></span> Use Cases</h3>
+                <ul>
+                    <li><strong>Big Data Processing:</strong> Process vast amounts of structured and unstructured data.</li>
+                    <li><strong>Data Warehousing & ETL:</strong> Scalable extraction, transformation, and loading (Hive, Presto).</li>
+                    <li><strong>Machine Learning:</strong> Train & deploy models with Spark MLlib.</li>
+                    <li><strong>Real-time Analytics:</strong> Streaming data with Flink & Spark Streaming.</li>
+                    <li><strong>Hadoop/Spark Migration:</strong> Migrate existing clusters from on-premises to cloud.</li>
+                    <li><strong>Interactive Analysis:</strong> Notebooks, Data Lakehouse, Data/Log analysis.</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-money-bill-wave"></i></span> Billing Structure</h3>
+                <ul>
+                    <li>Billed by the second (1-minute minimum).</li>
+                    <li><strong>Infrastructure costs:</strong> Compute Engine VMs, Persistent Disk storage, Cloud Storage, Cloud Monitoring, Global Networking.</li>
+                    <li><strong>Dataproc managed service cost:</strong> $0.01 per vCPU per hour based on the aggregate # of vCPUs across the entire cluster.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>HDFS</dt>
+                <dd>Hadoop Distributed File System. Provides high-throughput access by partitioning data across machines. 1 master node stores metadata; rest are data nodes physically storing data. Replicated across 3 machines for fault tolerance.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>YARN</dt>
+                <dd>Yet Another Resource Negotiator. Job scheduling and cluster resource management. The Resource Manager schedules tasks across nodes, and Node Managers handle execution.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>MapReduce</dt>
+                <dd>Parallel programming paradigm that processes huge amounts of data by running processes in two stages: map and reduce.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Spark</dt>
+                <dd>Fast, general-purpose distributed framework. Core abstraction is the <strong>Resilient Distributed Dataset (RDD)</strong>, which is immutable, lazily evaluated, and fault-tolerant through lineage tracking.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Hive</dt>
+                <dd>Data warehousing SQL-like query tool built on Hadoop. Translates HiveQL queries into MapReduce jobs, eliminating the need to write Java MapReduce code.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Pig</dt>
+                <dd>High-level scripting language (Pig Latin) for ETL. Supports <strong>checkpointing</strong> to resume processing in case of failure, and splitting pipelines to route data in parallel.</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3><span class="icon-badge"><i class="fas fa-database"></i></span> Data Ingestion & Storage</h3>
+                <ul>
+                    <li><strong>HBase:</strong> Non-relational, NoSQL, column-oriented database that runs on HDFS. Ideal for sparse datasets.</li>
+                    <li><strong>Sqoop:</strong> Transferring framework to move large amounts of data into HDFS from relational databases (MySQL).</li>
+                    <li><strong>Flume:</strong> Distributed, reliable service for efficiently collecting, aggregating, and moving large amounts of log data.</li>
+                    <li><strong>Presto / Trino:</strong> Distributed SQL query engine for interactive data analysis.</li>
+                    <li><strong>Avro / Parquet:</strong> Avro for compact, binary row-data exchange; Parquet for columnar storage optimized for querying.</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-cyan">
+                <h3><span class="icon-badge"><i class="fas fa-stream"></i></span> Streaming & Coordination</h3>
+                <ul>
+                    <li><strong>Kafka & Kafka Connect:</strong> Distributed streaming platform for real-time pipelines and connecting CDC systems (MySQL/Postgres) into topics.</li>
+                    <li><strong>Flink:</strong> Stream processing framework for stateful computations over bounded and unbounded data streams.</li>
+                    <li><strong>Debezium:</strong> Distributed OSS platform for real-time change data capture (CDC).</li>
+                    <li><strong>Zookeeper:</strong> Manages distributed environment and configuration across services.</li>
+                    <li><strong>Oozie:</strong> Workflow scheduler to manage Hadoop jobs with complex dependencies.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: Architecture & Foundation
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Architecture &amp; Foundation</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Master and Worker Nodes</dt>
+                <dd>The master node is responsible for distributing and managing workload distribution. You can configure <em>Primary</em> workers and <em>Secondary</em> workers (low-cost Spot VMs without HDFS).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Cluster Types</dt>
+                <dd>Standard, Single Node (1 master, 0 workers), High-Availability (multiple masters).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Dataproc Metastore</dt>
+                <dd>Fully managed, highly available service providing a centralized Hive metastore for your data lake. Allows Spark, Hive, and Presto to seamlessly share metadata.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Spark History Server</dt>
+                <dd>Web interface to view details about completed Spark jobs (stages, RDDs). Dataproc clusters can be set up to upload history automatically to GCS.</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-amber">
+                <h3><span class="icon-badge"><i class="fas fa-server"></i></span> Foundation Strategies</h3>
+                <ul>
+                    <li><strong>Persistent Clusters:</strong> Long-lived, ideal for ongoing batch jobs, retaining state. Higher ongoing cost but efficient for frequent use.</li>
+                    <li><strong>Transient Clusters:</strong> Short-lived, created for specific jobs and terminated afterward. Cost-effective for sporadic processing.</li>
+                    <li><strong>Initialization actions:</strong> Custom scripts to install additional components (e.g., Kafka) at worker creation time.</li>
+                    <li><strong>Optional Components:</strong> Pre-packaged additions like Anaconda, Jupyter, Druid, Ranger, Solr.</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-project-diagram"></i></span> Autoscaling & Workflows</h3>
+                <ul>
+                    <li><strong>Autoscaling:</strong> Dynamically adjusts cluster size based on YARN memory/CPU utilization. Set thresholds and configure <strong>cooldown periods</strong> to avoid rapid oscillation.</li>
+                    <li><strong>Workflows:</strong> Directed Acyclic Graph (DAG) of jobs on a cluster. Submitted via Console, gcloud, REST API, or Dataproc Workflow / Composer.</li>
+                    <li><strong>Component Gateway:</strong> Provides secure access to web endpoints for Dataproc default and optional components.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: Integration & Security
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>GCP Integration &amp; Security</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-network-wired"></i></span> Ecosystem Integration</h3>
+                <ul>
+                    <li><strong>Cloud Storage (GCS):</strong> Used for staging and storing data, providing scalable and durable storage while separating compute from storage.</li>
+                    <li><strong>BigQuery:</strong> Acts as a data warehouse for querying large datasets efficiently, often used in conjunction with Dataproc for analytics.</li>
+                    <li><strong>Dataflow:</strong> Manages data pipelines for ETL processes, integrating with Dataproc for seamless data processing.</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-lock"></i></span> Security Access Control</h3>
+                <ul>
+                    <li>Project-wide access is restricted by default.</li>
+                    <li><strong>Dataproc Editor:</strong> Can create, delete, and edit clusters, jobs, and workflows.</li>
+                    <li><strong>Dataproc Viewer:</strong> Read-only access to view Dataproc configurations and jobs.</li>
+                    <li><strong>Dataproc Worker:</strong> Executes jobs; typically assigned to the service account executing on the worker nodes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon"><i class="fas fa-balance-scale"></i></div>
+            <div class="callout-content">
+                <h4>Dataproc vs Dataflow</h4>
+                <p>Lead with <strong>Dataflow</strong> for streaming workloads and serverless ETL. Lead with <strong>Dataproc</strong> if you rely heavily on Spark/Hadoop ecosystems or are performing a "lift-and-shift" migration.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: Best Practices
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Best Practices &amp; Optimization</h2>
+        </div>
+
+        <div class="three-columns">
+            <div class="concept-card accent-mint">
+                <h3><i class="fas fa-dollar-sign"></i> Cost Optimization</h3>
+                <ul>
+                    <li><strong>Utilize Spot VMs:</strong> For non-critical, ephemeral clusters (no SLA, subject to preemption).</li>
+                    <li><strong>Autoscaling:</strong> Right-size clusters dynamically based on workload demands.</li>
+                    <li><strong>Larger Persistent Disks:</strong> Deliver better high disk throughput and cost-effective scaling than simply adding more VMs.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3><i class="fas fa-tachometer-alt"></i> Performance Tuning</h3>
+                <ul>
+                    <li><strong>Co-locate</strong> clusters and buckets in the same region to minimize latency and egress costs.</li>
+                    <li><strong>Use SSDs</strong> when performing many shuffling operations or partitioned write workloads.</li>
+                    <li>Increase boot disk size on spot workers for <strong>shuffle-heavy workloads</strong>.</li>
+                    <li><strong>spark.sql.shuffle.partitions:</strong> Set the number of partitions after a shuffle in Spark SQL.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3><i class="fas fa-hdd"></i> Storage Optimization</h3>
+                <ul>
+                    <li><strong>Leverage GCS over HDFS:</strong> Avoids the 3x replication overhead and cleanly separates compute from storage.</li>
+                    <li><strong>Columnar Formats:</strong> Prefer Parquet or ORC for efficient querying.</li>
+                    <li><strong>I/O Optimization:</strong> Avoid small reads, use large block sizes, and avoid excessive nested directory traversal.</li>
+                    <li><strong>GCS Caching:</strong> Accelerates access for workloads accessing the same data repeatedly.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon"><i class="fas fa-lightbulb"></i></div>
+            <div class="callout-content">
+                <h4>Advanced Optimizations & Tools</h4>
+                <p>Use <strong>distcp</strong> for efficient on-premises to cloud data transfers. Apply aggressive query optimizations (AQE) for performance gains. Leverage Spark 3's improved execution engine in Cluster mode for better resource utilization. Secure clusters with VPC Service Controls, CMEK, and Least Privilege.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: Ephemeral vs Persistent
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Ephemeral vs Persistent Clusters</h2>
+        </div>
+
+        <div class="prose">
+            <p>Google Cloud strongly recommends using <strong>ephemeral clusters</strong> tailored for single-job tasks. This approach minimizes operational overhead and avoids the common anti-patterns associated with shared, long-lived persistent clusters.</p>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3><span class="icon-badge"><i class="fas fa-exclamation-triangle"></i></span> Issues with Persistent Clusters</h3>
+            <ul class="checklist">
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>Single Points of Failure:</strong> Errors in a shared cluster disrupt all jobs. Ephemeral clusters are recreated quickly.</li>
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>State Management:</strong> Challenges migrating and maintaining cluster states across HDFS or MySQL.</li>
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>Resource Contention:</strong> Multiple jobs competing for YARN resources impacts overall performance.</li>
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>Unresponsive Daemons:</strong> Memory pressure causes critical service daemons to freeze.</li>
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>Disk Capacity Issues:</strong> Accumulated logs and temp files fill up disk space.</li>
+                <li><span class="check-icon"><i class="fas fa-times" style="color:var(--coral);"></i></span> <strong>Outdated Software:</strong> Managing outdated images is problematic with long-lived setups.</li>
+            </ul>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-exchange-alt"></i></span> Migration Considerations</h3>
+                <ul>
+                    <li>Migrate data to HDFS or GCS (unless heavy I/O is explicitly required).</li>
+                    <li>Migrate existing Hadoop/Spark jobs directly to Dataproc clusters.</li>
+                    <li>Migrate <strong>HBase to Bigtable</strong> for better managed performance.</li>
+                    <li>Migrate <strong>Hive & Impala to BigQuery</strong>.</li>
+                    <li>Shift from persistent architectures (running multiple jobs) to ephemeral single-purpose clusters.</li>
+                    <li>Separate storage (GCS) and compute (Dataproc clusters).</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-cyan">
+                <h3><span class="icon-badge"><i class="fas fa-chart-line"></i></span> Monitoring & ML Tools</h3>
+                <ul>
+                    <li><strong>Job Driver Output:</strong> Log levels per job are gathered automatically.</li>
+                    <li><strong>Logs:</strong> Default to INFO; can be configured to DEBUG.</li>
+                    <li><strong>Cloud Monitoring:</strong> Tracks HDFS, YARN, Job & Operational metrics.</li>
+                    <li><strong>Cluster Details:</strong> Graphs for CPU, DISK, and NETWORK utilizations.</li>
+                    <li><strong>Machine Learning:</strong> <em>SparkML</em> is the modern, higher-level library for ML pipelines and DataFrame integration. <em>MLlib</em> is the legacy lower-level library focused on RDDs.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: Languages & Interfaces
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Languages &amp; Web Interfaces</h2>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Python (PySpark)</td>
+                        <td>Easy to learn, large community, rich libraries (Pandas, NumPy), good for data exploration and prototyping.</td>
+                        <td>Slower than Scala/Java for complex jobs, less type safety can lead to runtime errors.</td>
+                    </tr>
+                    <tr>
+                        <td>Scala (Spark)</td>
+                        <td>Fast performance, statically typed (catches errors early), integrates natively with Spark, concise syntax.</td>
+                        <td>Steeper learning curve than Python, smaller developer community.</td>
+                    </tr>
+                    <tr>
+                        <td>Java (Spark)</td>
+                        <td>Very fast, highly mature ecosystem, extensive tooling support.</td>
+                        <td>Verbose syntax, can be significantly less developer-friendly for data scientists.</td>
+                    </tr>
+                    <tr>
+                        <td>SQL (Spark SQL)</td>
+                        <td>Familiar to many data analysts, declarative (express what you want), excellent for data warehousing/BI.</td>
+                        <td>Less flexible than general-purpose languages, can be difficult for complex programmatic transformations.</td>
+                    </tr>
+                    <tr>
+                        <td>R (SparkR)</td>
+                        <td>Powerful statistical computing language, rich repository of statistical libraries.</td>
+                        <td>Slower than Scala/Java, less integrated with the broader Spark ecosystem compared to other options.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><span class="icon-badge"><i class="fas fa-window-maximize"></i></span> Accessing Web Interfaces</h3>
+            <ul>
+                <li><strong>Component Gateway:</strong> Provides one-click access to Hadoop, Spark, and other component web UIs directly through the GCP console. Requires explicitly enabling during cluster creation.</li>
+                <li><strong>Google Cloud CLI:</strong> You can use <code>gcloud compute ssh</code> with dynamic port forwarding to create an <strong>SSH tunnel</strong> and set up a <strong>SOCKS proxy</strong> for secure, authenticated local access to UIs.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

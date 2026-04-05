@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud SQL Study Notes — Certification Hub</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Google Cloud Database<br><em>Cloud SQL</em></h1>
+                <p class="cover-subtitle">
+                    Fully-managed relational database service supporting MySQL, PostgreSQL, and MS SQL Server. Designed for structured, relational data.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Compatibility: <strong>100% SQL compatible</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview &amp; Use Cases
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Key Capabilities
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Operational Model &amp; Migration
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Architecture &amp; Considerations
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Best Practices &amp; Integrations
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Security, Proxy &amp; Monitoring
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: OVERVIEW & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview &amp; Use Cases</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                <strong>Cloud SQL</strong> is a fully-managed relational database service. It is designed for relational, record-based data (tables, rows, and columns) and super structured data. It scales vertically and allows field updates.
+            </p>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card blue">
+                <div class="stat-value">99.95%</div>
+                <div class="stat-label">SLA</div>
+            </div>
+            <div class="stat-card mint">
+                <div class="stat-value">64TB</div>
+                <div class="stat-label">Max Storage Capacity</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-value">60k</div>
+                <div class="stat-label">Max IOPS (read/write)</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-value">96</div>
+                <div class="stat-label">Max Cores (624 GB RAM)</div>
+            </div>
+        </div>
+
+        <!-- Definitions Grid -->
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Supported DB Engines</dt>
+                <dd>MySQL, PostgreSQL, and MS SQL Server.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Availability Options</dt>
+                <dd>Multiple zones (Highly Available) or Single zone.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Billing Components</dt>
+                <dd>Instance, CPU, Memory, Storage, Network Cost, and Licensing Cost (SQL Server only).</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Primary Use Cases
+                </h3>
+                <ul>
+                    <li><strong>OLTP Workloads:</strong> OnLine Transaction Processing</li>
+                    <li><strong>Migration:</strong> Lift &amp; Shift of legacy SQL RDBMS</li>
+                    <li><strong>Applications:</strong> Web Frameworks, ERP, CRM, SaaS</li>
+                    <li><strong>Websites:</strong> Back-ends DB applications, Ecommerce, blogs</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-server"></i></span>
+                    Compute &amp; Scaling
+                </h3>
+                <p>SQL databases generally scale <strong>vertically</strong> for structured data. Note that <strong>no autoscaling for compute nodes</strong> is supported natively in Cloud SQL, though auto-scaling for storage exists.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: KEY CAPABILITIES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Key Capabilities</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-copy"></i></span>
+                    Replication &amp; Disaster Recovery
+                </h3>
+                <ul>
+                    <li><strong>Read Replica:</strong> Read-only copy to offload work. It is an exact copy of the primary instance, updated in almost real time. Limited to the <em>same region</em> as the master.</li>
+                    <li><strong>Cascading Replication:</strong> Create a read replica under another read replica in the same or a different region.</li>
+                    <li><strong>Disaster Recovery:</strong> Use a cascading hierarchy to simulate primary topology. During an outage, a replica is promoted to primary; replicas under the new primary continue to replicate.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-tachometer-alt"></i></span>
+                    Performance &amp; Cost
+                </h3>
+                <ul>
+                    <li><strong>Performance Improvements:</strong> Reduce burden on the primary instance by offloading replication work to multiple read replicas.</li>
+                    <li><strong>Scale Reads:</strong> Have more replicas to share the read load.</li>
+                    <li><strong>Cost Reduction:</strong> Reduce networking costs using a single cascading replica with cross-region replication.</li>
+                    <li><strong>Automated Management:</strong> Automatic encryption, Auto-scale (vertically for storage) and auto-backup.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: OPERATIONAL MODEL & MIGRATION
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Operational Model &amp; Migration</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-clipboard-check"></i></span>
+                    Google's Responsibilities
+                </h3>
+                <p>As a fully-managed service, Google owns:</p>
+                <ul class="checklist">
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>IaaS Compute (hardware, virtualization)</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>OS install, upgrade, patches</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>DB install, upgrade, patches</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Database Backups</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>High-Availability (failover)</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Scaling (disk space)</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Monitoring &amp; Network connectivity</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-code-branch"></i></span>
+                    Supported Versions
+                </h3>
+                <ul>
+                    <li><strong>MySQL:</strong> 8.4, 8.0, 5.7, 5.6</li>
+                    <li><strong>PostgreSQL:</strong> 16, 15, 14, 13, 12, 11, 10, 9.6</li>
+                    <li><strong>SQL Server:</strong> 2022, 2019, 2017</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3>Standard Migration Steps</h3>
+        </div>
+
+        <!-- Process Flow -->
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="process-step-number">STEP 1</div>
+                <h4>Configure Source</h4>
+                <p>Provide details on your existing data source</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 2</div>
+                <h4>Create Replica</h4>
+                <p>Create a read replica in Cloud SQL</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 3</div>
+                <h4>Sync Data</h4>
+                <p>Sync the read replica with the source database</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">STEP 4</div>
+                <h4>Promote</h4>
+                <p>Promote the read replica to the primary instance</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: ARCHITECTURE & CONSIDERATIONS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Architecture &amp; Considerations</h2>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Cloud SQL vs BigQuery</h4>
+                <p>Cloud SQL is optimized for <strong>transactions (high throughput WRITES to RECORDS)</strong>. It is <em>record-based</em>, meaning an entire record must be opened on disk even if you SELECT a single column. BigQuery, in contrast, is <em>column-based</em> and optimized for <strong>reporting workloads (mostly reads)</strong>.</p>
+            </div>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-exclamation-triangle"></i></span>
+                Technical Considerations
+            </h3>
+            <ul>
+                <li><strong>Storage Media:</strong> SSD is preferred over HDD (which has lower performance).</li>
+                <li><strong>Throughput:</strong> IOPS and Network throughput depend on the machine type and configuration (bigger is faster).</li>
+                <li><strong>Limitations:</strong> Constrained by Global Availability and Disk Size limits.</li>
+                <li><strong>Connectivity:</strong> Connect easily with App Engine, GKE, GCE, and Cloud Run.</li>
+                <li><strong>Integration:</strong> Supports Federated Queries from BigQuery.</li>
+                <li><strong>Backups:</strong> Automate Backups (via windows of time) and enable point-in-time recovery (PITR) via write-ahead log archiving.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: BEST PRACTICES & INTEGRATIONS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Best Practices &amp; Data Movement</h2>
+        </div>
+
+        <!-- Summary / Key Takeaways -->
+        <div class="summary-block">
+            <h3><i class="fas fa-star"></i> Design Best Practices</h3>
+            <ul class="summary-list">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Table Size:</strong> Move smaller tables rather than large tables.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Networking:</strong> Use Private IP (requires Private services access connection).</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Storage:</strong> Enable <em>automatic storage increases</em> to prevent out-of-disk failures.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Resilience:</strong> Implement <em>exponential backoff</em> to gracefully handle database failures and connection retries.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-file-export"></i></span>
+                Loading &amp; Exporting Data
+            </h3>
+            <ul>
+                <li><strong>Ingestion:</strong> Use Storage Transfer Service (STS) or Transfer Appliance to load data into Cloud Storage (from AWS, local, or GCS). Use <code>gsutil</code> if copying files over from on-premise.</li>
+                <li><strong>Staging:</strong> Cloud Storage acts as the temporary staging ground to move data between Cloud SQL and BigQuery.</li>
+                <li><strong>Formats:</strong> Import/Export primarily uses SQL dump or CSV file formats.</li>
+                <li><strong>Cost Saving:</strong> Consider compressed gzip formats when storing exports.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: SECURITY, PROXY & MONITORING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Security, Auth Proxy &amp; Monitoring</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-shield-alt"></i></span>
+                    Cloud SQL Auth Proxy
+                </h3>
+                <p>The Cloud SQL Auth proxy offers enhanced security, especially for apps with dynamic IP addresses.</p>
+                <ul>
+                    <li>Creates a secure tunnel leveraging Google IAM for authentication.</li>
+                    <li>Eliminates the need to manage Authorized Networks, allowlisting IPs, or SSL certs manually.</li>
+                    <li><strong>Best Practice:</strong> Enforce exclusive use by leaving <em>Authorized Networks empty</em>, preventing any direct IP-based connection.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-line"></i></span>
+                    Monitoring &amp; Security
+                </h3>
+                <ul>
+                    <li><strong>Cloud SQL Insights:</strong> Offers 7-day retention to detect, diagnose, and identify the root cause of performance problems.</li>
+                    <li><strong>Stackdriver:</strong> MySQL connector is required for Stackdriver (Cloud Monitoring) tracking.</li>
+                    <li><strong>GKE Access:</strong> Use Secrets &amp; Service accounts to securely connect to a SQL Instance from Kubernetes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>RPO</dt>
+                <dd>Recovery Point Objective (Acceptable amount of data loss measured in time).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>RTO</dt>
+                <dd>Recovery Time Objective (Acceptable amount of downtime).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Database Migration Service</dt>
+                <dd>Creates Migration jobs to move data between source and destination. You define the source by creating a new job or via a connection profile.</dd>
+            </dl>
+        </div>
+
+        <!-- Quiz Block -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> You have an application running in GKE with dynamic IP addresses that needs to connect to Cloud SQL securely. What is the best way to handle this?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Use the Cloud SQL Auth Proxy. It handles secure tunnels using IAM and removes the need to allowlist dynamic IPs.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> Your analytics team needs to run heavy reporting queries, but doing so on Cloud SQL degrades performance for the web application. How can you solve this?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Create a Read Replica and offload the reporting workload to it, or export the data to BigQuery for OLAP reporting.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> True or False: Cloud SQL automatically scales its compute nodes when CPU utilization hits 90%.</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">False. Cloud SQL does not support autoscaling for compute nodes (only for storage). Vertical scaling of compute requires a restart.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the fundamental difference between how Cloud SQL and BigQuery store data?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Cloud SQL is record-based (row-oriented, good for OLTP), whereas BigQuery is column-based (good for OLAP).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Cloud SQL Readiness</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

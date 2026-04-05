@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Service Comparison</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-book-open"></i>
+                    Service Comparison Guide
+                </div>
+                <h1>Data Analytics Service<br><em>Comparison</em></h1>
+                <p class="cover-subtitle">
+                    A comprehensive guide comparing the ideal use cases and limitations of Google Cloud and third-party data analytics, processing, and database services.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Services Covered: <strong>23</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Data Warehousing &amp; Data Lakes
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Data Processing &amp; Integration
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Messaging &amp; Orchestration
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Relational Databases
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    NoSQL Databases
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Storage &amp; Caching
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-7" class="toc-item">
+                    <span class="toc-number">07</span>
+                    Analytics, ML &amp; BI
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: DATA WAREHOUSING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Data Warehousing &amp; Data Lakes</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-search"></i>
+                </span>
+                BigQuery
+            </h3>
+            <p>Serverless (no-ops), highly-scalable and cost-effective multi-cloud Data Warehouse where you can run SQL queries over vast amounts of data</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>OLAP workloads</li>
+                    <li>Data Warehousing</li>
+                    <li>Structured data</li>
+                    <li>Immediate consistency</li>
+                    <li>Optimized for columnar storage and large-scale reads</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Low latency reqs.</li>
+                    <li>Non-structured data</li>
+                    <li>Non-relational SQL</li>
+                    <li>Store large objects</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-project-diagram"></i>
+                </span>
+                Dataplex
+            </h3>
+            <p>Intelligent data fabric that helps organize, manage, and govern data across Google Cloud services.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Data discovery and metadata management</li>
+                    <li>Data lineage tracking</li>
+                    <li>Data quality monitoring</li>
+                    <li>Data governance and access control</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Projects with limited data complexity</li>
+                    <li>Lack of need for centralized data management</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: DATA PROCESSING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Data Processing &amp; Integration</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-water"></i>
+                </span>
+                Dataflow
+            </h3>
+            <p>Apache Beam Managed Service for unified stream and batch data processing patterns. Automated infrastructure provisioning and cluster management with horizontal autoscaling.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Streaming Analytics</li>
+                    <li>Real-time AI for Predictive Analytics or Fraud Detection</li>
+                    <li>Sensor and log data process for System Health</li>
+                    <li>ETL pipelines</li>
+                    <li>Unified stream and batch processing</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Wrangling capability</li>
+                    <li>Low Data Volume or Velocity</li>
+                    <li>Spark-exclusive workloads</li>
+                    <li>Legacy tooling/teams (against change)</li>
+                    <li>Very low latency (< seconds)</li>
+                    <li>Small datasets</li>
+                    <li>Simpler Data Processing needs</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-server"></i>
+                </span>
+                Dataproc
+            </h3>
+            <p>Managed Apache Spark and Hadoop service. Fast and easy-to-use. Dataproc provisions big and small clusters rapidly, supports many popular job types, and is integrated with other Google Cloud services (e.g., GCS, Stackdriver)</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>OSS Hadoop ecosystem tools (Pig, Hive, Spark, etc.).</li>
+                    <li>Large-scale batch processing</li>
+                    <li>Complex data transformations</li>
+                    <li>Machine Learning with Spark</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Wrangling capability</li>
+                    <li>Serverless alternatives are preferred (cluster mgmt)</li>
+                    <li>Workloads where managed services are preferred due to simplicity (e.g., BigQuery for SQL)</li>
+                    <li>Lack of Python/Java expertise in the team</li>
+                    <li>Small datasets</li>
+                    <li>Simpler Data Processing needs</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-broom"></i>
+                </span>
+                Dataprep
+            </h3>
+            <p>Intelligent cloud data service to visually explore, clean, and prepare data for analysis and machine learning</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>User-friendly Dataflow pipeline (no code)</li>
+                    <li>Visual data exploration and cleaning</li>
+                    <li>Data preparation for analysis and machine learning</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Very large datasets that may exceed Dataprep limitations</li>
+                    <li>Highly complex transformations requiring custom coding</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-plug"></i>
+                </span>
+                Data Fusion
+            </h3>
+            <p>Fully managed, cloud-native data integration service.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>ETL/ELT processes</li>
+                    <li>Data pipelines</li>
+                    <li>Data transformation</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Simple data transformations</li>
+                    <li>Limited budget</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: MESSAGING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Messaging &amp; Orchestration</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                Pub/Sub
+            </h3>
+            <p>Event-driven asynchronous messaging service that decouples senders (producing events) and receivers (processing events). Allows for secure and highly available communication between independently written applications. Unified messaging, global presence, push & pull-style subscriptions, replicated storage and guaranteed at-least-once message delivery, encryption of data at rest/transit, easy-to-use REST API</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Data streaming from various processes or devices</li>
+                    <li>Balancing workloads in network clusters</li>
+                    <li>Queue can efficiently distribute tasks</li>
+                    <li>Implementing asynchronous workflows</li>
+                    <li>Reliability improvement- in case zone failure</li>
+                    <li>Distributing event notifications</li>
+                    <li>Refreshing distributed caches</li>
+                    <li>Logging to multiple systems</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Kafka requirements</li>
+                    <li>Budget constraint</li>
+                    <li>Strict Ordering Requirements Across Multiple Publishers</li>
+                    <li>Very large messages (prefer Cloud Storage for payload)</li>
+                    <li>Synchronous request-response scenarios</li>
+                    <li>Exactly-once delivery guarantees</li>
+                    <li>Vendor-lock-in concerns</li>
+                    <li>Rich Ecosystem and Integrations</li>
+                    <li>High Throughput and Low Latency</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-code-branch"></i>
+                </span>
+                Composer
+            </h3>
+            <p>Managed Apache Airflow service for orchestrating workflows.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Data pipelines</li>
+                    <li>ETL processes</li>
+                    <li>Workflow automation</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Simple, non-complex workflows</li>
+                    <li>Real-time data processing</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-random"></i>
+                </span>
+                Datastream
+            </h3>
+            <p>Serverless change data capture and replication service that lets you synchronize data stored in supported sources to a variety of destinations. This enables real-time analytics, database migration, and event-driven architectures with minimal operational overhead.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Change Data Capture (CDC)</li>
+                    <li>Database replication and synchronization</li>
+                    <li>Populating data warehouses/lakes in near real-time</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Situations requiring complex transformations or joins before data lands in the destination</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: RELATIONAL DBS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Relational Databases</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-database"></i>
+                </span>
+                Cloud SQL
+            </h3>
+            <p>Fully-managed relational database service supporting MySQL, PostgreSQL and MS SQL Server. Designed for relational data (record-based): tables, rows and columns, and super structured data. SQL compatible and can update fields.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>SQL DB scaling vertically for structured data</li>
+                    <li>Relational data (tables, rows, columns)</li>
+                    <li>OLTP workloads</li>
+                    <li>Structured data</li>
+                    <li>MySQL, PostgreSQL, SQL Server compatibility</li>
+                    <li>Managed database service</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>RDBMS + large scale OLAP workloads</li>
+                    <li>NoSQL data</li>
+                    <li>Extremely high throughput</li>
+                    <li>Low-latency transactions</li>
+                    <li>Databases larger than 64TB</li>
+                    <li>non-relational, highly nested, or unstructured (e.g., documents, graphs, key-value pairs).</li>
+                    <li>Massive Global Scalability Needs</li>
+                    <li>Strict Horizontal Scaling</li>
+                    <li>Fully serverless database</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-globe"></i>
+                </span>
+                Cloud Spanner
+            </h3>
+            <p>Real time transaction store, horizontally autoscale and always available.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Relational database</li>
+                    <li>Structured data</li>
+                    <li>Vertical + Horizontal scaling</li>
+                    <li>Strong consistency</li>
+                    <li>Transactional reads and writes → mission critical workloads</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Budget constraint</li>
+                    <li>Data that is not relational or structured</li>
+                    <li>Open-source RDBMS preference</li>
+                    <li>When strong consistency and high availability are not critical</li>
+                    <li>Small-Scale or Low-Traffic Applications</li>
+                    <li>Vendor Lock-In Concerns</li>
+                    <li>Lack of Need for Strong Consistency and ACID Transactions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-layer-group"></i>
+                </span>
+                AlloyDB for Postgres
+            </h3>
+            <p>A fully managed PostgreSQL-compatible database service for your most demanding enterprise workloads. AlloyDB combines the best of Google with PostgreSQL, for superior performance, scale, and availability.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>PostgreSQL compatible</li>
+                    <li>High performance OLTP</li>
+                    <li>Automated scaling</li>
+                    <li>Reduced operational overhead</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Non-relational data</li>
+                    <li>Workloads not requiring high throughput</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-leaf"></i>
+                </span>
+                MariaDB
+            </h3>
+            <p>A community-developed, commercially supported fork of the MySQL relational database management system, intended to remain free and open-source software under the GNU General Public License</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Community-developed and commercially supported</li>
+                    <li>Open-source (GNU GPL)</li>
+                    <li>Relational database with SQL support</li>
+                    <li>ACID compliant</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Less scalable than some NoSQL solutions</li>
+                    <li>Can be complex to manage for very large deployments</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: NOSQL DBS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>NoSQL Databases</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-table"></i>
+                </span>
+                Bigtable
+            </h3>
+            <p>A managed, scalable NoSQL, wide column database service</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>High-throughput, low-latency NoSQL workloads</li>
+                    <li>Time-series & IoT data</li>
+                    <li>Petabyte-scale operational data</li>
+                    <li>HBase legacy migration</li>
+                    <li>Real time data ingestion</li>
+                    <li>Key-based reads</li>
+                    <li>Low-latency reads and writes of individual records within massive datasets.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Complex OLAP queries requiring SQL joins</li>
+                    <li>Small datasets (< 1TB)</li>
+                    <li>Relational data modeling</li>
+                    <li>Replacement for MongoDB</li>
+                    <li>Store large objects</li>
+                    <li>Strong consistency requirements</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-file-alt"></i>
+                </span>
+                Cloud Firestore
+            </h3>
+            <p>A scalable, fully-managed, NoSQL document database.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Semi-structured data</li>
+                    <li>Hierarchical data</li>
+                    <li>NoSQL</li>
+                    <li>Durable Key-value data</li>
+                    <li>Schema free</li>
+                    <li>OLTP workloads</li>
+                    <li>Highly available apps requirements</li>
+                    <li>ACID transactions</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Not for Analytical workloads</li>
+                    <li>Extreme scale</li>
+                    <li>Sub-ms latency</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-envira"></i>
+                </span>
+                MongoDB
+            </h3>
+            <p>Document-oriented database program. NoSQL database program, MongoDB uses JSON-like documents with optional schemas.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Flexible schema</li>
+                    <li>Horizontal scalability</li>
+                    <li>Document-oriented (suitable for various data types)</li>
+                    <li>IoT data structures</li>
+                    <li>low-latency reads</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Transactions requiring strong ACID properties</li>
+                    <li>Complex joins</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-network-wired"></i>
+                </span>
+                Cassandra
+            </h3>
+            <p>A highly scalable and distributed wide-column NoSQL database. It's designed to handle large volumes of data across multiple servers, providing high availability and fault tolerance. Cassandra prioritizes write performance and is well-suited for applications with massive data growth and unpredictable data structures.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>High availability</li>
+                    <li>Fault tolerance scalability</li>
+                    <li>ACID transactions within a partition</li>
+                    <li>time-series data (e.g., telemetry)</li>
+                    <li>handle large volumes of data</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Transactions spanning multiple partitions requiring strong consistency</li>
+                    <li>Complex queries and joins across multiple partitions.</li>
+                    <li>Strict ACID guarantees</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-couch"></i>
+                </span>
+                CouchDB
+            </h3>
+            <p>A NoSQL, document-oriented database that stores data in JSON format, with a focus on scalability and availability. It uses Multi-Version Concurrency Control (MVCC) for consistency and offers a RESTful HTTP API to interact with the database.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Distributed environments: highly effective for distributed applications due to its built-in replication and synchronization across multiple nodes</li>
+                    <li>Offline-first applications: CouchDB is ideal for applications that need to work offline, with automatic synchronization once connectivity is restored (e.g., mobile apps).</li>
+                    <li>Document-based data (user profiles, product catalogs, or logs)</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>High-performance transactional systems: eventual consistency model is not suited for applications that require strong ACID-compliant transactions, like banking or inventory systems.</li>
+                    <li>Complex querying and analytics: If you require complex queries, joins, or analytical workloads, relational databases or specialized analytical databases</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: STORAGE & CACHING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Storage &amp; Caching</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-box"></i>
+                </span>
+                Cloud Storage
+            </h3>
+            <p>Global, secure and scalable object store. Fully-managed and highly-reliable object/blob storage.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Eventual consistency</li>
+                    <li>Objects and blobs</li>
+                    <li>Storing unstructured data (images, videos, text, logs, backups)</li>
+                    <li>Data lake implementation</li>
+                    <li>Cost-effective storage for large dataset</li>
+                    <li>Serving static website content</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>IoT</li>
+                    <li>Spiky streaming data</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-bolt"></i>
+                </span>
+                Cloud Memorystore
+            </h3>
+            <p>A cache and better suited to storing key-value data for applications that need low latency access to data.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Caching</li>
+                    <li>Session management</li>
+                    <li>Real-time analytics</li>
+                    <li>High-performance computing</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Data persistence as primary requirement</li>
+                    <li>Large datasets that don't fit in memory</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-cube"></i>
+                </span>
+                Redis
+            </h3>
+            <p>An open-source, in-memory data store. It's often called a "data structures server" because it allows you to store and manipulate data in various formats like strings, lists, sets, and hashes.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>In-memory data store caching</li>
+                    <li>Real-time analytics</li>
+                    <li>Session management</li>
+                    <li>Leaderboards</li>
+                    <li>Pub/Sub messaging</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Large datasets that don't fit in memory</li>
+                    <li>Transactions requiring strong consistency (ACID properties)</li>
+                    <li>Complex queries and data relationships</li>
+                    <li>Persistent storage as the primary requirement</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 7: ANALYTICS, ML & BI
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-7">
+            <span class="section-divider-number">07</span>
+            <h2>Analytics, ML &amp; BI</h2>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-brain"></i>
+                </span>
+                BigQueryML
+            </h3>
+            <p>Machine learning directly inside BigQuery.</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>Predictive analytics within BigQuery</li>
+                    <li>Model training and deployment within BigQuery</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Complex machine learning models requiring specialized hardware</li>
+                    <li>Need for external ML tools</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3 style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-top: 40px; margin-bottom: 16px;">
+                <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: var(--purple-dim); color: var(--purple); border-radius: 8px; border: 1px solid rgba(184, 130, 255, 0.15); font-size: 1rem;">
+                    <i class="fas fa-chart-pie"></i>
+                </span>
+                Looker Studio
+            </h3>
+            <p>Easy to use data visualization and dashboards</p>
+        </div>
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-check"></i></span> Ideal For</h3>
+                <ul>
+                    <li>No budget (zero cost)</li>
+                    <li>Easy-to-use data visualization and dashboards</li>
+                    <li>Integration with various data sources</li>
+                    <li>No budget (free to use)</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-times"></i></span> Avoid</h3>
+                <ul>
+                    <li>Advanced analytical capabilities beyond visualization</li>
+                    <li>Limited data transformation options within the tool</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

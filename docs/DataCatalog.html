@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Catalog: Guide & Study Notes | Data Analytics Cert Hub</title>
+    <meta name="description" content="Learn about Data Catalog, Google Cloud's data discovery and metadata management service. Study guide and notes for certification.">
+    <meta name="keywords" content="Data Catalog, GCP, Metadata, Data Analytics, Cloud, Study Guide">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-graduation-cap"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Data Catalog<br><em>Study Guide</em></h1>
+                <p class="cover-subtitle">
+                    Fully managed and scalable data discovery and metadata management service. Empowers organizations to quickly discover, understand, and manage all their data in Google Cloud.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Updated: <strong>April 2026</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Version: <strong>1.0</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Category: <strong>Metadata Management</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Reading Time: <strong>~15 min</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#definition" class="toc-item">
+                    <span class="toc-number">01</span>
+                    <span>Definition & Use Cases</span>
+                </a>
+                <a href="#core-functionality" class="toc-item">
+                    <span class="toc-number">02</span>
+                    <span>Core Functionality & Concepts</span>
+                </a>
+                <a href="#tags" class="toc-item">
+                    <span class="toc-number">03</span>
+                    <span>Tags & Tag Templates</span>
+                </a>
+                <a href="#ingestion" class="toc-item">
+                    <span class="toc-number">04</span>
+                    <span>Ingestion & Cataloging Methods</span>
+                </a>
+                <a href="#entries" class="toc-item">
+                    <span class="toc-number">05</span>
+                    <span>Entries & Entry Groups</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 01: DEFINITION & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="definition">
+            <div class="section-divider-number">01</div>
+            <h2>Definition & Use Cases</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-info-circle"></i></div>What is Data Catalog?</h3>
+            <p>
+                <strong>Data Catalog</strong> is a fully managed and scalable data discovery and metadata management service that empowers organizations to quickly discover, understand, and manage all their data in Google Cloud.
+            </p>
+            <div class="definition-grid" style="margin-top: 15px;">
+                <div class="definition-item">
+                    <dt>SLA</dt>
+                    <dd>99.9%</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-lightbulb"></i></div>Use Cases</h3>
+                <ul>
+                    <li><strong>Data Discovery:</strong> Quickly find and understand data assets across your organization.</li>
+                    <li><strong>Data Governance:</strong> Enforce data policies and ensure data quality.</li>
+                    <li><strong>Data Catalog Management:</strong> Centralized management of metadata across different teams and projects.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-credit-card"></i></div>Billing</h3>
+                <ul>
+                    <li><strong>Metadata storage:</strong> Business metadata as well as any on-premises metadata ingested. Measured in binary gigabytes (GiB).</li>
+                    <li><strong>Data Catalog API calls:</strong> Read, write, and search API calls.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 02: CORE FUNCTIONALITY & CONCEPTS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="core-functionality">
+            <div class="section-divider-number">02</div>
+            <h2>Core Functionality & Concepts</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-cogs"></i></div>Core Functionality</h3>
+            <ul>
+                <li><strong>Scalability:</strong> Automatically scales to handle large volumes of metadata.</li>
+                <li><strong>Auto-Cataloging:</strong> Automatically discovers and catalogs metadata from various services (BigQuery, Pub/Sub, Bigtable, Cloud Storage) during ingest operations. Supports manual and API-driven cataloging.</li>
+                <li><strong>Metadata Types:</strong> Supports both <strong>technical</strong> (schema, location, etc.) and <strong>business</strong> metadata (tags, descriptions, ownership, etc.).</li>
+                <li><strong>Search & Discovery:</strong> Provides a user-friendly search interface for quickly finding relevant data assets.</li>
+                <li><strong>Security & Compliance:</strong> Integrates with IAM for granular access control and with Cloud DLP for data sensitivity detection and classification.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-pink">
+            <h3><div class="icon-badge"><i class="fas fa-key"></i></div>Key Concepts</h3>
+            <ul>
+                <li><strong>Metadata Types:</strong>
+                    <ul>
+                        <li><em>Technical metadata:</em> Project information, asset name, schema name, description for BigQuery, etc. Always linked to a technical metadata entry.</li>
+                        <li><em>Business metadata:</em> Tags, data stewards, rich text overview, PII, delete-by dates, business logic.</li>
+                    </ul>
+                </li>
+                <li><strong>Attribute types:</strong> String, Boolean, Double, Enum.</li>
+                <li><strong>Two main functions:</strong> Searching for data entries for which you have access, and Tagging data entries with metadata.</li>
+                <li><strong>Structured Tags:</strong> Allows adding custom business metadata as key-value pairs to tables and columns within BigQuery. Example: <code>{"department": "Sales", "data_owner": "John Doe", "sensitivity": "Confidential"}</code>.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 03: TAGS & TAG TEMPLATES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="tags">
+            <div class="section-divider-number">03</div>
+            <h2>Tags & Tag Templates</h2>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3><div class="icon-badge"><i class="fas fa-tags"></i></div>Tags and Tag Templates</h3>
+            <ul>
+                <li><strong>Tags:</strong> Enable organizations to create, search and manage metadata for all their data assets in a unified service. Tags are annotations or "business metadata".</li>
+                <li>Tags contain one or more fields where information can be stored.</li>
+                <li>The fields in a tag are defined by a <strong>tag template</strong>, and each field can be used to store one or more values.</li>
+                <li>Every tag is an instance of a tag template, which can be applied to an entire data asset, or to particular tables or columns.</li>
+                <li><strong>Tag templates:</strong> Define a new (custom) template or reuse an existing public template.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 04: INGESTION & CATALOGING METHODS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="ingestion">
+            <div class="section-divider-number">04</div>
+            <h2>Ingestion & Cataloging Methods</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-file-import"></i></div>Data Ingestion & Cataloging</h3>
+            <ul>
+                <li><strong>Automatic Ingestion:</strong> During data loading into supported services (BQ, Pub/Sub, Bigtable, GCS).</li>
+                <li><strong>Manual Ingestion:</strong> Using the Data Catalog UI or the API.</li>
+                <li><strong>Third-Party Tool Integration:</strong> Integrate with third-party tools and ETL processes to ingest metadata.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 05: ENTRIES & ENTRY GROUPS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="entries">
+            <div class="section-divider-number">05</div>
+            <h2>Entries & Entry Groups</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-folder"></i></div>Entries and Entry Groups</h3>
+            <ul>
+                <li><strong>Entries:</strong> Represent data resources (GCP resources like BigQuery dataset or table, Pub/Sub topic, etc., or custom resources with custom data types).</li>
+                <li>Entries are contained in an <strong>entry group</strong>.</li>
+                <li>An <strong>entry group</strong> is a set of logically related entries together with IAM policies that specify the users who can create, edit, and view entries within an entry group.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SELF ASSESSMENT QUESTIONS
+             ═══════════════════════════════════════ -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What are the two main types of metadata handled by Data Catalog?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Technical metadata (e.g., schema, location) and Business metadata (e.g., tags, descriptions).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> What defines the fields in a tag in Data Catalog?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">The fields in a tag are defined by a Tag Template.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> How are entries organized for access control in Data Catalog?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Entries are contained in an Entry Group, which holds logically related entries and associated IAM policies.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () { this.classList.toggle('revealed'); });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

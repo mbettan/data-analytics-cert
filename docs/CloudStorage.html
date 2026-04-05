@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Storage (GCS) - Michaël Bettan</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-cloud"></i>
+                    Google Cloud Storage
+                </div>
+                <h1>Google Cloud Storage <br><em>(GCS)</em></h1>
+                <p class="cover-subtitle">
+                    A highly-reliable, scalable, and fully-managed object storage service.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Availability: <strong>Global</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>SLA: <strong>99.0% to 99.95%</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Core Concepts &amp; Billing
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Storage Classes &amp; Replication
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Data Model &amp; Namespace
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Data Protection &amp; Considerations
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Loading &amp; Moving Data
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Management, Integrity &amp; Security
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: CORE CONCEPTS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Core Concepts &amp; Billing</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li><strong>Media storage and delivery:</strong> Streaming video, image hosting, content delivery networks (CDNs).</li>
+                    <li><strong>Backup and disaster recovery:</strong> Data backups (e.g., regulatory), system images, application backups.</li>
+                    <li><strong>Data lakes and analytics:</strong> Storing large datasets for analysis using tools like BigQuery, Dataproc, and Dataflow.
+                        <ul>
+                            <li>Hadoop HDFS replacement</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-file-invoice-dollar"></i></span>
+                    Billing Components
+                </h3>
+                <ul>
+                    <li><strong>Storage Costs:</strong> storage class, region, and data volume.</li>
+                    <li><strong>Network Usage:</strong> data reads and transfers between regions.</li>
+                    <li><strong>Operations Usage:</strong> listing, deleting, and other object operations.</li>
+                    <li><strong>Retrieval Fees:</strong> Nearline, Coldline, and Archive storage classes.</li>
+                    <li><strong>Early Deletion Fees:</strong> Applicable to data deleted before a minimum storage duration in certain classes.</li>
+                    <li><strong>Autoclass:</strong> management fee (+ one-time enablement).</li>
+                    <li><strong>Cost Allocation:</strong> Use Bucket and Object Labels to track usage and allocate costs to specific teams, partners, or workflows.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: STORAGE CLASSES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Storage Classes &amp; Replication</h2>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Storage Class</th>
+                        <th>Min. Storage</th>
+                        <th>Retrieval Fees</th>
+                        <th>Retrieval Time</th>
+                        <th>Availability (Multiregion)</th>
+                        <th>Durability</th>
+                        <th>Early Deletion Fee</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Standard</td>
+                        <td>None</td>
+                        <td>None</td>
+                        <td>Milliseconds</td>
+                        <td>&gt;99.99%</td>
+                        <td>99.999999999%</td>
+                        <td>No</td>
+                        <td>Frequently accessed</td>
+                    </tr>
+                    <tr>
+                        <td>Nearline</td>
+                        <td>30 days</td>
+                        <td>Yes</td>
+                        <td>Milliseconds</td>
+                        <td>99.95%</td>
+                        <td>99.999999999%</td>
+                        <td>Yes</td>
+                        <td>Infrequently accessed data</td>
+                    </tr>
+                    <tr>
+                        <td>Coldline</td>
+                        <td>90 days</td>
+                        <td>Yes</td>
+                        <td>Milliseconds</td>
+                        <td>99.95%</td>
+                        <td>99.999999999%</td>
+                        <td>Yes</td>
+                        <td>Infrequently accessed data</td>
+                    </tr>
+                    <tr>
+                        <td>Archive</td>
+                        <td>365 days</td>
+                        <td>Yes</td>
+                        <td>Milliseconds</td>
+                        <td>99.95%</td>
+                        <td>99.999999999%</td>
+                        <td>Yes</td>
+                        <td>Archiving, backup, and DR</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="prose">
+            <p>
+                <strong>Drivers:</strong> Storage class choice depends on <em>Availability, Cost, Access, and Performance</em>. Standard class has 99.9% to 99.95% availability SLA depending on location type.
+            </p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-map-marker-alt"></i></span>
+                    Geographic Placement
+                </h3>
+                <ul>
+                    <li><strong>Multi-Region:</strong> Highest availability in largest area</li>
+                    <li><strong>Dual-Region:</strong> Highly-available and low latency</li>
+                    <li><strong>Region:</strong> High local performance for single region</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-magic"></i></span>
+                    Autoclass
+                </h3>
+                <p>Optimizes storage costs and performance by automatically transitioning objects between storage classes based on access patterns.</p>
+                <ul>
+                    <li>Frequent access promotes objects to Standard for faster retrieval.</li>
+                    <li>Infrequent access demotes them to Nearline, Coldline, or Archive for cost savings.</li>
+                    <li>Eliminates manual copy-and-delete processes.</li>
+                    <li><strong>No retrieval fees</strong> and <strong>no early deletion fees</strong> when enabled.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-copy"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Dual-Region: Turbo Replication</h4>
+                <p><strong>Enhanced Data Durability and Availability:</strong> Offers faster redundancy across two regions, minimizing data loss risk and ensuring uninterrupted service during regional outages. <br><strong>Rapid Replication:</strong> Replicates 100% of newly written objects to two regions within a <strong>15-min Recovery Point Objective</strong>, regardless of object size → <strong>low write latency</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: DATA MODEL
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Data Model &amp; Namespace</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Global Namespace</dt>
+                <dd>Unique names for buckets across the entire platform for all clients.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Buckets</dt>
+                <dd>Basic containers holding your data.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Objects</dt>
+                <dd>Individual files within buckets, accessible through unique URLs.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Flat Namespace (Default)</dt>
+                <dd>No actual directories; uses object name prefixes to simulate folders.</dd>
+            </dl>
+        </div>
+
+        <div class="concept-card accent-cyan">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-folder-tree"></i></span>
+                Hierarchical NameSpace (HNS)
+            </h3>
+            <p>Enabled at bucket creation. Introduces true file-system folder resources.</p>
+            <ul>
+                <li><strong>Benefits:</strong> Higher initial QPS (mitigates hotspotting) and atomic folder renames (ensures consistency).</li>
+                <li><strong>Use cases:</strong> Big data (Hadoop/Spark, BigLake Iceberg) and AI/ML workloads (model checkpointing).</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: DATA PROTECTION
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Data Protection &amp; Considerations</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-shield-alt"></i></span>
+                    Data Protection
+                </h3>
+                <ul>
+                    <li><strong>Object Holds:</strong> Prevent objects from being deleted or overwritten, useful for legal or compliance reasons.</li>
+                    <li><strong>Soft Delete:</strong> Enabled by default (7 to 90 days retention) to recover deleted or overwritten objects without enabling versioning.</li>
+                    <li><strong>Encryption type:</strong> Google-managed, CMEK, CSEK (If CSEK key is lost, data is permanently lost).</li>
+                    <li><strong>Retention policy:</strong> Minimum retention period.</li>
+                    <li><strong>Object Versioning:</strong> Maintain versions of objects to protect against accidental deletion or overwrites.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-cog"></i></span>
+                    Considerations
+                </h3>
+                <ul>
+                    <li><strong>Object Lifecycle rules:</strong> Apply actions to objects when conditions are met (e.g., switching to colder classes based on age). 3 actions: <em>change class</em>, <em>delete</em>, or <em>AbortIncompleteMultipartUpload</em>.</li>
+                    <li><strong>Object conditions:</strong> Age, storage class, created before, etc.</li>
+                    <li><strong>Data Processing Integration:</strong> Integrates seamlessly with Dataproc, Dataflow, and BigQuery.</li>
+                    <li><strong>Event-Driven Processing:</strong> Use Eventarc or Pub/Sub notifications to trigger Cloud Run or Cloud Functions upon object creation/deletion (ideal for spiky ingestion).</li>
+                    <li><strong>CORS:</strong> Required if a web application on one domain needs direct access to a bucket on another domain.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: LOADING & MOVING DATA
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Loading &amp; Moving Data</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Online transfer</dt>
+                <dd><code>gcloud storage</code> (replaces legacy gsutil), console, APIs, etc. (&lt; 1TB).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Storage Transfer Service</dt>
+                <dd>Fully-managed service to move data from clouds (GCS, S3, Azure Blob) and on-premises (docker). Supports event-driven transfers.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>STS for on-premises data</dt>
+                <dd>Designed for large-scale transfers (up to petabytes of data, billions of files).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Transfer Appliance</dt>
+                <dd>High capacity storage server leased from Google to ship to your DC (&gt;20 TiB or takes more than a week to upload).</dd>
+            </dl>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Scenario</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>S3, Azure Blob Storage</td>
+                        <td>-</td>
+                        <td>Storage Transfer Service</td>
+                    </tr>
+                    <tr>
+                        <td>GCS bucket</td>
+                        <td>-</td>
+                        <td>Storage Transfer Service</td>
+                    </tr>
+                    <tr>
+                        <td>Data Center</td>
+                        <td>Enough bandwidth to meet your project deadline</td>
+                        <td><code>gcloud storage</code> command</td>
+                    </tr>
+                    <tr>
+                        <td>Data Center</td>
+                        <td>Enough bandwidth to meet your project deadline (large scale)</td>
+                        <td>Storage Transfer Service for on-premises data</td>
+                    </tr>
+                    <tr>
+                        <td>Data Center</td>
+                        <td>Not enough bandwidth to meet your project deadline</td>
+                        <td>Transfer Appliance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: MANAGEMENT & SECURITY
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Management, Integrity &amp; Security</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-pie"></i></span>
+                    Storage Intelligence (Management Hub)
+                </h3>
+                <p>Centralizes data management, data exploration, cost optimization, security enforcement, and governance.</p>
+                <ul>
+                    <li><strong>Components:</strong> Gemini Cloud Assist, Storage Insights datasets, and inventory reports.</li>
+                    <li><strong>Capabilities:</strong> Enables bucket relocation and large-scale batch operations.</li>
+                    <li><strong>Availability:</strong> Generally Available (including CLI, Dashboards, and Guardrails).</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-check-double"></i></span>
+                    Data Integrity
+                </h3>
+                <ul>
+                    <li><strong>CRC32C</strong> is a cyclic redundancy check algorithm to detect errors during data transfer/storage.</li>
+                    <li>CRC32C hash is calculated for each object and stored as an attribute. Retrieve to verify integrity after download.</li>
+                    <li>Calculate hash using <code>gcloud storage hash</code> (or legacy <code>gsutil hash</code>) or Python's <code>crcmod</code>.</li>
+                    <li>Supports <strong>MD5</strong> calculations for compatibility with older systems or stricter security demands.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="concept-card accent-blue">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-lock"></i></span>
+                Access Control &amp; Security
+            </h3>
+            <p><strong>Two Options:</strong> Uniform or Fine-grained (legacy method).</p>
+            <ul class="checklist">
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Uniform:</strong> uniform access to all objects in the bucket by using only bucket-level permissions (IAM).
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Fine-grained:</strong> Specify access to individual objects using object-level permissions (ACLs) in addition to bucket-level IAM.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Object Tags vs. Labels:</strong> Labels are strictly for billing/organization. Tags enforce conditional IAM policies (e.g., granting access only if object has tag "security: confidential").
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Signed URLs:</strong> Time-limited access via generated URL without requiring IAM.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Signed Policy Documents:</strong> Upload policy directly to your bucket.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Control Access Levels:</strong> Project, Bucket, Folder (requires HNS), Object level.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Public Access Prevention (PAP):</strong> Enforced at bucket or Org Policy level to absolutely guarantee no objects are public (overrides IAM/ACLs).
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>HMAC Keys:</strong> Used via Interoperability API to migrate workloads from AWS S3 without rewriting authentication logic.
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quiz Block -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What is the main benefit of enabling Autoclass on a GCS bucket?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">It optimizes storage costs by automatically transitioning objects between classes based on access patterns, with no retrieval or early deletion fees.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> What is the critical difference between Object Tags and Labels in Cloud Storage?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Labels are strictly used for billing allocation and organization, while Tags are used to enforce conditional IAM security policies.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> Which storage class requires a minimum storage duration of 90 days but still offers millisecond retrieval time?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Coldline. Nearline is 30 days, and Archive is 365 days.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> If you need to migrate an application from AWS S3 to GCS without rewriting its authentication logic, what feature should you use?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">HMAC Keys, used via the Interoperability API.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Module Mastery</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

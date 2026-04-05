@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes — Google Cloud Bigtable</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Google Cloud Database<br><em>Bigtable</em></h1>
+                <p class="cover-subtitle">
+                    Comprehensive study notes covering Bigtable architecture, schema design, operational best practices, and configuration. Everything you need to pass with confidence.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Topic: <strong>Bigtable Operations</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Core Concepts &amp; Overview
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Architecture &amp; Storage Model
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Instance Configuration &amp; Billing
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Schema Design &amp; Row Keys
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Best Practices &amp; Limitations
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Garbage Collection &amp; Misc
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Core Concepts &amp; Overview</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Definition</dt>
+                <dd>A managed, scalable NoSQL database service designed for large analytical and operational workloads.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Availability</dt>
+                <dd>Available in multi-regional or regional deployments.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>SLA</dt>
+                <dd>Offers up to 99.999% uptime for multi-regional instances.</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li>PB Large analytical workloads (OLTP)</li>
+                    <li>High throughput analysis &amp; Low latency writes</li>
+                    <li>Key-based reads</li>
+                    <li>Time-series workloads (Financial, IoT, etc.)</li>
+                    <li>HBase legacy migration</li>
+                    <li>Real-time serving (ad serving, mobile app recommendations, etc.)</li>
+                    <li>Batch analytics (ML, Data Mining, etc)</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-star"></i></span>
+                    Key Capabilities
+                </h3>
+                <ul>
+                    <li>Wide Column database (multidimensional array which may contain many columns)</li>
+                    <li>Managed service (nodes provisioning required)</li>
+                    <li>Horizontal scaling</li>
+                    <li>HBase API compatibility interoperability</li>
+                    <li>Cluster configuration required (nodes, disk, regions, etc)</li>
+                    <li>Adding a new cluster for High-Availability</li>
+                    <li>Operations are atomic at the row level</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Architecture &amp; Storage Model</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Cell</dt>
+                <dd>Each row/column intersection can contain multiple cells (versions of data).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Rows &amp; Row Key</dt>
+                <dd>A single entity is indexed by a single row-key. The table has only one index based on this row key. Rows are sorted lexicographically by row key.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Columns &amp; Families</dt>
+                <dd>Columns are grouped into column families (groups of related columns in a table).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Tablets</dt>
+                <dd>A Table is sharded into blocks of contiguous rows called Tablets. This is the smallest logical structure for grouping/storing data, associated with a specific node.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>SSTable</dt>
+                <dd>Tablets are stored in Colossus in the SSTable format: persistent, ordered, immutable maps from keys to values (arbitrary byte strings).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Nodes &amp; Colossus</dt>
+                <dd>Nodes store the metadata (SSTables locations). Colossus's shared log stores all writes. The cluster routes requests to appropriate nodes.</dd>
+            </dl>
+        </div>
+
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Instance Configuration &amp; Billing</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-server"></i></span>
+                    Instance Configuration
+                </h3>
+                <ul>
+                    <li><strong>Instance</strong> is the container for your clusters.</li>
+                    <li><strong>SSD:</strong> Lower latency and more rows read per second. Typically used for real-time serving.</li>
+                    <li><strong>HDD:</strong> Higher latency for random reads. Good performance on scans and used for batch analytics.</li>
+                    <li><strong>Important:</strong> Changing disk type requires a new instance (cannot flip HDD to SSD).</li>
+                    <li><strong>Scaling:</strong> Manual scaling (add/delete nodes without downtime), or recently introduced Autoscaling.</li>
+                    <li><strong>Replication:</strong> Add clusters to automatically replicate (cross-regional supported) to isolate serving from batch, or improve availability.</li>
+                    <li><strong>App profile:</strong> Defines routing policy (single-cluster or multi-cluster routing) and controls single-row transactions.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-money-bill-wave"></i></span>
+                    Billing &amp; Security
+                </h3>
+                <ul>
+                    <li><strong>Compute Billing:</strong> Type of instance and number of nodes in your clusters.</li>
+                    <li><strong>Storage Billing:</strong> Amount of storage your tables use (GiB).</li>
+                    <li><strong>Network Billing:</strong> Amount of network bandwidth used (GiB).</li>
+                    <li><strong>Backup Billing:</strong> Billed only for the backup storage you use. A backup can never be larger than the original table.</li>
+                    <li><strong>Security Access Control:</strong> Managed via IAM at Project or Instance level. Roles include Read, Write, and Manage.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Schema Design &amp; Row Keys</h2>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Schema Considerations</h4>
+                <p>Designing a schema is different from a typical RDBMS. There is no support for joining (no foreign key concept). Each table has only one index (the row key, up to 4 KB). All operations are atomic (ACID) at the row level only, and both reads and writes should be distributed evenly.</p>
+            </div>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Row Key Design</th>
+                        <th>Characteristics / Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Good Row Keys</strong></td>
+                        <td>Distributed load. Design from a common value to a granular value. Include a timestamp (but not at the beginning).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Poor Row Keys</strong></td>
+                        <td>Sequential numeric IDs. Timestamps alone or at the start. Hashed values. Values expressed as raw bytes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hot-spotting Avoidance</strong></td>
+                        <td>Avoid auto-incrementing keys or time-values alone as they hit the same node repeatedly.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-key"></i></span>
+                Designing Row Keys
+            </h3>
+            <ul>
+                <li>Design your row keys based on the queries you will use to retrieve the data.</li>
+                <li>Keep your row keys short (4 KB or less).</li>
+                <li>Store multiple delimited values in each row key.</li>
+                <li>Use human-readable string values.</li>
+                <li>Field promotion (shift a column as part of the row key) and salting (remainder of division of hash of timestamp plus row key) are ways to help design row keys.</li>
+            </ul>
+        </div>
+
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Best Practices &amp; Limitations</h2>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card mint">
+                <div class="stat-value">1,000</div>
+                <div class="stat-label">Tables Limit</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-value">100</div>
+                <div class="stat-label">Col Families Limit</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-value">100 MB</div>
+                <div class="stat-label">Max Cell Size</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-value">256 MB</div>
+                <div class="stat-label">Max Row Size</div>
+            </div>
+        </div>
+
+        <div class="concept-card accent-blue">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-clipboard-check"></i></span>
+                Best Practices
+            </h3>
+            <ul class="checklist">
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Store datasets with similar schemas in the same table. Creating many small tables is an anti-pattern.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Time-series data: use tall/narrow tables (one event per row).
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Denormalize: prefer multiple tall and narrow tables rather than small tables.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Try to keep all info for an entity in a single row. Related entities should be stored in adjacent rows.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Target sizes: Try to store 10 MB in a single cell (max 100 MB) and 100 MB in a single row (max 256 MB).
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Column Qualifiers: create as many as needed in each row, but avoid splitting data across more than necessary (16 KB).
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Tables are sparse. Empty columns don’t take up any space.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    Columns are grouped together when frequently accessed (limitation: up to 100 columns).
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Garbage Collection &amp; Misc</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-trash"></i></span>
+                    Garbage Collection
+                </h3>
+                <ul>
+                    <li><strong>Asynchronous and Delayed:</strong> runs continuously in the background. Data marked for deletion can take up to a week to be fully removed.</li>
+                    <li><strong>Column Family Specific:</strong> GC rules are defined independently at the column family level.</li>
+                    <li><strong>Multiple Deletion Criteria:</strong> configure rules based on age (TTL), number of cell versions, or a combination.</li>
+                    <li><strong>Tombstoning:</strong> When all cells within a row/qualifier are deleted, it is marked as "tombstoned" and removed during GC.</li>
+                    <li><strong>Filtering for Accuracy:</strong> Apply timestamp range filters within queries to bypass the GC delay and retrieve only recent data.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-cogs"></i></span>
+                    Miscellaneous
+                </h3>
+                <ul>
+                    <li>Related columns should be placed in a column family. A single table can have multiple column families.</li>
+                    <li>Related data should be in one table, not multiple tables.</li>
+                    <li>Bigtable does not support secondary indexes.</li>
+                    <li>Row keys are specified for each row, not for each column family.</li>
+                    <li>Command line usage: use <strong>cbt tool (preferred)</strong> or HBase shell.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What happens if you use a sequential numeric ID or a timestamp as the beginning of your row key?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">It leads to hot-spotting when writing, as all sequential writes will hit the exact same node instead of being distributed across the cluster.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> You initially provisioned an HDD Bigtable instance for batch analytics, but now want to serve real-time app traffic requiring lower latency. How do you switch to SSD?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Changing disk type requires creating a entirely new instance. You cannot toggle a setting from HDD to SSD.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> At what level are operations guaranteed to be atomic (ACID) in Bigtable?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Operations are atomic only at the row level.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> Because Garbage Collection is asynchronous and can take up to a week, how do you ensure deleted data isn't returned in your queries?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">By applying timestamp range filters for accuracy within your queries, which bypasses the garbage collection delay.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> What is a common way to avoid hot-spotting for row keys when writing time-series data?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Use field promotion (shifting a column to be part of the row key before the timestamp) or salting (hashing the timestamp plus row key).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

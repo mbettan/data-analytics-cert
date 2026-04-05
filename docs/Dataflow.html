@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataflow: Guide & Study Notes | Data Analytics Cert Hub</title>
+    <meta name="description" content="Learn about Dataflow, Google Cloud's managed service for unified stream and batch data processing. Study guide and notes for certification.">
+    <meta name="keywords" content="Dataflow, GCP, Apache Beam, Data Analytics, Cloud, Study Guide">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-graduation-cap"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Dataflow<br><em>Study Guide</em></h1>
+                <p class="cover-subtitle">
+                    Apache Beam managed service for unified stream and batch data processing patterns. Automated infrastructure provisioning and cluster management with horizontal autoscaling.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Updated: <strong>April 2026</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Version: <strong>1.0</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Category: <strong>Data Processing</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Reading Time: <strong>~25 min</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#definition" class="toc-item">
+                    <span class="toc-number">01</span>
+                    <span>Definition & Use Cases</span>
+                </a>
+                <a href="#model" class="toc-item">
+                    <span class="toc-number">02</span>
+                    <span>Infrastructure & SDK Model</span>
+                </a>
+                <a href="#windowing" class="toc-item">
+                    <span class="toc-number">03</span>
+                    <span>Windowing & Watermarks</span>
+                </a>
+                <a href="#prime" class="toc-item">
+                    <span class="toc-number">04</span>
+                    <span>Dataflow Prime & Optimization</span>
+                </a>
+                <a href="#security" class="toc-item">
+                    <span class="toc-number">05</span>
+                    <span>Security & Networking</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 01: DEFINITION & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="definition">
+            <div class="section-divider-number">01</div>
+            <h2>Definition & Use Cases</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-info-circle"></i></div>What is Dataflow?</h3>
+            <p>
+                <strong>Dataflow</strong> is an Apache Beam managed service for unified stream and batch data processing patterns. It provides automated infrastructure provisioning and cluster management with horizontal autoscaling.
+            </p>
+            <div class="definition-grid" style="margin-top: 15px;">
+                <div class="definition-item">
+                    <dt>Availability</dt>
+                    <dd>Regional</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>SLA</dt>
+                    <dd>99.9%</dd>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-columns" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="concept-card accent-blue" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-lightbulb"></i></div>Use Cases</h3>
+                <ul>
+                    <li>Streaming Analytics for Business insights.</li>
+                    <li>Real-time AI for Predictive Analytics or Fraud Detection.</li>
+                    <li>Sensor and log data processing for System Health.</li>
+                    <li>ETL pipelines in general.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Note:</strong> If you have an existing Hadoop/Spark ecosystem, use <strong>Dataproc</strong> instead.</p>
+            </div>
+
+            <div class="concept-card accent-coral" style="margin-bottom: 0;">
+                <h3><div class="icon-badge"><i class="fas fa-credit-card"></i></div>Billing</h3>
+                <p>Billed in per-second increments, on a per-job basis:</p>
+                <ul>
+                    <li><strong>Dataflow Compute resources:</strong> Worker vCPU and Memory, Shuffle data processed, Streaming Engine Compute Units.</li>
+                    <li><strong>Dataflow Prime Compute resources:</strong> Data Compute Units (DCUs).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 02: INFRASTRUCTURE & SDK MODEL
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="model">
+            <div class="section-divider-number">02</div>
+            <h2>Infrastructure & SDK Model</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><div class="icon-badge"><i class="fas fa-server"></i></div>Infrastructure Model</h3>
+            <ul>
+                <li><strong>Jobs:</strong> Can be <strong>batch</strong> (bounded data) or <strong>streaming</strong> (unbounded data).</li>
+                <li><strong>Invocation:</strong> Predefined Templates, Custom Templates, or Dataflow SQL.</li>
+                <li><strong>Workers:</strong> Compute Engine machines execute the processing with horizontal autoscaling.</li>
+                <li><strong>Separating Compute and Storage:</strong>
+                    <ul>
+                        <li><em>Dataflow Shuffle:</em> Moves shuffle operations out of worker VMs (for batch).</li>
+                        <li><em>Streaming Engine:</em> Moves pipeline execution out of the worker (for streaming).</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-pink">
+            <h3><div class="icon-badge"><i class="fas fa-cubes"></i></div>Beam SDK Model</h3>
+            <ul>
+                <li><strong>PCollection:</strong> A distributed, immutable dataset processed within a pipeline.</li>
+                <li><strong>Transforms (PTransform):</strong> Operations on PCollections (filtering, grouping, joining).
+                    <ul>
+                        <li><em>ParDo:</em> Core transform for parallel processing.</li>
+                        <li><em>Flatten:</em> Merges multiple PCollections.</li>
+                        <li><em>CoGroupByKey:</em> Joins PCollections by key.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 03: WINDOWING & WATERMARKS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="windowing">
+            <div class="section-divider-number">03</div>
+            <h2>Windowing & Watermarks</h2>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3><div class="icon-badge"><i class="fas fa-clock"></i></div>Windowing</h3>
+            <p>Dividing unbounded data streams into logical chunks for processing.</p>
+            <ul>
+                <li><strong>Tumbling Window:</strong> Non-overlapping, consistent, fixed-size time intervals.</li>
+                <li><strong>Sliding Window:</strong> Overlapping windows that move forward by a set interval.</li>
+                <li><strong>Session Window:</strong> Dynamically determined based on periods of activity followed by inactivity.</li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-coral">
+            <h3><div class="icon-badge"><i class="fas fa-tint"></i></div>Watermarks</h3>
+            <p><strong>Watermark</strong> is an estimation of the oldest unprocessed data. It represents the system's understanding of how complete the data stream is.</p>
+            <ul>
+                <li>Tracks progress in unbounded data.</li>
+                <li>Determines when to finalize results, especially with late-arriving data.</li>
+                <li>Default behavior is to drop late data (arriving after the watermark).</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 04: DATAFLOW PRIME & OPTIMIZATION
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="prime">
+            <div class="section-divider-number">04</div>
+            <h2>Dataflow Prime & Optimization</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3><div class="icon-badge"><i class="fas fa-rocket"></i></div>Dataflow Prime</h3>
+            <ul>
+                <li><strong>Vertical Autoscaling:</strong> Scales workers' memory capacity dynamically.</li>
+                <li><strong>Right Fitting:</strong> Stage-specific worker pools using resource hints.</li>
+                <li><strong>Job Visualizer:</strong> See performance and find bottlenecks.</li>
+            </ul>
+        </div>
+
+        <!-- SELF ASSESSMENT QUESTIONS -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> When should you choose Dataflow over Dataproc?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Choose Dataflow for modern pipeline development (Apache Beam). Choose Dataproc for existing Hadoop/Spark ecosystems.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> What is a Watermark in Dataflow?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">An estimation of the oldest unprocessed data, used to track progress and handle late data.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> What are the three types of windowing supported by Dataflow?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Tumbling (fixed, non-overlapping), Sliding (overlapping), and Session (based on activity gaps).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () { this.classList.toggle('revealed'); });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+
+</html>

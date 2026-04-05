@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Memorystore — Study Notes</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Study Notes — Google Cloud
+                </div>
+                <h1>Google Cloud<br><em>Memorystore</em></h1>
+                <p class="cover-subtitle">
+                    Reduce latency with scalable, secure, and highly available in-memory managed service for Redis and Memcached.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Availability: <strong>Regional</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>SLA: <strong>99.9%</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview &amp; Use Cases
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Billing &amp; Capabilities
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Ecosystem &amp; Integration
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Considerations &amp; OSS Redis
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Redis vs Memcached
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Read Scalability &amp; Clustering
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-7" class="toc-item">
+                    <span class="toc-number">07</span>
+                    Disaster Recovery
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: OVERVIEW & USE CASES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview &amp; Use Cases</h2>
+        </div>
+
+        <div class="prose">
+            <p><strong>Memorystore</strong> provides caching data capabilities using a very low-latency storage mechanism. It acts as a front-end for databases and powers real-time applications with fast read/write speeds for real-time dashboards.</p>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card mint">
+                <div class="stat-value">99.9%</div>
+                <div class="stat-label">SLA</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-value">300GB</div>
+                <div class="stat-label">Redis Limit</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-value">5,120GB</div>
+                <div class="stat-label">Memcached Limit</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-value">&lt; 1ms</div>
+                <div class="stat-label">Latency</div>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-gamepad"></i></span>Online Games &amp; Social Media</h3>
+                <ul>
+                    <li>Session Store</li>
+                    <li>Content Caching</li>
+                    <li>Jobs &amp; Queues</li>
+                    <li>Distributed Lock</li>
+                    <li>Fast Data Ingestion</li>
+                    <li>Stream Processing</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-chart-line"></i></span>Stream Processing &amp; Analytics</h3>
+                <ul>
+                    <li>Real-time Analytics</li>
+                    <li>Leaderboard</li>
+                    <li>Recommendation Engine</li>
+                    <li>Counters</li>
+                    <li>Page ranking</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: BILLING & CAPABILITIES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Billing &amp; Capabilities</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3><span class="icon-badge"><i class="fas fa-file-invoice-dollar"></i></span>Billing Factors</h3>
+                <ul>
+                    <li><strong>Service tier:</strong> basic or standalone (HA) for Redis</li>
+                    <li><strong>Provisioned capacity:</strong> how much storage and throughput is available.</li>
+                    <li><strong>Region:</strong> location where the instance is provisioned.</li>
+                    <li><strong>Replicas (public preview):</strong> how many nodes are there in a Standard Tier instance.</li>
+                    <li><strong>vCPUs / cores</strong> per node for Memcached</li>
+                    <li><strong>Memory provisioned</strong> per node for Memcached</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-cyan">
+                <h3><span class="icon-badge"><i class="fas fa-cogs"></i></span>Key Capabilities</h3>
+                <ul>
+                    <li><strong>2 options:</strong> Redis &amp; Memcached</li>
+                    <li><strong>Scalable &amp; HA:</strong> replicated across zones</li>
+                    <li><strong>Deep Insights:</strong> monitor instances using Cloud Operations</li>
+                    <li><strong>Backup data:</strong> Easily backup instance data or import data into Memorystore from GCS buckets using RDB files</li>
+                    <li><strong>Interoperability:</strong> no code change required</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: ECOSYSTEM & INTEGRATION
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Ecosystem &amp; Integration</h2>
+        </div>
+
+        <div class="prose">
+            <p>Memorystore integrates seamlessly with open-source projects and Google Cloud services, making High-Availability easy and allowing scaling up to <strong>30GiB Storage</strong> and <strong>12 GPS throughput</strong>.</p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-plug"></i></span>
+                    Compute Integration
+                </h3>
+                <ul class="checklist">
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>App Engine Standard</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>App Engine Flexible</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Google Compute Engine (GCE)</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Cloud Functions</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span>Google Kubernetes Engine (GKE)</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-layer-group"></i></span>
+                    Redis Tiers
+                </h3>
+                <p>Tiers determine availability, cost, and performance.</p>
+                <ul>
+                    <li><strong>Basic:</strong> Lower cost. Does not provide high availability.</li>
+                    <li><strong>Standard:</strong> Supports automatic failover for high availability and up to 5 read replicas for scaling reads.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: CONSIDERATIONS & OSS REDIS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Key Considerations &amp; OSS Redis</h2>
+        </div>
+
+        <div class="callout warning">
+            <div class="callout-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Persistence Limitation</h4>
+                <p>Memorystore does not support persistence, so it should not be used for applications that need to save data to persistent storage (RDB Snapshot in Preview).</p>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-bar"></i></span>
+                    Monitoring
+                </h3>
+                <p>Even though it’s a managed service, you must monitor the following:</p>
+                <ul>
+                    <li>Memory usage</li>
+                    <li># of expirable keys</li>
+                    <li>Duration periods of memory overload</li>
+                    <li>Cache-hit ratio</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-code-branch"></i></span>
+                    Memorystore vs. OSS Redis
+                </h3>
+                <ul>
+                    <li>Persisting to Disk (Preview)</li>
+                    <li>Parameters are not customizable</li>
+                    <li>Lack of redis commands</li>
+                    <li>Standard Tier does not provide read from replica (Preview)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: REDIS VS MEMCACHED
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Redis vs Memcached</h2>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Redis</th>
+                        <th>Memcached</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Overall</td>
+                        <td>Powerful data types &amp; commands</td>
+                        <td>Great for multi-thread and simplicity</td>
+                    </tr>
+                    <tr>
+                        <td>Data Types</td>
+                        <td>Strings, list, sets, sorted set, hashes, bit arrays, geospatial and hyper logs</td>
+                        <td>strings</td>
+                    </tr>
+                    <tr>
+                        <td>Memory Limit</td>
+                        <td>300 GB</td>
+                        <td>5,120 GB (256 GB x 20 nodes)</td>
+                    </tr>
+                    <tr>
+                        <td>Data size limits</td>
+                        <td>512 MB (string type)</td>
+                        <td>1 MB</td>
+                    </tr>
+                    <tr>
+                        <td>Latency</td>
+                        <td>Sub-milliseconds</td>
+                        <td>Sub-milliseconds<br>Faster in general</td>
+                    </tr>
+                    <tr>
+                        <td>Distributed caching cluster</td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-thread</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Scaling</td>
+                        <td>Horizontal</td>
+                        <td>Vertical</td>
+                    </tr>
+                    <tr>
+                        <td>Replication</td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction</td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Data Persistence</td>
+                        <td>No (as of GA)</td>
+                        <td>No</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: SCALABILITY & CLUSTERING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Read Scalability &amp; Clustering</h2>
+        </div>
+
+        <div class="prose">
+            <p>Memorystore for Redis clusters distribute data across multiple nodes, improving read scalability.</p>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-network-wired"></i></span>
+                Clustering
+            </h3>
+            <ul>
+                <li><strong>Cluster Size:</strong> Choose based on anticipated read load. Start with a small cluster (e.g., 3 nodes) and scale up as needed. Each additional node increases read capacity linearly.</li>
+                <li><strong>Node Types:</strong> 
+                    <ul>
+                        <li><strong>Primary Node:</strong> Handles writes and reads.</li>
+                        <li><strong>Replica Nodes:</strong> Handle reads only, improving read scalability.</li>
+                    </ul>
+                </li>
+                <li><strong>Cluster Modes:</strong>
+                    <ul>
+                        <li><strong>Standard Mode:</strong> Single primary node with multiple read replicas.</li>
+                        <li><strong>Cluster Mode:</strong> Multiple primary nodes (shards) with their own replicas. Offers better scalability for large datasets and high-throughput scenarios.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="concept-card accent-cyan">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-tachometer-alt"></i></span>
+                Optimizing for Read Scalability
+            </h3>
+            <ul>
+                <li><strong>Connection Pooling:</strong> Efficiently managing client connections is crucial. Incorrectly managing connections can lead to bottlenecks even with a large cluster.</li>
+                <li><strong>Read Replicas:</strong> While Memorystore doesn't offer read replicas in the same way some database systems do, understanding how to effectively distribute read traffic across multiple nodes within a cluster is vital for scalability.</li>
+                <li><strong>Data Partitioning (Sharding):</strong> If the dataset is very large, you might need to consider how to distribute data across different Redis instances (either within a cluster or across multiple clusters) to improve read performance. This involves understanding key strategies for partitioning data based on consistent hashing or other techniques.</li>
+                <li><strong>Caching Strategies:</strong> Understanding how to effectively use Redis's data structures (lists, sets, hashes) and commands to optimize reads is crucial.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 7: DISASTER RECOVERY
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-7">
+            <span class="section-divider-number">07</span>
+            <h2>Disaster Recovery</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Production vs. Development</dt>
+                <dd>Always test failover and scaling in a dedicated development environment to avoid impacting production data and traffic.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>force-data-loss mode</dt>
+                <dd>Employs a chain of failover strategies to aggressively execute the failover. It does not check the offset delta between the primary and replicas before initiating the failover; you can potentially lose more than 30MB of data changes &rarr; <span class="tag coral">testing only</span>.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>limited-data-loss mode</dt>
+                <dd>Minimizes data loss by verifying that the difference in data between the primary and replica is below 30 MB before initiating the failover. The offset on the primary is incremented for each byte of data that must be synchronized to its replicas &rarr; <span class="tag amber">not a complete test</span>.</dd>
+            </dl>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 8: EXAM QUICK REFERENCE
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-8">
+            <span class="section-divider-number">08</span>
+            <h2>Exam Quick Reference</h2>
+        </div>
+
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> Which Google Cloud services can integrate seamlessly with Memorystore without code changes?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">App Engine, Google Compute Engine (GCE), Cloud Functions, and Google Kubernetes Engine (GKE).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> What is the key difference between Basic and Standard Tiers for Redis?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Basic Tier is lower cost and does not provide high availability. Standard Tier supports automatic failover for HA and up to 5 read replicas.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> Can Memorystore be used as a persistent storage database?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">No. Memorystore does not support full data persistence (RDB Snapshot is in Preview), so it should not be used for applications that need to save data to persistent storage.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> When comparing Memorystore to Memcached, what is a distinct feature of Redis regarding data types?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Redis provides powerful data types (Strings, lists, sets, hashes, etc.) while Memcached mainly supports simple string data types.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> What does the force-data-loss failover mode do during testing?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">It aggressively executes failover without checking the offset delta between primary and replica, potentially causing data loss (>30MB). It is meant for testing only.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

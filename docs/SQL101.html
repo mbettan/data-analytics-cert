@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL 101 - Michaël Bettan</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Database Fundamentals
+                </div>
+                <h1>SQL 101<br><em>Structured Query Language</em></h1>
+                <p class="cover-subtitle">
+                    SQL is the standard language for managing relational databases. It allows you to create, modify, and query data efficiently. Essential knowledge for data engineering, analysis, and backend development.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Topic: <strong>Relational Databases</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    SQL Basics & Sublanguages
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Data Types & Operators
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Querying & Search Conditions
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Joins & Combining Data
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Advanced Functions & Techniques
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: SQL BASICS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>SQL Basics & Sublanguages</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li>Defining database structures (tables, views, etc.)</li>
+                    <li>Adding, updating, and deleting data</li>
+                    <li>Retrieving data with precise filtering and sorting</li>
+                    <li>Controlling access to your database</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-history"></i></span>
+                    History & Popular RDBMS
+                </h3>
+                <ul>
+                    <li>Developed in the 1970s at IBM (originally SEQUEL).</li>
+                    <li>Standardized by ANSI and ISO in the 1980s.</li>
+                    <li>Continues to evolve with new features and standards.</li>
+                    <li><strong>Commercial:</strong> Oracle, SQL Server, Db2</li>
+                    <li><strong>Open-Source:</strong> MySQL, PostgreSQL</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <p>
+                SQL commands are grouped into distinct sublanguages based on their primary function within the database.
+            </p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-tools"></i></span>
+                    DDL (Data Definition Language)
+                </h3>
+                <p>Defining the database structure (schema).</p>
+                <ul>
+                    <li><strong>CREATE:</strong> Create databases, tables, views, indexes.
+                        <br><em>CTAS:</em> <code>CREATE TABLE AS SELECT</code> by directly selecting data from an existing table or query.</li>
+                    <li><strong>ALTER:</strong> Modify existing database objects (e.g., add a column to a table).</li>
+                    <li><strong>DROP:</strong> Delete database objects.</li>
+                    <li><strong>TRUNCATE:</strong> Remove all data from a table, but keep the table structure.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-edit"></i></span>
+                    DML (Data Manipulation Language)
+                </h3>
+                <p>Manipulating data within the database.</p>
+                <ul>
+                    <li><strong>SELECT:</strong> Retrieve data from one or more tables.</li>
+                    <li><strong>INSERT:</strong> Add new data into a table.</li>
+                    <li><strong>UPDATE:</strong> Modify existing data in a table.</li>
+                    <li><strong>DELETE:</strong> Remove data from a table.</li>
+                    <li><strong>MERGE:</strong> conditionally update, insert, or delete rows</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-search"></i></span>
+                    DQL (Data Query Language)
+                </h3>
+                <p>Focuses solely on retrieving data.</p>
+                <ul>
+                    <li><strong>SELECT:</strong> core command for querying data, with various clauses for filtering, sorting, and joining.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-pink">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-lock"></i></span>
+                    DCL & TCL
+                </h3>
+                <p><strong>Data Control Language (DCL):</strong> Controlling access.</p>
+                <ul>
+                    <li><strong>GRANT:</strong> Give users specific privileges (e.g., read, write).</li>
+                    <li><strong>REVOKE:</strong> Take away user privileges.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Transaction Control Language (TCL):</strong> Managing transactions (logical units of work).</p>
+                <ul>
+                    <li><strong>COMMIT:</strong> Save changes made within a transaction.</li>
+                    <li><strong>ROLLBACK:</strong> Undo changes made within a transaction.</li>
+                    <li><strong>SAVEPOINT:</strong> Create points within a transaction to potentially roll back to.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: DATA TYPES & OPERATORS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Data Types & Operators</h2>
+        </div>
+
+        <div class="prose">
+            <p>Every column in a database table must have a defined data type. Operators allow you to perform calculations and comparisons on these data types.</p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Numeric Types</dt>
+                <dd>
+                    <strong>INT:</strong> Whole numbers.<br>
+                    <strong>DECIMAL(p, s):</strong> Fixed-point numbers with precision p (total digits) and scale s (digits after the decimal).<br>
+                    <strong>FLOAT:</strong> Single-precision floating-point numbers.<br>
+                    <strong>DOUBLE:</strong> Double-precision floating-point numbers.
+                </dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>String Types</dt>
+                <dd>
+                    <strong>CHAR(n):</strong> Fixed-length strings with a maximum length of n characters.<br>
+                    <strong>VARCHAR(n):</strong> Variable-length strings with a maximum length of n characters.<br>
+                    <strong>TEXT:</strong> Large amounts of text data.
+                </dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Date & Time Types</dt>
+                <dd>
+                    <strong>DATE:</strong> Stores a date (YYYY-MM-DD).<br>
+                    <strong>TIME:</strong> Stores a time (HH:MM:SS).<br>
+                    <strong>DATETIME:</strong> Stores both date and time.<br>
+                    <strong>TIMESTAMP:</strong> Stores a timestamp, which is a specific point in time.
+                </dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Other Data Types</dt>
+                <dd>
+                    <strong>BOOLEAN:</strong> True or False values.<br>
+                    <strong>BLOB:</strong> Binary Large Object, for storing binary data (e.g., images).
+                </dd>
+            </dl>
+        </div>
+
+        <div class="concept-card accent-blue">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-calculator"></i></span>
+                Operators
+            </h3>
+            <ul>
+                <li><strong>Math:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo)</li>
+                <li><strong>Comparison:</strong> <code>=</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code></li>
+                <li><strong>String:</strong> <code>||</code> (concatenation), <code>LIKE</code>, <code>NOT LIKE</code> (pattern matching)</li>
+                <li><strong>Variables:</strong> (Vary by database system, often prefixed with <code>@</code> or <code>:</code>)</li>
+                <li><strong>Logical:</strong> <code>AND</code>, <code>OR</code>, <code>NOT</code></li>
+                <li><strong>Bitwise:</strong> <code>&</code> (AND), <code>|</code> (OR), <code>^</code> (XOR), <code>~</code> (NOT)</li>
+                <li><strong>Miscellaneous:</strong> <code>IN</code>, <code>BETWEEN</code>, <code>IS NULL</code>, <code>IS NOT NULL</code></li>
+                <li><strong>Comments:</strong> Single-line: <code>-- This is a comment</code> | Multi-line: <code>/* This is a multi-line comment */</code></li>
+            </ul>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-sort-numeric-down"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Operator Precedence</h4>
+                <p>SQL follows general mathematical order of operations (parentheses first, then multiplication/division, then addition/subtraction, etc.).</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: QUERYING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Querying & Search Conditions</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-filter"></i></span>
+                Search Conditions & Clauses
+            </h3>
+            <ul>
+                <li><strong>WHERE clause:</strong> Filters data based on specified conditions (e.g., WHERE age > 25).</li>
+                <li><strong>FROM & JOIN:</strong> Specifies the table(s) to retrieve data from and how to join them if multiple tables are involved.</li>
+                <li><strong>GROUP BY:</strong> Groups rows with the same values in one or more columns.</li>
+                <li><strong>HAVING:</strong> Filters grouped data (used with GROUP BY).</li>
+                <li><strong>ORDER BY:</strong> Sorts the result set by one or more columns (ascending <code>ASC</code> or descending <code>DESC</code>).</li>
+                <li><strong>TOP / LIMIT:</strong> Limits the number of rows returned (e.g., TOP 10 or LIMIT 10).</li>
+                <li><strong>INTO:</strong> (Used in some database systems to insert data into a new table).</li>
+            </ul>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-layer-group"></i></span>
+                    Aggregate Functions
+                </h3>
+                <p>GROUP BY is necessary when you want to apply aggregate functions to subsets of your data. For the entire dataset, not needed.</p>
+                <ul>
+                    <li><strong>SUM:</strong> Total of numeric values.</li>
+                    <li><strong>AVG:</strong> Average of numeric values.</li>
+                    <li><strong>MIN/MAX:</strong> Retrieve the minimum or maximum value.</li>
+                    <li><strong>COUNT:</strong> Count the number of rows.</li>
+                    <li><strong>ROUND:</strong> Round a numeric value to a specified number of decimal places.</li>
+                    <li><strong>ARRAY_AGG:</strong> gathers values from multiple rows and puts them into an array.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-code-branch"></i></span>
+                    Conditional Queries & SubQueries
+                </h3>
+                <p><strong>Conditional:</strong></p>
+                <ul>
+                    <li><strong>CASE:</strong> Conditionally return different values.</li>
+                    <li><strong>COALESCE:</strong> Return the first non-null value.</li>
+                    <li><strong>CAST:</strong> Convert a value to a different data type.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>SubQueries:</strong></p>
+                <ul>
+                    <li><strong>IN/EXISTS:</strong> Test for the presence of rows in a subquery.</li>
+                    <li><strong>Correlated Subquery:</strong> Subquery that references columns from the outer query.</li>
+                    <li><strong>CTE (WITH):</strong> Define temporary result sets.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: JOINS & COMBINING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Joins & Combining Data</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-link"></i></span>
+                    Joins (inclusive)
+                </h3>
+                <ul>
+                    <li><strong>(INNER) JOIN:</strong> returns rows with matching values in both tables</li>
+                    <li><strong>LEFT JOIN:</strong> returns all rows from the left table and matching rows from the right</li>
+                    <li><strong>RIGHT JOIN:</strong> returns all rows from the right table and matching rows from the left</li>
+                    <li><strong>FULL (OUTER) JOIN:</strong> returns all rows from both sides even if join condition is not met</li>
+                    <li><strong>CROSS JOIN:</strong> returns all possible combinations of rows (cartesian product)</li>
+                    <li><strong>Self-join:</strong> is a join where a table is joined with itself. It allows you to compare rows within the same table. Useful when you need to compare or relate data from different rows of the same table.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-object-group"></i></span>
+                    Combine Data
+                </h3>
+                <ul>
+                    <li><strong>UNION:</strong> Combine results of two queries, removing duplicates.</li>
+                    <li><strong>UNION ALL:</strong> Combine results without removing duplicates. (SQL operator that appends together rows from different result sets).</li>
+                    <li><strong>EXCEPT:</strong> Return rows from the first query not found in the second.</li>
+                    <li><strong>INTERSECT:</strong> Return rows common to both queries.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout warning">
+            <div class="callout-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Union vs Join</h4>
+                <p><strong>Union</strong> combines the rows of two or more tables with similar structures (same number of columns and compatible data types). Removes duplicate rows by default (unless UNION ALL). Think of it as stacking tables on top of each other.</p>
+                <p><strong>Join</strong> combines columns from two or more tables based on a related column between them. Link information from different tables. Determine which rows are included in the output based on matches in the join condition.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: ADVANCED FUNCTIONS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Advanced Functions & Techniques</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-font"></i></span>
+                    String Functions
+                </h3>
+                <ul>
+                    <li><strong>UPPER/LOWER:</strong> Convert text to uppercase or lowercase.</li>
+                    <li><strong>LENGTH:</strong> Calculate the length of a string.</li>
+                    <li><strong>SUBSTR:</strong> Extract a substring from a string.</li>
+                    <li><strong>Concatenation:</strong> Combine strings together.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-square-root-alt"></i></span>
+                    Mathematical Functions
+                </h3>
+                <ul>
+                    <li><strong>SAFE_DIVIDE(x, y):</strong> divides, but returns NULL if dividing by zero</li>
+                    <li><strong>ROUND(x [, N]):</strong> rounds x to N decimal places (or nearest integer if N is omitted)</li>
+                    <li><strong>MOD(x, y):</strong> gives the remainder of x divided by y.</li>
+                    <li><strong>ABS(x):</strong> returns the positive version of x.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-window-restore"></i></span>
+                    Window & Ranking Functions
+                </h3>
+                <p><strong>Window Functions:</strong></p>
+                <ul>
+                    <li><strong>PARTITION BY:</strong> divide the result set into partitions for calculations.</li>
+                    <li><strong>ORDER BY:</strong> define the order of rows within a partition.</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>Ranking data:</strong></p>
+                <ul>
+                    <li><strong>RANK:</strong> Assign ranks to rows, leaving gaps for ties.</li>
+                    <li><strong>DENSE_RANK:</strong> Assign ranks without gaps for ties.</li>
+                    <li><strong>ROW_NUMBER:</strong> Assign a unique number to each row.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="prose">
+            <h3>Miscellaneous Concepts</h3>
+        </div>
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Table wildcards</dt>
+                <dd>Enable you to query multiple tables using concise SQL statements. Wildcard tables are available only in standard SQL.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>DISTINCT</dt>
+                <dd>Operates on columns: The keyword is used to return unique rows based on the values in specified columns. It eliminates duplicate rows. You can't directly apply DISTINCT to a single column while selecting other columns. DISTINCT works on the entire row, considering all the columns you specify in the SELECT statement.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>NEST</dt>
+                <dd>Combines values from multiple rows into a single row with an array (like creating those smaller boxes).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>UNNEST</dt>
+                <dd>Expands an array into multiple rows (like taking the toys out of the smaller boxes).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>STRUCT</dt>
+                <dd>Lets you organize related data within a single column, making your data more structured and easier to work with.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>LAG</dt>
+                <dd>Window function in SQL used to access data from a previous row (or rows) within the same result set without needing to perform a self-join. It’s helpful when you need to compare the current row with the previous one in a specific order.</dd>
+            </dl>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

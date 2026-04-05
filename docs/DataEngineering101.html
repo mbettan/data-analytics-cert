@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Engineering 101 - Michaël Bettan</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-graduation-cap"></i>
+                    Study Notes — Certification Prep
+                </div>
+                <h1>Data Engineering 101<br><em>Michaël Bettan</em></h1>
+                <p class="cover-subtitle">
+                    Comprehensive study notes covering data engineering fundamentals, data pipelines, architectures (Data Lake vs Data Mesh), databases, formats, and orchestration.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Definition & Core Concepts
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    OLTP vs OLAP & Storage
+                    <span class="toc-dots"></span>
+                </a>
+                 <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Data Architectures & Formats
+                    <span class="toc-dots"></span>
+                </a>
+                 <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Data Warehouses & Pipelines
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Databases & Modeling
+                    <span class="toc-dots"></span>
+                </a>
+                 <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Advanced Concepts & Tooling
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: Definition & Core Concepts
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Definition &amp; Core Concepts</h2>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Definition</h4>
+                <p>Data engineering enables data-driven decision making by collecting, transforming, and visualizing data. A data engineer designs, builds, maintains, and troubleshoots data processing systems with a particular emphasis on the security, reliability, fault-tolerance, scalability, fidelity, and efficiency of such systems.</p>
+            </div>
+        </div>
+
+        <div class="concept-card accent-mint">
+             <h3>
+                <span class="icon-badge"><i class="fas fa-cubes"></i></span>
+                Big Data's 3 Vs
+            </h3>
+            <p>Describe the core characteristics that distinguish it from traditional data:</p>
+            <ul>
+                <li><strong>Volume:</strong> refers to the massive amount of data</li>
+                <li><strong>Velocity:</strong> to the speed at which it's generated and processed</li>
+                <li><strong>Variety:</strong> to the different formats it comes in (structured, semi-structured, unstructured).</li>
+            </ul>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li>Build/maintain data structures and databases</li>
+                    <li>Design data processing systems</li>
+                    <li>Analyze data and enable machine learning</li>
+                    <li>Design for reliability</li>
+                    <li>Visualize data and advocate policy</li>
+                    <li>Model business processes for analysis</li>
+                    <li>Design for security and compliance</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-project-diagram"></i></span>
+                    Data Engineers' Role
+                </h3>
+                <p>Build data pipelines to enable data-driven decisions:</p>
+                <ul>
+                    <li>Get the data to where it can be useful</li>
+                    <li>Get the data into a usable condition</li>
+                    <li>Add new value to the data</li>
+                    <li>Manage the data</li>
+                    <li>Productionize data processes</li>
+                    <li>Understand how to manipulate data formats, scale data systems, and enforce data quality and security.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Durability</dt>
+                <dd>Ensures that data remains intact and persistent, even in the event of system failures such as hardware crashes or power outages. It guarantees data integrity and the ability to recover information, safeguarding it from loss.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Availability</dt>
+                <dd>Guarantees that data is always accessible when needed. Systems are built with redundancy and fault tolerance to minimize downtime, ensuring continuous and reliable access to information.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Low Latency</dt>
+                <dd>minimal delay between a data request and its response. Low latency is critical for real-time or near real-time data processing, especially in time-sensitive applications like online gaming and financial transactions.</dd>
+            </dl>
+        </div>
+        
+        <div class="concept-card accent-coral">
+             <h3>
+                <span class="icon-badge"><i class="fas fa-database"></i></span>
+                Types of data structures
+            </h3>
+            <ul>
+                <li><strong>Structured data</strong> has a fixed schema (such as RDBMS)</li>
+                <li><strong>Semi-streaming data</strong> has a flexible schema (can vary)</li>
+                <li><strong>Unstructured data</strong> does not have a structure used to determine how to store data → text, video, images, etc.</li>
+            </ul>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: OLTP vs OLAP & Storage
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>OLTP vs OLAP &amp; Storage</h2>
+        </div>
+
+        <div class="two-columns">
+             <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-exchange-alt"></i></span>
+                    OLTP (Online Transaction Processing)
+                </h3>
+                <p>Focuses on high-volume, short transactions, prioritizing data integrity and consistency (e.g., banking transactions, e-commerce orders). ACID properties are crucial. Normalized schemas are common.</p>
+            </div>
+             <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-pie"></i></span>
+                    OLAP (Online Analytical Processing)
+                </h3>
+                <p>Designed for complex queries, aggregations, and analysis over large datasets. Speed and flexibility for analytical queries are prioritized. Denormalized schemas (star/snowflake) are common.</p>
+            </div>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-columns"></i></span>
+                Row-level vs Column-level
+            </h3>
+            <p><strong>RDBMS:</strong> row-based storage, all the fields (columns) for a given row are stored together. However, in columnar storage, the data for each column is stored independently.</p>
+            <ul>
+                <li><strong>Efficient Querying:</strong> Since data in each column is stored separately, queries that access only specific columns can be executed much faster because BigQuery doesn't need to read entire rows into memory—just the relevant columns. For example, if you have a table with 10 columns but your query only references 2 of them, BigQuery only reads and processes those 2 columns, which reduces the amount of data read from storage.</li>
+                <li><strong>Better Compression:</strong> Columns often have repeating or similar values (like IDs, dates, etc.), making them highly compressible. By storing each column separately, BigQuery can apply more efficient compression algorithms, further reducing storage costs.</li>
+                <li><strong>Optimized for Analytics:</strong> Columnar storage is particularly effective for analytical workloads where large datasets are scanned for a few fields (columns) to produce reports or insights.</li>
+            </ul>
+        </div>
+        
+         <div class="concept-card accent-purple">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-server"></i></span>
+                RDBMS & ACID
+            </h3>
+            <p>Relational Database Management Systems allows you to create, update, and manage a relational database, and ensure data integrity through ACID properties</p>
+            <ul>
+                <li><strong>Atomicity:</strong> All changes in a transaction are treated as a single unit.</li>
+                <li><strong>Consistency:</strong> Data remains consistent before and after a transaction.</li>
+                <li><strong>Isolation:</strong> Multiple transactions don't interfere with each other.</li>
+                <li><strong>Durability:</strong> Once a transaction is committed, the changes are permanent.</li>
+            </ul>
+            <br>
+            <p><strong>Strong consistency:</strong> every operation (read or write) guarantees that all transactions are in the same order</p>
+            <p><strong>Eventual consistency:</strong> parallel processes can see changes in different orders or temporarily inconsistent states, but over time, the system guarantees that all processes will converge on the same final state.</p>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: Data Architectures & Formats
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Data Architectures &amp; Formats</h2>
+        </div>
+
+        <div class="two-columns">
+             <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-water"></i></span>
+                    Data Lake
+                </h3>
+                <p>Suitable for organizations with a strong central IT team and a need for a cost-effective solution to store large volumes of raw data. Best when exploring data and use cases aren't clearly defined.</p>
+                <p><strong>Table Format: Data Lake</strong></p>
+                 <ul>
+                    <li>Brings together data from across the enterprise into a single and consolidated location → Cloud Storage</li>
+                    <li><strong>Solves for these pain points:</strong>
+                        <ul>
+                            <li>Getting insights across multiple datasets is difficult</li>
+                            <li>Data is often siloed in many upstream source systems.</li>
+                            <li>Cleaning, formatting and getting the data ready for useful business insights in a data warehouse</li>
+                        </ul>
+                    </li>
+                     <li><strong>Key considerations:</strong> Can it handle all types of data? Can it scale? High-throughput? Fine-grained access control? Easy tool connection?</li>
+                </ul>
+            </div>
+             <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-network-wired"></i></span>
+                    Data Mesh
+                </h3>
+                <p>Ideal for large, complex organizations with diverse data domains and a need for greater agility and data ownership. Requires a significant cultural shift and investment in training and infrastructure.</p>
+                 <p>Promotes <strong>distributed data ownership</strong> while <strong>centralizing governance</strong> and <strong>data discoverability</strong>. It shifts the responsibility for managing, producing, and consuming data to <strong>domain-specific teams</strong>.</p>
+                 <ul>
+                     <li><strong>Domain-Oriented Data Ownership:</strong> Each domain owns and manages its data.</li>
+                     <li><strong>Data as a Product:</strong> Useful, documented, and accessible via APIs.</li>
+                     <li><strong>Federated Governance:</strong> Centralized rules ensure compliance (e.g., Dataplex).</li>
+                     <li><strong>Self-Service Infrastructure:</strong> Teams are empowered to manage data.</li>
+                 </ul>
+            </div>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Data Lake vs Data Mesh</h4>
+                <p>Centralized vs Decentralized | Schema-on-read vs Schema-on-write | IT-centric vs Data products/Domain-centric</p>
+            </div>
+        </div>
+        
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-file-alt"></i></span>
+                Choosing the right file format
+            </h3>
+            <ul>
+                <li><strong>Data access patterns:</strong> Are you primarily performing analytical queries or row-wise operations?</li>
+                <li><strong>Data size and storage costs:</strong> How much data are you storing, and what are your storage budget constraints?</li>
+                <li><strong>Schema evolution requirements:</strong> How often do you expect your data schema to change?</li>
+                <li><strong>Data quality needs:</strong> How important is schema enforcement and data validation?</li>
+                <li><strong>Tooling and ecosystem:</strong> What tools and technologies are you using to process and analyze your data?</li>
+            </ul>
+        </div>
+
+         <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Description</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CSV</td>
+                        <td>Simple text format, rows separated by commas. Lacks data type enforcement.</td>
+                        <td>Small datasets, simple data exchange, human readability.</td>
+                    </tr>
+                    <tr>
+                        <td>Parquet</td>
+                        <td>Columnar storage optimized for analytical queries. Better compression/performance than CSV.</td>
+                        <td>Analytical workloads needing high performance, compression, schema evolution.</td>
+                    </tr>
+                    <tr>
+                        <td>Avro</td>
+                        <td>Row-oriented format based on schemas. Supports schema evolution, good compression.</td>
+                        <td>Data serialization and streaming applications where schema evolution is paramount.</td>
+                    </tr>
+                    <tr>
+                        <td>ORC</td>
+                        <td>Optimized Row Columnar. Combines row/columnar aspects. Good compression/querying.</td>
+                        <td>Hive workloads requiring ACID properties and optimized for columnar access.</td>
+                    </tr>
+                    <tr>
+                        <td>JSON</td>
+                        <td>Human-readable, key-value pairs. Flexible but challenging to query efficiently at scale.</td>
+                        <td>Web APIs and document databases where flexibility is important.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="two-columns">
+             <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-layer-group"></i></span>
+                    Table Format: Iceberg
+                </h3>
+                <p>A high-level management layer for your data lake. Provides essential features:</p>
+                <ul>
+                    <li><strong>ACID Properties:</strong> Atomicity, consistency, isolation, durability.</li>
+                    <li><strong>Schema Evolution:</strong> Add/remove/modify columns without rewriting dataset.</li>
+                    <li><strong>Hidden Partitioning:</strong> Manages partitioning efficiently behind the scenes.</li>
+                    <li><strong>Time Travel:</strong> Tracks history, allowing queries of past snapshots.</li>
+                </ul>
+                <p>Data stored in Parquet/Avro/ORC. Metadata tracks schema, location, partitioning, snapshots.</p>
+            </div>
+             <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-hive"></i></span>
+                    Table Formats: Hive & Delta Lake
+                </h3>
+                <p><strong>Hive:</strong> Data warehouse system on Hadoop for querying large datasets (batch, SQL-like).</p>
+                 <ul>
+                    <li>ACID: Limited support (Hive ACID tables/ORC).</li>
+                    <li>Schema Evolution: Supported.</li>
+                    <li>Partitioning: Directory-based.</li>
+                </ul>
+                <p><strong>Delta Lake:</strong> Open-source storage layer providing ACID transactions for data lakes (often with Spark).</p>
+                <ul>
+                     <li>ACID Transactions: Full support.</li>
+                     <li>Schema Evolution: Enforcement & evolution.</li>
+                     <li>Time Travel & Partitioning supported.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Data Serialization</dt>
+                <dd>The process of transforming a complex data structure into a format that can be easily stored or transmitted and then reconstructed later. (e.g., JSON, XML, CSV, Protocol Buffer).</dd>
+            </dl>
+             <dl class="definition-item">
+                <dt>Protocol Buffer (protobuf)</dt>
+                <dd>Mechanism for serializing structured data in a language- and platform-neutral way. Compact, fast. Often used for microservices communication and defining API contracts.</dd>
+            </dl>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: Data Warehouses & Pipelines
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Data Warehouses &amp; Pipelines</h2>
+        </div>
+        
+        <div class="concept-card accent-blue">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-warehouse"></i></span>
+                Data Warehouse
+            </h3>
+            <p>Stores transformed data in a usable condition for business insights (e.g., BigQuery, Snowflake).</p>
+            <ul>
+                <li><strong>RDBMS</strong> are optimized for high throughput WRITES to RECORDS. Cloud SQL databases are <strong>RECORD-based storage</strong>.</li>
+                <li><strong>BigQuery</strong> is <strong>COLUMN-based storage</strong> that allows for really wide reporting schemas.</li>
+                <li><strong>Upstream processes:</strong> Data acquisition, integration, preparation.</li>
+                <li><strong>Downstream processes:</strong> Data consumption, analysis, reporting.</li>
+            </ul>
+             <p><strong>Choosing cloud over on-premises:</strong> Cost reduction/Scalability, Reduced maintenance/Increased agility, Enhanced accessibility/Collaboration.</p>
+        </div>
+
+        <div class="concept-card accent-mint">
+             <h3>
+                <span class="icon-badge"><i class="fas fa-random"></i></span>
+                Standard workflow & lifecycle
+            </h3>
+            <ol class="numbered-steps">
+                <li><strong>Collect:</strong> raw data, such as streaming data from devices, on-premises batch data, application logs, or mobile-app user events and analytics</li>
+                <li><strong>Store:</strong> the data in a format that is durable and accessible into a data lake or data warehouse</li>
+                <li><strong>Process or enrich:</strong> to make the data useful for the downstream systems for analysis</li>
+                <li><strong>Analyze:</strong> data exploration, ad-hoc querying and analysis</li>
+                <li><strong>Empower:</strong> data visualization, sharing and activation to derive business value and insights from data</li>
+            </ol>
+        </div>
+
+        <div class="two-columns">
+             <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-satellite-dish"></i></span>
+                    Collect mechanisms
+                </h3>
+                <ul>
+                    <li><strong>Application:</strong> push model (Cloud Logging, Pub/Sub, CloudSQL, Spanner)</li>
+                    <li><strong>Streaming:</strong> continuous stream of small, asynchronous messages (IoT telemetry, user events → Pub/Sub)</li>
+                    <li><strong>Batching:</strong> large amounts transferred in bulk (scientific workloads, backups → Storage Transfer Service)</li>
+                </ul>
+            </div>
+             <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-project-diagram"></i></span>
+                    Data Pipeline patterns
+                </h3>
+                 <ul>
+                    <li><strong>Needs additional processing?</strong> → Data processing (Dataproc or Dataflow)</li>
+                    <li><strong>Arrives continuously?</strong> → Data streaming (Pub/Sub + Dataflow)</li>
+                    <li><strong>ETL (Extract, Transform, Load):</strong> Data is loaded into a database <em>after</em> transformation.</li>
+                    <li><strong>ELT (Extract, Load, Transformation):</strong> Data is loaded into a database <em>before</em> transforming.</li>
+                    <li><strong>EL (Extraction, Load):</strong> No transform needed.</li>
+                    <li><strong>CDC (Change Data Capture):</strong> Captures changes over time in source system.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout warning">
+            <div class="callout-icon">
+                <i class="fas fa-stream"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Batch vs Streaming</h4>
+                <p><strong>Batch:</strong> For bounded, finite datasets, delayed processing. Choose if high throughput > low latency, data is finite, complex transforms needed.</p>
+                <p><strong>Streaming:</strong> For unbounded datasets, continuous updates, immediate processing. Uses message queue. Choose if low latency is crucial (fraud detection), data continuous, immediate feedback required. <em>Main challenge: out of order data.</em></p>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: Databases & Modeling
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Databases &amp; Modeling</h2>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Relational</th>
+                        <th>Document</th>
+                        <th>Wide-Column</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data Model</td>
+                        <td>Table</td>
+                        <td>JSON/BSON document</td>
+                        <td>Sparse multidimensional array</td>
+                    </tr>
+                    <tr>
+                        <td>Schema</td>
+                        <td>Fixed</td>
+                        <td>Flexible</td>
+                        <td>Flexible within column families</td>
+                    </tr>
+                    <tr>
+                        <td>Scalability</td>
+                        <td>Vertical</td>
+                        <td>Horizontal</td>
+                        <td>Horizontal</td>
+                    </tr>
+                    <tr>
+                        <td>Querying</td>
+                        <td>SQL</td>
+                        <td>Specific query languages</td>
+                        <td>Specific query languages</td>
+                    </tr>
+                    <tr>
+                        <td>Transactions</td>
+                        <td>ACID</td>
+                        <td>Limited</td>
+                        <td>Limited</td>
+                    </tr>
+                     <tr>
+                        <td>Use Cases</td>
+                        <td>Transactional systems, structured data</td>
+                        <td>Content management, e-commerce, user profiles</td>
+                        <td>Time-series data, analytics, large datasets</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="two-columns">
+             <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-star"></i></span>
+                    Star Schema
+                </h3>
+                <p>EDW schema that organizes data into fact and dimension tables.</p>
+                <ul>
+                    <li><strong>Fact Table:</strong> Contains quantitative data (facts) like sales, revenue. Holds foreign keys to dimension tables.</li>
+                    <li><strong>Dimension Tables:</strong> Smaller tables describing attributes of facts (Date, Customer, Product).</li>
+                </ul>
+                <p><strong>Features:</strong> Denormalized dimensions (some redundancy), simple joins, faster query performance for analytics.</p>
+            </div>
+             <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-snowflake"></i></span>
+                    Snowflake Schema
+                </h3>
+                <p>Extension of Star Schema, dimension tables are further normalized.</p>
+                <ul>
+                    <li><strong>Normalized Dimension Tables:</strong> Dimension tables are split into multiple related tables (e.g., Product → Product Category, Subcategory).</li>
+                </ul>
+                 <p><strong>Features:</strong> Normalized dimensions (less redundancy), complex joins, storage efficiency over query speed.</p>
+            </div>
+        </div>
+
+        <div class="concept-card accent-pink">
+             <h3>
+                <span class="icon-badge"><i class="fas fa-exclamation-circle"></i></span>
+                Avoid anti-SQL patterns
+            </h3>
+            <ul>
+                <li><strong>Self-joins:</strong> potentially squares output rows, causing poor performance.</li>
+                <li><strong>Cross joins:</strong> joins every row to every row.</li>
+                <li><strong>Single-Row DML:</strong> to treat EDW like an OLTP system.</li>
+                <li><strong>Lack of Foreign Keys:</strong> leads to data integrity issues.</li>
+                <li><strong>Generic Primary Keys:</strong> (auto-incrementing) can obscure relationships.</li>
+            </ul>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: Advanced Concepts & Tooling
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Advanced Concepts &amp; Tooling</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Data marts</dt>
+                <dd>Siloed copies of some of the data stored in a data warehouse to offload analytic activity and preserve performance. Fulfills the request of a specific division.</dd>
+            </dl>
+             <dl class="definition-item">
+                <dt>Time-series data</dt>
+                <dd>Sequence of data points indexed in time order (CPU utilization, stock pricing).</dd>
+            </dl>
+             <dl class="definition-item">
+                <dt>Data orchestration tools</dt>
+                <dd>e.g., Apache Airflow, focus on orchestration only and structure the flow of data as a series of sequential tasks.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>DataOps</dt>
+                <dd>Brings together data engineers, scientists, analysts to apply agile best practices to the data lifecycle.</dd>
+            </dl>
+             <dl class="definition-item">
+                <dt>OLAP cube</dt>
+                <dd>Data structure for fast analysis according to multiple dimensions.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Data Wrangling</dt>
+                <dd>Process of cleaning, transforming, and preparing data for analysis (handling missing values, etc.).</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-cogs"></i></span>
+                    Data Transformation
+                </h3>
+                <ul>
+                    <li><strong>Denormalization:</strong> Adding precomputed redundant data to improve read performance (can increase storage costs).</li>
+                    <li><strong>Normalization:</strong> Removing redundancy (better for integrity, slower queries).</li>
+                    <li><strong>Standardizing:</strong> converting data types.</li>
+                    <li><strong>Cleansing:</strong> resolving inaccuracies.</li>
+                    <li><strong>Mapping:</strong> combining elements.</li>
+                    <li><strong>Deduplication:</strong> eliminating duplicate copies.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-bolt"></i></span>
+                    Streaming semantics
+                </h3>
+                <p>Ensuring processing is accurate/reliable despite failures.</p>
+                <ul>
+                    <li><strong>Exactly-Once:</strong> Each record processed exactly one time (difficult to achieve).</li>
+                    <li><strong>At-Least-Once:</strong> Processed at least once (can lead to duplicates, requires idempotence).</li>
+                    <li><strong>At-Most-Once:</strong> Processed at most once (weakest, records may be lost).</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="concept-card accent-blue">
+             <h3>
+                <span class="icon-badge"><i class="fas fa-sitemap"></i></span>
+                Distributed Systems Concepts
+            </h3>
+            <ul>
+                <li><strong>Hot Spotting:</strong> A specific partition receiving a disproportionately high volume of requests (access patterns).</li>
+                <li><strong>Data Skew:</strong> Uneven distribution of data across partitions.</li>
+                <li><strong>Shuffling:</strong> Data redistribution across nodes based on a key (network-intensive, e.g., Spark joins).</li>
+                <li><strong>Data lineage:</strong> Tracing and visualizing the flow of data from origin to destination.</li>
+                <li><strong>Data tiering:</strong> Classifying data (hot/cold) to optimize storage costs in data lakes/warehouses.</li>
+                <li><strong>Idempotence:</strong> Operation can be applied multiple times without changing the result (vital for retries).</li>
+            </ul>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Data Build Tool (DBT)</h4>
+                <p>SQL-first transformation workflow following software engineering best practices.</p>
+                <p><strong>Pros:</strong> Strong community, excels at complex logic, modularity, wide support.</p>
+                <p><strong>Cons:</strong> Steeper learning curve, less focus on orchestration, limited built-in testing.</p>
+            </div>
+        </div>
+
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal (if any quizzes added later)
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

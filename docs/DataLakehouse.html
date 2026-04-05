@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Lakehouse — Michaël Bettan</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-book-open"></i>
+                    Architecture Notes
+                </div>
+                <h1>Data Lakehouse<br><em>Michaël Bettan</em></h1>
+                <p class="cover-subtitle">
+                    Comprehensive study notes covering Data Lakehouse concepts, comparing Data Lake vs Warehouse, Medallion &amp; Lambda architectures, open table formats (Delta, Iceberg, UniForm), and Databricks platform fundamentals.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Topic: <strong>Data Architecture</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-database"></i>
+                        <span>Focus: <strong>Lakehouse &amp; Delta Lake</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card mint">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Architectures Compared</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Medallion Zones</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Open Table Formats</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Platform Planes</div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview: Lake vs Warehouse vs Lakehouse
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Medallion &amp; Lambda Architectures
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Core Principles &amp; Architecture
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Open Table Formats
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Platform &amp; Metadata Management
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: OVERVIEW
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview: Lake vs Warehouse vs Lakehouse</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                The Lakehouse architecture leverages cloud object storage combined with open standards like Delta Lake to provide ACID transactions and robust governance. This approach supports record-level updates and eliminates the complexity of separate lake and warehouse systems.
+            </p>
+        </div>
+
+        <div class="three-columns">
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-water"></i></span> Data Lake</h3>
+                <p>Stores raw data in various formats at low cost but lacks structure, governance, and performance for complex queries.</p>
+            </div>
+            <div class="concept-card accent-amber">
+                <h3><span class="icon-badge"><i class="fas fa-database"></i></span> Data Warehouse</h3>
+                <p>Stores structured data optimized for fast querying and BI use cases but can be expensive and inflexible for diverse data types. Traditionally uses schema-on-write and offers ACID transactions.</p>
+            </div>
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-house-user"></i></span> Data Lakehouse</h3>
+                <p>Combines the best of both worlds, offering low-cost storage, diverse data types, and excellent performance with robust governance.</p>
+                <ul>
+                    <li>Solves data lake challenges (data duplication, inconsistent data, lack of schema enforcement).</li>
+                    <li>Solves data warehouse challenges (rigidity, difficulty in making changes).</li>
+                    <li>Single processing path: Spark handles both batch and streaming incrementally.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-purple">
+                <h3><span class="icon-badge"><i class="fas fa-bolt"></i></span> Spark</h3>
+                <p>Acts as the primary processing engine, unifying real-time and batch workloads under a single, incremental computational path.</p>
+            </div>
+            <div class="concept-card accent-cyan">
+                <h3><span class="icon-badge"><i class="fas fa-layer-group"></i></span> Delta Lake</h3>
+                <p>An open storage layer utilizing Parquet files and a transaction log (stored in <code>_delta_log/</code>) to provide ACID integrity, schema enforcement, and time travel across cloud-native object storage.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: ARCHITECTURES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Medallion &amp; Lambda Architectures</h2>
+        </div>
+
+        <div class="prose">
+            <p><strong>Medallion Architecture</strong> uses zones to manage data quality and usability, progressively improving data structure as it flows through the lakehouse.</p>
+        </div>
+
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="process-step-number">ZONE 1</div>
+                <h4>Source</h4>
+                <p>Data originates directly from databases, files, or streams. Raw form, varying quality/governance.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">ZONE 2</div>
+                <h4>Bronze</h4>
+                <p>Ingested as-is, usually Delta format. Contains history &amp; duplicates. Primary goal is streamlined loading.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">ZONE 3</div>
+                <h4>Silver</h4>
+                <p>Cleaned, quality rules applied, duplicates removed via merge. Contains data for business decisions.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">ZONE 4</div>
+                <h4>Gold</h4>
+                <p>Curated and optimized (aggregations, joins) to answer business questions. Tuned for reading/dashboards.</p>
+            </div>
+        </div>
+
+        <div class="prose">
+            <p><strong>Lambda Architecture</strong> attempts to balance low-latency and high-throughput processing using two paths. However, a lakehouse simplifies this by employing a single processing path (Spark) for both real-time and batch workflows.</p>
+        </div>
+
+        <div class="three-columns">
+            <div class="concept-card accent-coral">
+                <h3><span class="icon-badge"><i class="fas fa-fire"></i></span> Speed Layer (Hot Path)</h3>
+                <p>Processes near real-time data using stream processing (Storm, Flink, Kafka). Quick but potentially inaccurate results; accuracy sacrificed for speed.</p>
+            </div>
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-snowflake"></i></span> Batch Layer (Cold Path)</h3>
+                <p>Processes in batches (Hadoop, Spark) handling historical data for comprehensive, accurate computations. Eventual correction of speed layer.</p>
+            </div>
+            <div class="concept-card accent-mint">
+                <h3><span class="icon-badge"><i class="fas fa-concierge-bell"></i></span> Serving Layer</h3>
+                <p>Combines and serves results from both speed and batch layers for a unified view of the data.</p>
+            </div>
+        </div>
+
+        <div class="callout warning">
+            <div class="callout-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="callout-content">
+                <h4>Challenges with Lambda Architecture</h4>
+                <p><strong>Complexity:</strong> Maintaining two codebases is complex and expensive.<br>
+                <strong>Data Duplication:</strong> Processing data twice increases storage costs.<br>
+                <strong>Inconsistency:</strong> Reconciling paths can cause temporary data inconsistencies.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: CORE PRINCIPLES & ARCHITECTURE
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Core Principles &amp; Architecture</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3><span class="icon-badge"><i class="fas fa-star"></i></span> Lakehouse Core Principles</h3>
+            <ul class="checklist">
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>Open Formats:</strong> Leverages open standards like Apache Parquet and Delta Lake to prevent vendor lock-in.</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>ACID Transactions:</strong> Ensures data integrity on cloud object storage through robust transaction logs.</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>Schema Enforcement &amp; Evolution:</strong> Protects data quality while supporting governed structural changes.</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>Unified Governance:</strong> Standardizes security and discovery (e.g., Unity Catalog).</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>BI + ML on same data:</strong> Eliminates redundant data silos and costs.</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>Decoupled Storage &amp; Compute:</strong> Scales independently to optimize TCO and performance.</li>
+                <li><span class="check-icon"><i class="fas fa-check"></i></span> <strong>Streaming + Batch unified:</strong> Identical APIs and Delta tables for both workloads.</li>
+            </ul>
+        </div>
+
+        <div class="diagram-block">
+            <div class="diagram-title">
+                <i class="fas fa-sitemap"></i>
+                Lakehouse Architecture Layers
+            </div>
+            <div class="architecture-flow">
+                <div class="arch-node input">
+                    <i class="fas fa-plug"></i><br>
+                    Ingestion Layer<br>
+                    <small>Raw Data</small>
+                </div>
+                <i class="fas fa-arrow-right arch-arrow"></i>
+                <div class="arch-node storage">
+                    <i class="fas fa-database"></i><br>
+                    Storage Layer<br>
+                    <small>Delta/Parquet</small>
+                </div>
+                <i class="fas fa-arrow-right arch-arrow"></i>
+                <div class="arch-node process">
+                    <i class="fas fa-tags"></i><br>
+                    Metadata Layer<br>
+                    <small>Unity Catalog</small>
+                </div>
+                <i class="fas fa-arrow-right arch-arrow"></i>
+                <div class="arch-node process">
+                    <i class="fas fa-cogs"></i><br>
+                    Processing Layer<br>
+                    <small>Spark/Trino</small>
+                </div>
+                <i class="fas fa-arrow-right arch-arrow"></i>
+                <div class="arch-node output">
+                    <i class="fas fa-chart-pie"></i><br>
+                    Consumption Layer<br>
+                    <small>BI / ML</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: OPEN TABLE FORMATS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Open Table Formats</h2>
+        </div>
+
+        <div class="prose">
+            <p><strong>Table Format (Delta Lake):</strong> Open-source storage layer that provides ACID transactions and scalable metadata handling for data lakes. It leverages <strong>Parquet files</strong> coupled with a JSON-based transaction log stored in the <code>_delta_log/</code> directory.</p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>ACID Transactions</dt>
+                <dd>Guarantees full transactional integrity on cloud object storage, ensuring partial writes are never visible.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Schema Enforcement &amp; Evolution</dt>
+                <dd>Automatically rejects incompatible writes at ingestion, while supporting governed structural changes via <code>mergeSchema</code> or <code>overwriteSchema</code>.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Time Travel</dt>
+                <dd>Enables access to historical data snapshots using specific version numbers or timestamps.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>MERGE (Upsert)</dt>
+                <dd>Performs atomic insert, update, and delete operations, providing a foundation for CDC pipelines.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>File Immutability &amp; Deletion Vectors</dt>
+                <dd>Preserves original files for writes. Deletion vectors utilize a soft-delete mechanism enabling row-level concurrency without immediate file rewrites.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>OPTIMIZE &amp; VACUUM</dt>
+                <dd><strong>OPTIMIZE:</strong> Compacts small files into larger ones. <strong>VACUUM:</strong> Removes unreferenced data files (default 7 days retention).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Z-Ordering &amp; Liquid Clustering</dt>
+                <dd>Co-locates related data within files. Liquid clustering provides dynamic alternative by automatically reorganizing files based on clustering keys.</dd>
+            </dl>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-cyan">
+                <h3><span class="icon-badge"><i class="fas fa-igloo"></i></span> Table Format (Iceberg)</h3>
+                <p>Engine-agnostic format providing warehouse-grade features on data lakes.</p>
+                <ul>
+                    <li><strong>ACID Properties:</strong> Snapshot isolation</li>
+                    <li><strong>Schema Evolution:</strong> Add/remove/rename columns without rewrite</li>
+                    <li><strong>Hidden Partitioning:</strong> No manual directory structure management</li>
+                    <li><strong>Time Travel:</strong> Query via snapshot ID or timestamp</li>
+                    <li><strong>Metadata Layer:</strong> Tracks schema, file locations, snapshots</li>
+                    <li><strong>Multi-engine:</strong> Readable by multiple compute engines simultaneously</li>
+                </ul>
+            </div>
+            
+            <div class="concept-card accent-amber">
+                <h3><span class="icon-badge"><i class="fas fa-layer-group"></i></span> Table Format (UniForm)</h3>
+                <p>Universal Format enabling interoperability across ecosystems.</p>
+                <ul>
+                    <li><strong>Universal Format:</strong> Single Delta table read simultaneously as Delta, Iceberg, or Hudi without copying data.</li>
+                    <li><strong>Interoperability:</strong> Eliminates multi-format fragmentation allowing different teams to access the same source.</li>
+                    <li><strong>Table Configuration:</strong> Enabled via TBLPROPERTIES (<code>'delta.universalFormat.enabledFormats' = 'iceberg'</code>).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: PLATFORM & METADATA
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Databricks Platform &amp; Metadata Management</h2>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="callout-content">
+                <h4>ACID Transactions Details</h4>
+                <p><strong>Atomicity:</strong> Write operations fully succeed or fail.<br>
+                <strong>Consistency:</strong> Protects table integrity via schema enforcement.<br>
+                <strong>Isolation:</strong> Concurrent readers and writers do not block each other (Optimistic Concurrency Control).<br>
+                <strong>Durability:</strong> Permanently records every committed transaction in the Delta Log to survive failures.</p>
+            </div>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Control Plane</th>
+                        <th>Data Plane</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Hosting</strong></td>
+                        <td>Managed within the Databricks cloud subscription</td>
+                        <td>Resides within the customer's own cloud subscription</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Components</strong></td>
+                        <td>Includes Web UI, Cluster Management, Workflows, and Notebooks</td>
+                        <td>Consists of compute clusters and storage (DBFS, Delta tables)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Management</strong></td>
+                        <td>Fully administered by Databricks</td>
+                        <td>Administered by the customer via Databricks tooling</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="prose">
+            <p>Metadata is managed at two distinct levels: table-level via the <strong>Delta Transaction Log</strong> and platform-level via <strong>Unity Catalog</strong>.</p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3><span class="icon-badge"><i class="fas fa-file-alt"></i></span> Delta Transaction Log (Table)</h3>
+                <ul>
+                    <li><strong>Log Directory:</strong> Maintains <code>_delta_log/</code> directory with ordered JSON commit files.</li>
+                    <li><strong>Commit Metadata:</strong> Records schema, file locations, min/max stats, operation type.</li>
+                    <li><strong>Checkpoint Files:</strong> Created every 10 commits to optimize reads.</li>
+                    <li><strong>Read Flow:</strong> Engine reads last checkpoint + subsequent JSON logs.</li>
+                    <li><strong>Source of Truth:</strong> The log is the table, acting as single source of truth for read/write operations.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3><span class="icon-badge"><i class="fas fa-sitemap"></i></span> Unity Catalog (Platform)</h3>
+                <ul>
+                    <li><strong>Regional Metastore:</strong> Single metastore per region shared across workspaces.</li>
+                    <li><strong>Namespace Hierarchy:</strong> Catalog → Schema → Table / View / Volume / Function.</li>
+                    <li><strong>Unified Governance:</strong> Centralizes control for tables, models, dashboards, volumes, etc.</li>
+                    <li><strong>Automated Lineage:</strong> Captures column/table lineage automatically without manual configuration.</li>
+                    <li><strong>System Tables:</strong> access.audit, billing.usage, access.column_lineage.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             QUIZ BLOCK
+             ═══════════════════════════════════════ -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What is the primary purpose of the Bronze zone in Medallion Architecture?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">To ingest data as-is from source systems, often retaining history and duplicates, streamlining the loading process to the Silver layer.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> Why does the Lakehouse architecture eliminate the need for Lambda Architecture?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">It employs a single processing path (like Apache Spark) capable of handling both batch and streaming workloads incrementally, removing the complexity of maintaining separate codebases.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> In the Databricks Platform Architecture, which plane hosts the compute clusters and the actual Delta tables?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">The Data Plane, which resides within the customer's own cloud subscription.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the role of Unity Catalog in a Lakehouse architecture?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">It manages metadata at the platform-level, providing a regional metastore, unified governance, a 3-level namespace hierarchy, and automated data lineage.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> What feature of Delta Lake allows for co-locating related data within files to maximize data skipping during queries?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Z-Ordering (and Liquid Clustering as a dynamic alternative).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Topic Review</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

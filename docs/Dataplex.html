@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Dataplex</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Dataplex Overview
+                </div>
+                <h1>Google Cloud<br><em>Dataplex</em></h1>
+                <p class="cover-subtitle">
+                    Intelligent data fabric that unifies your distributed data to help automate data management and power analytics at scale.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview &amp; Data Mesh
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Key Capabilities
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Architecture: Lakes &amp; Zones
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Data Profiles &amp; Tagging
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Security Access Controls
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Policy Tags
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: OVERVIEW & DATA MESH
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview &amp; Data Mesh</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                <strong>Dataplex</strong> is a unified data management platform that unifies data lakes and warehouses to simplify data governance and accelerate analytics. It organizes disparate data sources across multiple clouds and formats into logical lakes and zones for unified management, and offers built-in security, governance, and integrations with other GCP services for seamless data analysis and insights.
+            </p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-lightbulb"></i></span>
+                    Use Cases
+                </h3>
+                <ul>
+                    <li>Rapidly curate, secure, integrate, and analyze any type of data, at any scale</li>
+                    <li>Organize data without data movement, automatic data discovery, metadata harvesting, lifecycle management, and data quality with built-in AI-driven data intelligence.</li>
+                    <li>Central policy management, monitoring and auditing for data authorization, retention, and classification.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-network-wired"></i></span>
+                    Data Mesh
+                </h3>
+                <p>Data Mesh promotes <strong>distributed data ownership</strong> while <strong>centralizing governance</strong> and data discoverability. It shifts the responsibility for managing, producing, and consuming data to <strong>domain-specific teams</strong> that have the most context for that data.</p>
+                <ul>
+                    <li>Dataplex provides centralized data governance while enabling distributed ownership through "virtual lakes."</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Billing</h4>
+                <p>Based on pay-as-you-go usage: Dataplex processing (standard and premium), Dataplex shuffle storage, Metadata storage, and Data Catalog API calls.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: KEY CAPABILITIES
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Key Capabilities</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-database"></i></span>
+                    Centralized Data Management
+                </h3>
+                <ul>
+                    <li>Unifies data lakes and warehouses across multiple storage systems (Cloud Storage, BigQuery, etc.) for centralized visibility and control.</li>
+                    <li>Organizes data into lakes and zones based on business logic for easier management.</li>
+                    <li>Integrates with data governance and security tools for policy enforcement.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-shield-alt"></i></span>
+                    Enhanced Data Governance
+                </h3>
+                <ul>
+                    <li>Enforces data access and usage policies across all unified sources for compliance and privacy.</li>
+                    <li>Provides data lineage tracking to understand data origins and transformations.</li>
+                    <li>Enables data quality management to ensure accuracy and reliability.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-pie"></i></span>
+                    Simplified Analytics
+                </h3>
+                <ul>
+                    <li>Provides a unified interface for data discovery and exploration.</li>
+                    <li>Simplifies data access for analysts and data scientists using preferred tools (BigQuery, Spark, etc.).</li>
+                    <li>Accelerates analytics and machine learning workflows with streamlined data access.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-lock"></i></span>
+                    Security and Compliance
+                </h3>
+                <ul>
+                    <li>Enforces granular access controls and data masking for sensitive data protection.</li>
+                    <li>Integrates with Google Cloud's security infrastructure for threat detection and prevention.</li>
+                    <li>Supports compliance with industry regulations (GDPR, CCPA, etc.).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: ARCHITECTURE
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Architecture: Lakes &amp; Zones</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                Logical groupings within a Dataplex lake allow you to organize and manage your data assets based on criteria like data sensitivity, department, or business domain. Benefits include <strong>simplified data management</strong> (breaking down large data lakes into manageable units), <strong>improved data governance</strong> (applying different policies and controls to different zones), and <strong>enhanced security</strong> (isolating sensitive data in dedicated zones).
+            </p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Virtual Lakes</dt>
+                <dd>A lake is the highest-level abstraction representing a <strong>logical container</strong> for organizing and managing your data across multiple data storage systems (e.g., Cloud Storage, BigQuery). It allows you to apply governance, metadata management, and monitoring across your entire data ecosystem. <br><br><em>Use case:</em> A lake can represent an overarching domain in your data mesh architecture, such as a specific business function (e.g., marketing, finance) or a data product.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Zones</dt>
+                <dd>A zone is a sub-component of a lake that organizes data into logical groupings, typically based on the lifecycle or stage of the data (e.g., raw, curated, or analytics data). Zones allow finer segmentation of data within a lake, reflecting different stages in the data processing pipeline. <br><br><em>Use case:</em> You might create separate zones for raw, transformed, and curated data within a single lake, ensuring logical separation and governance at different stages of the data lifecycle.</dd>
+            </dl>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-layer-group"></i></span>
+                Types of Zones
+            </h3>
+            <ul>
+                <li><strong>Raw zone:</strong> Stores unprocessed, incoming data (e.g., from logs, transactions).</li>
+                <li><strong>Curated zone:</strong> Stores transformed and cleansed data, ready for consumption or analysis.</li>
+                <li><strong>Landing zone:</strong> A temporary holding place for files before processing.</li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: DATA PROFILES & TAGGING
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Data Profiles &amp; Automated Tagging</h2>
+        </div>
+
+        <div class="concept-card accent-mint">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-chart-bar"></i></span>
+                Data Profile Insights
+            </h3>
+            <p>Data profiles give you insights into your data:</p>
+            <ul>
+                <li><strong>Data types:</strong> What kind of information is in each column (e.g., numbers, dates, text)?</li>
+                <li><strong>Completeness:</strong> How much data is missing?</li>
+                <li><strong>Uniqueness:</strong> Are there duplicate values?</li>
+                <li><strong>Value distributions:</strong> What are the common values in a column?</li>
+            </ul>
+        </div>
+
+        <div class="two-columns">
+            <div class="callout tip">
+                <div class="callout-icon">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="callout-content">
+                    <h4>Automated Tagging</h4>
+                    <p>You can automatically tag tables in Dataplex based on the insights from your data profiles. For example, you could tag a table as "PII" if a profile detects sensitive information like names or addresses.</p>
+                </div>
+            </div>
+            <div class="callout info">
+                <div class="callout-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="callout-content">
+                    <h4>Improved Discovery &amp; Governance</h4>
+                    <p><strong>Improved Data Discovery:</strong> Tags make it easier to find and understand data within Dataplex. <br><strong>Data Governance:</strong> Tagging helps you manage and control access to sensitive data.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: SECURITY ACCESS CONTROLS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Security Access Controls</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-project-diagram"></i></span>
+                    Project Level
+                </h3>
+                <ul>
+                    <li><strong>Dataplex Admin:</strong> Full control over all Dataplex resources in the project.</li>
+                    <li><strong>Dataplex Editor:</strong> Can manage Dataplex resources but cannot grant access to others.</li>
+                    <li><strong>Dataplex Viewer:</strong> Read-only access to all Dataplex resources in the project.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-water"></i></span>
+                    Lake Level
+                </h3>
+                <p>Grant permissions within a specific lake.</p>
+                <ul>
+                    <li><strong>Lake Admin:</strong> Full control over a lake and its contents.</li>
+                    <li><strong>Lake Contributor:</strong> Can create, update, and delete resources within a lake.</li>
+                    <li><strong>Lake Reader:</strong> Read-only access to a lake and its contents.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-bullseye"></i></span>
+                    Zone Level
+                </h3>
+                <p>Grant permissions within a specific zone.</p>
+                <ul>
+                    <li><strong>Zone Admin:</strong> Full control over a zone and its contents.</li>
+                    <li><strong>Zone Contributor:</strong> Can create, update, and delete resources within a zone.</li>
+                    <li><strong>Zone Reader:</strong> Read-only access to a zone and its contents.</li>
+                </ul>
+            </div>
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-database"></i></span>
+                    Data Roles
+                </h3>
+                <p>Control access to the data within Dataplex assets.</p>
+                <ul>
+                    <li><strong>Data Reader:</strong> Read-only access to data.</li>
+                    <li><strong>Data Writer:</strong> Permission to write data.</li>
+                    <li><strong>Data Owner:</strong> Full control over data, including granting access to others.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: POLICY TAGS
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Policy Tags</h2>
+        </div>
+
+        <div class="prose">
+            <p>Policy Tags enable you to define and apply business-relevant metadata to your data assets. These tags can represent classifications (e.g., "Confidential", "PII"), compliance requirements (e.g., "GDPR", "HIPAA"), or data sensitivity levels.</p>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-tags"></i></span>
+                Benefits of Policy Tags
+            </h3>
+            <ul class="checklist">
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Improved data discovery:</strong> Make it easier to find data based on its classification.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Enhanced data governance:</strong> Enforce policies and controls based on tags.
+                </li>
+                <li>
+                    <span class="check-icon"><i class="fas fa-check"></i></span>
+                    <strong>Automated data management:</strong> Trigger actions (e.g., data masking, access control) based on tags.
+                </li>
+            </ul>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

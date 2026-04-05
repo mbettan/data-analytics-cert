@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datastream — Google Cloud Study Notes</title>
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/mbettan/data-analytics-cert/main/docs/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════
+             COVER SECTION
+             ═══════════════════════════════════════ -->
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-cloud"></i>
+                    Google Cloud Service Notes
+                </div>
+                <h1>Google Cloud<br><em>Datastream</em></h1>
+                <p class="cover-subtitle">
+                    Serverless Change Data Capture (CDC) and Replication Service that allows you to synchronize data across heterogeneous databases, storage systems, and applications reliably and with minimal latency.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>SLA: <strong>&gt;=99.9%</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Billing: <strong>Per-byte (GBs processed)</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════
+             TABLE OF CONTENTS
+             ═══════════════════════════════════════ -->
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Core Overview &amp; Use Cases
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Change Data Capture (CDC)
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    Key Features
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    Key Concepts
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Integration &amp; Connectivity
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    Review &amp; Self-Test
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 1: Core Overview & Use Cases
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Core Overview &amp; Use Cases</h2>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon">
+                <i class="fas fa-coins"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Billing Breakdown</h4>
+                <p>Based on gigabytes (GBs) processed. Usage is billed in per-byte increments, on a per-stream basis, and is stated in GB (500 MB is 0.5 GB, for example). Bytes are counted based on raw (uncompressed) data for <strong>CDC</strong> and <strong>Backfill</strong>.<br><br>In addition to Datastream costs, you're billed for resources used to transfer, store, or process data: Cloud Storage, Dataflow, and Networking.</p>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-bolt"></i></span>
+                    Primary Use Cases
+                </h3>
+                <ul>
+                    <li><strong>Analytics:</strong> Keep analytical systems up to date.</li>
+                    <li><strong>Database Replication:</strong> Synchronize databases (e.g., Cloud SQL → Cloud Spanner).</li>
+                    <li><strong>Event-driven architectures:</strong> Trigger downstream processes efficiently.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-project-diagram"></i></span>
+                    Data Integration
+                </h3>
+                <p>Data streams from databases and Software-as-a-Service (SaaS) cloud services can feed a near-real-time data integration pipeline by loading data into BigQuery via Dataflow or Cloud Data Fusion.</p>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-amber">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-chart-line"></i></span>
+                    Streaming Analytics
+                </h3>
+                <p>Changes in databases are ingested into streaming pipelines such as with Dataflow for fraud detection, security event processing, and anomaly detection.</p>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-clock"></i></span>
+                    Near-Real-Time Availability
+                </h3>
+                <p>Availability of data changes in near-real-time powers artificial intelligence and machine learning applications to prevent churn or increase engagement via marketing efforts or by feeding back into production systems.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 2: Change Data Capture (CDC)
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Change Data Capture (CDC) Definition</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                Each change in a source system is captured and recorded in a data store. This is helpful in cases where it is important to know <strong>all changes over time</strong> and not just the state of the database at the time of data extraction.
+            </p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-exchange-alt"></i></span>
+                    ETL vs CDC Approach
+                </h3>
+                <ul>
+                    <li><strong>ETL/ELT Process:</strong> Sufficient if you need to know <em>only the final value</em>.</li>
+                    <li><strong>CDC Approach:</strong> Appropriate if you need to know <em>all the changes in value</em> over time.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-search"></i></span>
+                    Alternative: Federated Queries
+                </h3>
+                <ul>
+                    <li>Query external data directly from BigQuery.</li>
+                    <li>No data replication required.</li>
+                    <li>Best for <strong>occasional access and joining data</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 3: Key Features
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>Key Features</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Serverless</dt>
+                <dd>Configure a stream and the data starts moving. There are no installation, resource allocation, or maintenance overheads. Auto-scaling capabilities allocate resources to keep data moving in real time, automatically.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Unified Avro-based Type Schema</dt>
+                <dd>Enables simple, source-independent processing by converting all source-specific data types into a unified Datastream type schema, based on Avro types.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Stream Historical and CDC Data</dt>
+                <dd>Datastream streams both historical and CDC source data in real time, simultaneously.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Oracle CDC Without Additional Licenses</dt>
+                <dd>Provides LogMiner-based CDC streaming from any Oracle source version 11.2g and above, without the need to pay for additional licenses or software installations.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Cloud Storage Destination</dt>
+                <dd>CDC data is written to self-describing Avro or JSON files in Cloud Storage continually. This information is easily consumable for additional processing either directly in place or by loading downstream.</dd>
+            </dl>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 4: Key Concepts
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>Key Concepts</h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                Datastream ingests a lot of data in real time from a variety of sources, and makes the data available for consumption in the destination.
+            </p>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Event</dt>
+                <dd>The unit of data stored by Datastream. Represents every data manipulation language (DML) change for a given object.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Stream</dt>
+                <dd>Represents continuous ingestion of events from a source and writing them to a destination. Consists of a source and destination connection profile pair, along with stream-specific settings.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Connection Profiles</dt>
+                <dd>Represent connectivity information to a specific source or destination database.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Objects</dt>
+                <dd>Represent a sub-portion of a stream. For instance, a database stream has a data object for every table being streamed.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Private Connectivity Configurations</dt>
+                <dd>Enable Datastream to communicate with data sources over a secure, private network connection. This communication happens through Virtual Private Cloud (VPC) peering.</dd>
+            </dl>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 5: Integration & Connectivity
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Sources, Destinations &amp; Connectivity</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-database"></i></span>
+                    Source &amp; Destination
+                </h3>
+                <ul>
+                    <li><strong>Sources:</strong> Oracle and MySQL</li>
+                    <li><strong>Destination:</strong> Cloud Storage (change streams)</li>
+                    <li><strong>Limitation:</strong> Natively limited to Cloud Storage destination.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-network-wired"></i></span>
+                    Connectivity Options
+                </h3>
+                <ul>
+                    <li><strong>Private connectivity configurations:</strong> Defines a peering connection establishing a dedicated connection on the Datastream network (no other customers share it) communicating over internal IP addresses.</li>
+                    <li><strong>VPC Peering</strong></li>
+                    <li><strong>IP ALLOW-LIST</strong></li>
+                    <li><strong>Port-forwarding via SSH tunnel</strong></li>
+                    <li><em>Note:</em> Private connectivity is optional, Datastream also supports other modes over public networks.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Custom Destination Workarounds</h4>
+                <p>Because Datastream natively writes only to Cloud Storage, replicating to other destinations requires a Dataflow template workaround. Supported replication destinations include: <strong>Cloud SQL, Spanner, BigQuery, Bigtable, MongoDB, and Databricks</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SECTION 6: Review & Self-Test
+             ═══════════════════════════════════════ -->
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>Review &amp; Self-Test</h2>
+        </div>
+
+        <!-- Summary / Key Takeaways -->
+        <div class="summary-block">
+            <h3><i class="fas fa-trophy"></i> Key Takeaways</h3>
+            <ul class="summary-list">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Datastream</strong> is a serverless CDC and replication service for real-time data sync.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Native destination is <strong>Cloud Storage</strong>, storing data as self-describing Avro or JSON files.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Supports <strong>Oracle</strong> (without extra licenses via LogMiner) and <strong>MySQL</strong> as sources.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Requires <strong>Dataflow templates</strong> to write directly to Spanner, Cloud SQL, BigQuery, Bigtable, MongoDB, or Databricks.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>The core organizational units are <strong>Streams, Connection Profiles, Objects, and Events</strong>.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quiz Block -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What is the native destination for Datastream output?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Cloud Storage (as self-describing Avro or JSON files).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> Which Oracle CDC method does Datastream use that avoids additional licenses?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">LogMiner-based CDC streaming.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> If you need to replicate data from Datastream to BigQuery, what service is required as an intermediary?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Dataflow (using a Dataflow template).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the alternative to CDC if you only need occasional access and joining of external data?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Federated Queries (e.g., querying external data directly from BigQuery).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Material Completed</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             FOOTER
+             ═══════════════════════════════════════ -->
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Back to top visibility
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

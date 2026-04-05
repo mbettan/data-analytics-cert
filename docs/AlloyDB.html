@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlloyDB for PostgreSQL — Study Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a href="index.html" class="back-button">×</a>
+
+
+    <div class="page-wrapper">
+
+        <section class="cover" id="top">
+            <div class="cover-grid"></div>
+            <div class="cover-content">
+                <div class="cover-eyebrow">
+                    <i class="fas fa-database"></i>
+                    Google Cloud Database Services
+                </div>
+                <h1>AlloyDB for <br><em>PostgreSQL</em></h1>
+                <p class="cover-subtitle">
+                    Fully-managed, PostgreSQL-compatible database service designed for demanding enterprise database workloads. Combines a Google-built database engine with a disaggregated, log-structured storage layer. Optimized for high-throughput OLTP, real-time analytics (HTAP), and AI-driven applications.
+                </p>
+                <div class="cover-meta">
+                    <div class="cover-meta-item">
+                        <i class="fas fa-globe"></i>
+                        <span>Availability: <strong>Regional (Multi-zone HA) &amp; Omni</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>SLA: <strong>99.99%</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Compatibility: <strong>100% PostgreSQL</strong></span>
+                    </div>
+                    <div class="cover-meta-item">
+                        <i class="fas fa-user-edit"></i>
+                        <span>Author: <strong>Michaël Bettan</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="toc">
+            <div class="toc-header">
+                <i class="fas fa-list-ol"></i>
+                <h2>Table of Contents</h2>
+            </div>
+            <div class="toc-columns">
+                <a href="#section-1" class="toc-item">
+                    <span class="toc-number">01</span>
+                    Overview &amp; Billing
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-2" class="toc-item">
+                    <span class="toc-number">02</span>
+                    Architecture &amp; Storage Model
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-3" class="toc-item">
+                    <span class="toc-number">03</span>
+                    HTAP &amp; Columnar Engine
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-4" class="toc-item">
+                    <span class="toc-number">04</span>
+                    AlloyDB AI &amp; Machine Learning
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-5" class="toc-item">
+                    <span class="toc-number">05</span>
+                    Use Cases &amp; Migrations
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-6" class="toc-item">
+                    <span class="toc-number">06</span>
+                    AlloyDB Omni
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-7" class="toc-item">
+                    <span class="toc-number">07</span>
+                    Security &amp; Networking
+                    <span class="toc-dots"></span>
+                </a>
+                <a href="#section-8" class="toc-item">
+                    <span class="toc-number">08</span>
+                    High Availability &amp; Disaster Recovery
+                    <span class="toc-dots"></span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="section-divider" id="section-1">
+            <span class="section-divider-number">01</span>
+            <h2>Overview &amp; Billing</h2>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-card mint">
+                <div class="stat-value">99.99%</div>
+                <div class="stat-label">SLA Guarantee</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">PG Compatible</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-value">4x</div>
+                <div class="stat-label">Faster OLTP</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-value">100x</div>
+                <div class="stat-label">Faster OLAP</div>
+            </div>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Compute</dt>
+                <dd>vCPU &amp; Memory per hour for Primary and Read pool nodes (HA doubles primary cost).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Storage</dt>
+                <dd>Data storage per GiB/month. Pay-for-what-you-use, no provisioning required.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Network Egress</dt>
+                <dd>Charges apply for data transferred out of the system.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Backup &amp; Logs</dt>
+                <dd>Snapshot and PITR log storage. PITR logs are free for the first 7 days.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>I/O Charges</dt>
+                <dd>No I/O charges apply for reading or writing data.</dd>
+            </dl>
+        </div>
+
+
+        <div class="section-divider" id="section-2">
+            <span class="section-divider-number">02</span>
+            <h2>Architecture &amp; Storage Model</h2>
+        </div>
+
+        <div class="prose">
+            <p>AlloyDB utilizes a <strong>Decoupled Compute &amp; Storage</strong> architecture. Compute nodes and storage scale independently, with storage being a highly available distributed service shared across the cluster.</p>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-server"></i></span>
+                    Compute Layer
+                </h3>
+                <ul>
+                    <li><strong>Primary Instance:</strong> A single read/write node. If configured for HA, it includes an active/standby pair across zones. Max capacity is 288 vCPUs and 2,232 GiB RAM per instance.</li>
+                    <li><strong>Read Pool Instances:</strong> Up to 20 nodes for read scaling. All nodes share the same distributed storage layer, meaning <strong>no replication lag</strong>; writes on primary are immediately visible to all read pool nodes.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-purple">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-hdd"></i></span>
+                    Storage Layer
+                </h3>
+                <ul>
+                    <li><strong>Replication:</strong> Replicated automatically across 3 zones in a region for durability.</li>
+                    <li><strong>Auto-scaling:</strong> Auto-scales seamlessly up to 128 TiB per cluster without requiring downtime or resizing operations.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="callout tip">
+            <div class="callout-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Log-Structured Storage Layer</h4>
+                <p>Compute nodes do not write data blocks to storage; they only write Write-Ahead Logs (WAL). The storage layer autonomously applies WALs to blocks, drastically reducing I/O bottlenecks and vacuuming overhead.</p>
+            </div>
+        </div>
+
+        <div class="callout info">
+            <div class="callout-icon">
+                <i class="fas fa-memory"></i>
+            </div>
+            <div class="callout-content">
+                <h4>Cache Hierarchy</h4>
+                <p>Multi-layer caching (Buffer Cache, Ultra-fast Local SSDs) significantly accelerates data access compared to standard PostgreSQL.</p>
+            </div>
+        </div>
+
+        <div class="section-divider" id="section-3">
+            <span class="section-divider-number">03</span>
+            <h2>HTAP &amp; Columnar Engine</h2>
+        </div>
+
+        <div class="prose">
+            <p>AlloyDB is optimized for Hybrid Transactional and Analytical Processing (HTAP). It allows for rapid operational performance while simultaneously serving analytical queries.</p>
+        </div>
+
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="process-step-number">01</div>
+                <h4>Built-in Columnar Engine</h4>
+                <p>Keeps a column-based representation of data in memory, specifically optimized for analytical queries (aggregations, scans).</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">02</div>
+                <h4>Auto-columnarization (ML)</h4>
+                <p>ML algorithms observe workload patterns and automatically decide which tables/columns to load into the columnar engine.</p>
+            </div>
+            <div class="process-step">
+                <div class="process-step-number">03</div>
+                <h4>Real-Time Insights</h4>
+                <p>Enables running complex BI reporting directly on the operational database without needing ETL pipelines to a separate data warehouse.</p>
+            </div>
+        </div>
+
+        <div class="concept-card accent-amber">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-network-wired"></i></span>
+                Connection Management
+            </h3>
+            <p>An instance supports up to 1,000 concurrent connections by default, but AlloyDB has a native Managed Connection Pooler. It scales to a maximum of 240,000 concurrent connections.</p>
+            <ul>
+                <li><strong>Standard PostgreSQL port:</strong> <span class="tag blue">5432</span></li>
+                <li><strong>Managed Connection Pooler port:</strong> <span class="tag mint">6432</span></li>
+            </ul>
+        </div>
+
+
+        <div class="section-divider" id="section-4">
+            <span class="section-divider-number">04</span>
+            <h2>AlloyDB AI &amp; Machine Learning</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-brain"></i></span>
+                    Vertex AI &amp; Vector Search
+                </h3>
+                <ul>
+                    <li><strong>Vertex AI Integration:</strong> Integrates seamlessly with Vertex AI to call ML models directly from SQL (e.g., using <code>google_ml.predict_row()</code>) for inference and generating embeddings.</li>
+                    <li><strong>Vector Search:</strong> Leverages Google's <strong>ScaNN index</strong> (powering Google Search/YouTube) to deliver up to 10x faster index creation, 4x faster pure vector search, and 10x faster filtered vector searches than standard pgvector HNSW index.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-robot"></i></span>
+                    Generative AI &amp; Embeddings
+                </h3>
+                <ul>
+                    <li><strong>Generative AI &amp; RAG:</strong> Build scalable Generative AI and RAG applications directly on transactional data. Invokes Large Language Models directly from SQL (e.g., <code>google_ml.generate_content</code> leveraging the <code>google_ml_integration</code> extension).</li>
+                    <li><strong>Auto Vector Embeddings:</strong> Automatically synchronizes embeddings with transactional data. Supports incremental refresh for updated rows and a bulk backfill mode 130x faster than standard row-by-row processing.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="section-divider" id="section-5">
+            <span class="section-divider-number">05</span>
+            <h2>Use Cases &amp; Migrations</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-cyan">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-briefcase"></i></span>
+                    Key Use Cases
+                </h3>
+                <ul class="checklist">
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span><strong>Tier-1 OLTP:</strong> Mission-critical operational database applications.</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span><strong>HTAP &amp; Real-time Analytics:</strong> Hybrid transactional and analytical processing.</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span><strong>Legacy Modernization:</strong> Modernizing legacy systems, including migrations from Oracle.</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span><strong>Generative AI &amp; Vector Search:</strong> Build intelligent applications leveraging integrated AlloyDB AI.</li>
+                    <li><span class="check-icon"><i class="fas fa-check"></i></span><strong>High-throughput Scaling:</strong> Workloads exceeding standard Cloud SQL performance limits.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-blue">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-exchange-alt"></i></span>
+                    Migration &amp; Integrations
+                </h3>
+                <ul>
+                    <li><strong>Database Migration Service (DMS):</strong> Native integration for secure, minimal-downtime migrations from legacy databases into AlloyDB with Gemini-assisted schema conversion for heterogeneous migrations (e.g., SQL Server &rarr; PostgreSQL). Supports Amazon RDS, Aurora, MySQL, Oracle, etc.</li>
+                    <li><strong>Datastream:</strong> Change Data Capture (CDC) to stream data from AlloyDB into BigQuery for long-term enterprise data warehousing.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="section-divider" id="section-6">
+            <span class="section-divider-number">06</span>
+            <h2>AlloyDB Omni</h2>
+        </div>
+
+        <div class="concept-card accent-purple">
+            <h3>
+                <span class="icon-badge"><i class="fas fa-laptop-code"></i></span>
+                Run AlloyDB Anywhere
+            </h3>
+            <p>AlloyDB Omni is a downloadable, containerized edition of AlloyDB designed to run anywhere while maintaining the same core performance characteristics.</p>
+            <ul>
+                <li><strong>Deployment Flexibility:</strong> Run on-premises, on developer laptops (via Docker/VMs), at the edge, or on competing clouds (AWS, Azure).</li>
+                <li><strong>Core Engine Optimizations:</strong> Brings the exact same core engine optimizations (columnar engine, vector search, ScaNN) to self-managed infrastructure.</li>
+            </ul>
+        </div>
+
+
+        <div class="section-divider" id="section-7">
+            <span class="section-divider-number">07</span>
+            <h2>Security &amp; Networking</h2>
+        </div>
+
+        <div class="definition-grid">
+            <dl class="definition-item">
+                <dt>Private Access</dt>
+                <dd>Connect securely via VPC peering to access instances through private IPs without traversing the public internet.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Encryption</dt>
+                <dd>Data is encrypted in transit and at rest, supporting Customer-Managed Encryption Keys (CMEK).</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>IAM Authentication</dt>
+                <dd>Centralized access control leveraging Google Cloud IAM.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>VPC Service Controls</dt>
+                <dd>Establish secure perimeters around database resources.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>Audit Logging</dt>
+                <dd>Detailed Cloud Audit Logs for database access and administrative actions.</dd>
+            </dl>
+            <dl class="definition-item">
+                <dt>PSC Support</dt>
+                <dd>Supports Private Service Connect (PSC) for secure connections.</dd>
+            </dl>
+        </div>
+
+
+        <div class="section-divider" id="section-8">
+            <span class="section-divider-number">08</span>
+            <h2>High Availability &amp; Disaster Recovery</h2>
+        </div>
+
+        <div class="two-columns">
+            <div class="concept-card accent-mint">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-heartbeat"></i></span>
+                    High Availability &amp; Backup
+                </h3>
+                <ul>
+                    <li><strong>Rapid HA Failover:</strong> Automatic failover completes in &lt; 60 seconds, independent of database size.</li>
+                    <li><strong>Continuous Backup &amp; PITR:</strong> Point-in-time recovery retained for 14 days by default (adjustable from 1–35 days).</li>
+                    <li><strong>Intra-region Recovery:</strong> Provides zero RPO for point-in-time recovery scenarios within a region.</li>
+                </ul>
+            </div>
+
+            <div class="concept-card accent-coral">
+                <h3>
+                    <span class="icon-badge"><i class="fas fa-fire-extinguisher"></i></span>
+                    Disaster Recovery
+                </h3>
+                <p>Cross-region replication is available for robust DR strategies.</p>
+                <ul>
+                    <li><strong>Planned switchover:</strong> <span class="tag mint">Zero RPO</span> for scheduled maintenance.</li>
+                    <li><strong>Unplanned regional outage:</strong> <span class="tag amber">Minimal, non-zero RPO</span> (dependent on replication lag at the moment of failure, but 25x lower lag than standard PostgreSQL).</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="summary-block">
+            <h3><i class="fas fa-trophy"></i> Key Takeaways for AlloyDB</h3>
+            <ul class="summary-list">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>Log-Structured Storage</strong> is the core of AlloyDB's performance, as compute nodes only write WALs, heavily reducing I/O bottlenecks.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Read pools have <strong>no replication lag</strong> because they share the same exact storage layer as the primary instance.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>AlloyDB uses Google's <strong>ScaNN index</strong> for vector search, dramatically outperforming standard pgvector.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span><strong>AlloyDB Omni</strong> allows you to take the exact same core engine optimizations and run them on-prem, locally, or on other clouds.</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Connection scaling is native via the Managed Connection Pooler on port <strong>6432</strong>, scaling up to 240,000 connections.</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> How does AlloyDB eliminate I/O bottlenecks during heavy write operations?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Through its Log-Structured Storage Layer. Compute nodes only write Write-Ahead Logs (WAL), while the storage layer autonomously applies WALs to blocks.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> Which index technology does AlloyDB leverage to accelerate vector searches for AI applications?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">The ScaNN index (the same technology powering Google Search/YouTube), which is significantly faster than the standard pgvector HNSW index.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> If you need to connect your application to the Managed Connection Pooler instead of standard PostgreSQL, which port should you use?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Port 6432 (Standard PostgreSQL connects on port 5432).</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the expected RPO (Recovery Point Objective) for a planned cross-region disaster recovery switchover?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Zero RPO.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> How many read pool nodes can you provision in an AlloyDB cluster, and what is the typical replication lag?</p>
+                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                        <span class="answer-text">Up to 20 read nodes. There is zero replication lag because all nodes read from the same shared distributed storage layer.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Material Coverage</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+                <footer class="page-footer">
+            <p>Study Notes by Michaël Bettan</p>
+            <p><a href="#top">Back to Top</a></p>
+        </footer>
+
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo(0,0);"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
+        });
+
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
