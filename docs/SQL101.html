@@ -460,6 +460,59 @@
         </div>
 
         <!-- ═══════════════════════════════════════
+             QUIZ BLOCK
+             ═══════════════════════════════════════ -->
+        <div class="quiz-block">
+            <div class="quiz-header">
+                <i class="fas fa-question-circle"></i>
+                <h3>Self-Assessment Questions</h3>
+            </div>
+            <div class="quiz-body">
+                <div class="quiz-question">
+                    <p><span class="q-num">Q1.</span> What does DDL stand for and give an example command?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">Data Definition Language. Examples: CREATE, ALTER, DROP, TRUNCATE.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q2.</span> What is the difference between UNION and UNION ALL?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">UNION combines results and removes duplicates, while UNION ALL combines results without removing duplicates.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q3.</span> Which join returns all rows from both tables even if there is no match?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">FULL (OUTER) JOIN.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q4.</span> What is the purpose of the GROUP BY clause?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">To group rows with the same values in one or more columns, typically for use with aggregate functions.</span>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><span class="q-num">Q5.</span> What is the difference between RANK and DENSE_RANK window functions?</p>
+                    <div class="quiz-answer">
+                        <span class="answer-text">RANK leaves gaps in the ranking sequence when there are ties, while DENSE_RANK does not leave gaps.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar-label">
+                <span>Study Progress — Module Mastery</span>
+                <span>100%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
              FOOTER
              ═══════════════════════════════════════ -->
                 <footer class="page-footer">
@@ -477,6 +530,13 @@
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Quiz answer reveal
+        document.querySelectorAll('.quiz-answer').forEach(answer => {
+            answer.addEventListener('click', function () {
+                this.classList.toggle('revealed');
+            });
         });
 
         // Smooth scroll for TOC links

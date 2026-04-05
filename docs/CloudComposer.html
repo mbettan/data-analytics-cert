@@ -355,31 +355,31 @@
             <div class="quiz-body">
                 <div class="quiz-question">
                     <p><span class="q-num">Q1.</span> In the Cloud Composer architecture, where are your DAGs, plugins, and Airflow logs physically stored?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">In the Environment's Cloud Storage bucket, which is hosted within your Customer project.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q2.</span> Which architectural component is responsible for storing Airflow metadata?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">The Airflow Database, which is hosted on Cloud SQL in the Google-managed tenant project.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q3.</span> You need to process data in near real-time whenever a new file lands in Cloud Storage. Which ETL pattern should you use?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Push-based ETL using a Cloud Function triggered by the GCS event to launch the Airflow DAG reactively.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q4.</span> How does Airflow ensure that individual tasks persist across container restarts?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Tasks are held in a Redis queue running as a GKE StatefulSet application.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q5.</span> You want to execute a custom Python function if a specific DAG task fails. How can you implement this?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">By using the `on_failure_callback` parameter designed to handle custom logic upon task failure.</span>
                     </div>
                 </div>

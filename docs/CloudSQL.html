@@ -403,25 +403,25 @@
             <div class="quiz-body">
                 <div class="quiz-question">
                     <p><span class="q-num">Q1.</span> You have an application running in GKE with dynamic IP addresses that needs to connect to Cloud SQL securely. What is the best way to handle this?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Use the Cloud SQL Auth Proxy. It handles secure tunnels using IAM and removes the need to allowlist dynamic IPs.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q2.</span> Your analytics team needs to run heavy reporting queries, but doing so on Cloud SQL degrades performance for the web application. How can you solve this?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Create a Read Replica and offload the reporting workload to it, or export the data to BigQuery for OLAP reporting.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q3.</span> True or False: Cloud SQL automatically scales its compute nodes when CPU utilization hits 90%.</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">False. Cloud SQL does not support autoscaling for compute nodes (only for storage). Vertical scaling of compute requires a restart.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q4.</span> What is the fundamental difference between how Cloud SQL and BigQuery store data?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Cloud SQL is record-based (row-oriented, good for OLTP), whereas BigQuery is column-based (good for OLAP).</span>
                     </div>
                 </div>

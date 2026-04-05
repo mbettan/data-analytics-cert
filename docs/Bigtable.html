@@ -371,31 +371,31 @@
             <div class="quiz-body">
                 <div class="quiz-question">
                     <p><span class="q-num">Q1.</span> What happens if you use a sequential numeric ID or a timestamp as the beginning of your row key?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">It leads to hot-spotting when writing, as all sequential writes will hit the exact same node instead of being distributed across the cluster.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q2.</span> You initially provisioned an HDD Bigtable instance for batch analytics, but now want to serve real-time app traffic requiring lower latency. How do you switch to SSD?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Changing disk type requires creating a entirely new instance. You cannot toggle a setting from HDD to SSD.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q3.</span> At what level are operations guaranteed to be atomic (ACID) in Bigtable?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Operations are atomic only at the row level.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q4.</span> Because Garbage Collection is asynchronous and can take up to a week, how do you ensure deleted data isn't returned in your queries?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">By applying timestamp range filters for accuracy within your queries, which bypasses the garbage collection delay.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q5.</span> What is a common way to avoid hot-spotting for row keys when writing time-series data?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Use field promotion (shifting a column to be part of the row key before the timestamp) or salting (hashing the timestamp plus row key).</span>
                     </div>
                 </div>

@@ -424,31 +424,31 @@
             <div class="quiz-body">
                 <div class="quiz-question">
                     <p><span class="q-num">Q1.</span> How does AlloyDB eliminate I/O bottlenecks during heavy write operations?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Through its Log-Structured Storage Layer. Compute nodes only write Write-Ahead Logs (WAL), while the storage layer autonomously applies WALs to blocks.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q2.</span> Which index technology does AlloyDB leverage to accelerate vector searches for AI applications?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">The ScaNN index (the same technology powering Google Search/YouTube), which is significantly faster than the standard pgvector HNSW index.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q3.</span> If you need to connect your application to the Managed Connection Pooler instead of standard PostgreSQL, which port should you use?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Port 6432 (Standard PostgreSQL connects on port 5432).</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q4.</span> What is the expected RPO (Recovery Point Objective) for a planned cross-region disaster recovery switchover?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Zero RPO.</span>
                     </div>
                 </div>
                 <div class="quiz-question">
                     <p><span class="q-num">Q5.</span> How many read pool nodes can you provision in an AlloyDB cluster, and what is the typical replication lag?</p>
-                    <div class="quiz-answer" onclick="this.classList.toggle('revealed')">
+                    <div class="quiz-answer">
                         <span class="answer-text">Up to 20 read nodes. There is zero replication lag because all nodes read from the same shared distributed storage layer.</span>
                     </div>
                 </div>
