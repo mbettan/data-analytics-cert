@@ -568,6 +568,16 @@
         </div>
     </div>
 
+    <!-- ── INFOGRAPHIC OVERLAY ── -->
+    <div id="infographic-container">
+        <div id="infographic-inner">
+            <button id="infographic-close"
+                onclick="document.getElementById('infographic-container').style.display='none';">×</button>
+            <img id="infographic-img" src="" alt="Infographic"
+                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+        </div>
+    </div>
+
     <!-- ── FOOTER ── -->
     <footer>
         <p style="font-size: 0.75rem; max-width: 800px; margin: 0 auto 16px; color: var(--text-secondary); opacity: 0.8;">
@@ -589,24 +599,6 @@
             const views = getViews(fileId) + 1;
             localStorage.setItem(fileId + '-views', views);
         }
-        function showPDF(url, fileId) {
-            const container = document.getElementById('pdf-viewer');
-            document.getElementById('pdf-container').style.display = 'block';
-            pdfjsLib.getDocument(url).promise.then(function (pdf) {
-                pdf.getPage(1).then(function (page) {
-                    const scale = 1.5;
-                    const viewport = page.getViewport({ scale });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-                    container.innerHTML = '';
-                    container.appendChild(canvas);
-                    page.render({ canvasContext: context, viewport });
-                });
-            });
-            incrementViews(fileId);
-        }
 
         document.addEventListener('DOMContentLoaded', function () {
             // Wrap all audio elements in a styled container
@@ -617,6 +609,116 @@
                 wrapper.appendChild(audio);
             });
 
+            // Infographic Modal Handler
+            const infographicContainer = document.getElementById('infographic-container');
+            const infographicImg = document.getElementById('infographic-img');
+            
+            document.querySelectorAll('.infographic-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let imgUrl = this.getAttribute('href');
+                    const title = this.closest('.product-item').querySelector('h3').innerText;
+                    
+                    // Convert GitHub blob URL to raw URL if needed
+                    if (imgUrl.includes('github.com') && imgUrl.includes('/blob/')) {
+                        imgUrl = imgUrl.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+                    }
+                     
+                    // Set image source
+                    infographicImg.src = imgUrl;
+                    
+                    // Show modal
+                    infographicContainer.style.display = 'block';
+                    
+                    // Trigger Google Analytics Event
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'view_infographic', {
+                            'event_category': 'Engagement',
+                            'event_label': title,
+                            'value': 1
+                        });
+                    }
+                });
+            });
+
+            // PDF Modal Handler using PDF.js
+            const pdfContainer = document.getElementById('pdf-container');
+            const pdfViewer = document.getElementById('pdf-viewer');
+            const pdfClose = document.getElementById('pdf-close');
+            
+            // Set worker source
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+            
+            pdfClose.addEventListener('click', function() {
+                pdfContainer.style.display = 'none';
+                pdfViewer.innerHTML = ''; // Clear content
+            });
+            
+            const links = document.querySelectorAll('a.download-link');
+            
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.endsWith('.pdf')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        let pdfUrl = href;
+                        const title = this.closest('.product-item').querySelector('h3').innerText;
+                        const isDeck = this.innerText.toLowerCase().includes('deck');
+                        
+                        // Convert GitHub blob URL to raw URL if needed
+                        if (pdfUrl.includes('github.com') && pdfUrl.includes('/blob/')) {
+                            pdfUrl = pdfUrl.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+                        }
+                        
+                        // Clear viewer
+                        pdfViewer.innerHTML = '<div style="color: white; padding: 20px;">Loading PDF...</div>';
+                        
+                        // Show modal
+                        pdfContainer.style.display = 'block';
+                        
+                        // Load PDF using PDF.js
+                        pdfjsLib.getDocument(pdfUrl).promise.then(async pdfDoc => {
+                            pdfViewer.innerHTML = ''; // Clear loading text
+                            
+                            // Render all pages in order
+                            for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                                const page = await pdfDoc.getPage(pageNum);
+                                const scale = 1.5;
+                                const viewport = page.getViewport({ scale: scale });
+                                
+                                const canvas = document.createElement('canvas');
+                                canvas.style.display = 'block';
+                                canvas.style.margin = '0 auto 20px auto';
+                                canvas.style.maxWidth = '100%';
+                                
+                                const ctx = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+                                pdfViewer.appendChild(canvas);
+                                
+                                const renderContext = {
+                                    canvasContext: ctx,
+                                    viewport: viewport
+                                };
+                                await page.render(renderContext).promise;
+                            }
+                        }).catch(err => {
+                            console.error('Error loading PDF:', err);
+                            pdfViewer.innerHTML = `<div style="color: red; padding: 20px;">Error loading PDF: ${err.message}</div>`;
+                        });
+                        
+                        // Trigger Google Analytics Event
+                        if (typeof gtag === 'function') {
+                            gtag('event', isDeck ? 'view_deck' : 'view_pdf', {
+                                'event_category': 'Engagement',
+                                'event_label': title,
+                                'value': 1
+                            });
+                        }
+                    });
+                }
+            });
+
             const filterButtons = document.querySelectorAll('.filter-button');
             filterButtons.forEach(button => {
                 button.addEventListener('click', function () {
@@ -625,7 +727,6 @@
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     const productItems = document.querySelectorAll('.product-item');
                     if (isActive) {
-                        // Deselect — show all
                         productItems.forEach(item => item.classList.add('active'));
                     } else {
                         this.classList.add('active');
