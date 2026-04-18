@@ -1,2 +1,5 @@
 .DS_Store
 **/.DS_Store
+interactive_rewrite.py
+template.html
+verify_content.py
